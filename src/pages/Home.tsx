@@ -1,32 +1,48 @@
-import React from 'react';
-import {IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar} from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
+import React, {useState} from 'react';
+import {
+    IonAvatar,
+    IonButton,
+    IonButtons, IonCard,
+    IonCardContent,
+    IonContent,
+    IonHeader,
+    IonIcon, IonItem, IonLabel,
+    IonPage,
+    IonTitle,
+    IonToolbar
+} from '@ionic/react';
 import './Home.scss';
-import {settingsOutline} from "ionicons/icons";
+import {checkmarkCircleOutline, settingsOutline} from "ionicons/icons";
 
 const Home: React.FC = () => {
-  return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar>
-          <IonTitle>Tab 1</IonTitle>
-            <IonButtons slot="end">
-                <IonButton href="/settings" >
-                    <IonIcon icon={settingsOutline}/>
-                </IonButton>
-            </IonButtons>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large" className="gradientColor">fLKFJDSLKFJSDLFSDfdsafdaslkfjdasl;fdasf</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <ExploreContainer name="Tab 1 page" />
-      </IonContent>
-    </IonPage>
-  );
+
+    return (
+        <IonPage>
+            <IonHeader>
+                <IonToolbar className="gradientBackgroundColor">
+                    <IonTitle slot="start">Tab 1</IonTitle>
+                    <IonButtons slot="end">
+                        <IonButton href="/settings">
+                            <IonIcon icon={settingsOutline} color="dark"/>
+                        </IonButton>
+                    </IonButtons>
+                </IonToolbar>
+            </IonHeader>
+            <IonContent>
+                <IonCard className="card">
+                    <IonCardContent>
+                        <IonItem lines="none" className="carditem">
+                            <IonAvatar slot="start">
+                                <IonIcon icon={checkmarkCircleOutline} color={'success'}/>
+                            </IonAvatar>
+                            <IonLabel>Uw sensoren zijn verbonden</IonLabel>
+                        </IonItem>
+
+                    </IonCardContent>
+                </IonCard>
+            </IonContent>
+        </IonPage>
+    );
 };
 
 export default Home;
