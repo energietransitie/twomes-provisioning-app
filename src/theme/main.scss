@@ -1,0 +1,18 @@
+.tab-selected {
+  #svgGradient {
+    --color-stop-1:#45B97C;
+    --color-stop-2:#B1D249;
+  }
+
+  #icon {
+    stroke: url(#svgGradient) black;
+    fill: url(#svgGradient) black;
+    width: 25%;
+  }
+}
+
+#icon {
+  stroke: white;
+  fill: white;
+  width: 25%;
+}
