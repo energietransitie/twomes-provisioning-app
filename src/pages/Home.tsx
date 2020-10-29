@@ -20,7 +20,7 @@ const Home: React.FC = () => {
         <IonPage>
             <IonHeader>
                 <IonToolbar className="gradientBackgroundColor">
-                    <IonTitle slot="start">Tab 1</IonTitle>
+                    <IonTitle slot="start">Home</IonTitle>
                     <IonButtons slot="end">
                         <IonButton href="/settings">
                             <IonIcon icon={settingsOutline} color="dark"/>
