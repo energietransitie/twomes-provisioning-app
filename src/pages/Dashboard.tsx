@@ -1,23 +1,41 @@
 import React from 'react';
-import { IonContent, IonHeader, IonPage, IonTitle, IonToolbar } from '@ionic/react';
+import {
+    IonAvatar,
+    IonButton,
+    IonButtons,
+    IonCard, IonCardContent,
+    IonContent,
+    IonHeader,
+    IonIcon, IonItem, IonLabel,
+    IonPage,
+    IonTitle,
+    IonToolbar
+} from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import './Dashboard.scss';
+import {settingsSharp} from "ionicons/icons";
 
 const Dashboard: React.FC = () => {
   return (
     <IonPage>
       <IonHeader>
-        <IonToolbar>
-          <IonTitle>Tab 2</IonTitle>
+        <IonToolbar className="gradientBackgroundColor">
+          <IonTitle>Dashboard</IonTitle>
+            <IonButtons slot="end">
+                <IonButton href="/settings">
+                    <IonIcon icon={settingsSharp} color="dark"/>
+                </IonButton>
+            </IonButtons>
         </IonToolbar>
       </IonHeader>
-      <IonContent fullscreen>
-        <IonHeader collapse="condense">
-          <IonToolbar>
-            <IonTitle size="large">Tab 2</IonTitle>
-          </IonToolbar>
-        </IonHeader>
-        <ExploreContainer name="Tab 2 page" />
+      <IonContent fullscreen>  <IonCard className="card">
+          <IonCardContent>
+              <IonItem  lines="none" className="carditem">
+                  <IonLabel>ChartJS</IonLabel>
+              </IonItem>
+
+          </IonCardContent>
+      </IonCard>
       </IonContent>
     </IonPage>
   );
