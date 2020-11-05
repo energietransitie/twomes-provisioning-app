@@ -13,7 +13,7 @@ import {
 } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import './Dashboard.scss';
-import {checkmarkCircleOutline, settingsOutline} from "ionicons/icons";
+import {settingsSharp} from "ionicons/icons";
 
 const Dashboard: React.FC = () => {
   return (
@@ -23,7 +23,7 @@ const Dashboard: React.FC = () => {
           <IonTitle>Dashboard</IonTitle>
             <IonButtons slot="end">
                 <IonButton href="/settings">
-                    <IonIcon icon={settingsOutline} color="dark"/>
+                    <IonIcon icon={settingsSharp} color="dark"/>
                 </IonButton>
             </IonButtons>
         </IonToolbar>
