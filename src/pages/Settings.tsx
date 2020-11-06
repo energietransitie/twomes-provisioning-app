@@ -9,6 +9,8 @@ import {
     useIonViewWillEnter, useIonViewWillLeave
 } from "@ionic/react"
 import React from 'react';
+import GetCurrentSSID from "../components/GetCurrentSSID";
+
 
 const Settings: React.FC = () => {
 
@@ -35,7 +37,8 @@ const Settings: React.FC = () => {
             </IonHeader>
 
             <IonContent>
-                <IonTitle>HALLO</IonTitle>
+                <IonTitle></IonTitle>
+                <GetCurrentSSID></GetCurrentSSID>
             </IonContent>
         </IonPage>
     )
