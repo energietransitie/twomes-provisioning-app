@@ -12,7 +12,7 @@ import {
     IonToolbar
 } from '@ionic/react';
 import './Home.scss';
-import {checkmarkCircleOutline, settingsOutline} from "ionicons/icons";
+import {checkmarkCircleOutline, settingsSharp} from "ionicons/icons";
 import {LocalStorage} from "../services/Storage";
 
 var getItem = LocalStorage().getItem;
@@ -50,7 +50,7 @@ const Home: React.FC = () => {
                     <IonTitle slot="start">Home</IonTitle>
                     <IonButtons slot="end">
                         <IonButton href="/settings">
-                            <IonIcon icon={settingsOutline} color="dark"/>
+                            <IonIcon icon={settingsSharp} color="dark"/>
                         </IonButton>
                     </IonButtons>
                 </IonToolbar>
@@ -64,7 +64,6 @@ const Home: React.FC = () => {
                             </IonAvatar>
                             <IonLabel>Uw sensoren zijn verbonden</IonLabel>
                         </IonItem>
-
                     </IonCardContent>
                 </IonCard>
             </IonContent>

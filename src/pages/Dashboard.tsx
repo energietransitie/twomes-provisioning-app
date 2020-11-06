@@ -1,6 +1,5 @@
 import React from 'react';
 import {
-    IonAvatar,
     IonButton,
     IonButtons,
     IonCard, IonCardContent,
@@ -12,7 +11,7 @@ import {
     IonToolbar
 } from '@ionic/react';
 import './Dashboard.scss';
-import {settingsOutline} from "ionicons/icons";
+import {settingsSharp} from "ionicons/icons";
 import API from "../api/Calls";
 import {LocalStorage} from "../services/Storage";
 import moment from "moment";
@@ -21,6 +20,7 @@ const setItem = LocalStorage().setItem;
 const getItem = LocalStorage().getItem;
 
 const localization = require("moment/locale/nl");
+
 
 const Dashboard: React.FC = () => {
 
@@ -51,7 +51,7 @@ const Dashboard: React.FC = () => {
                     <IonTitle>Dashboard</IonTitle>
                     <IonButtons slot="end">
                         <IonButton href="/settings">
-                            <IonIcon icon={settingsOutline} color="dark"/>
+                            <IonIcon icon={settingsSharp} color="dark"/>
                         </IonButton>
                     </IonButtons>
                 </IonToolbar>
@@ -70,6 +70,29 @@ const Dashboard: React.FC = () => {
             </IonContent>
         </IonPage>
     );
+  return (
+    <IonPage>
+      <IonHeader>
+        <IonToolbar className="gradientBackgroundColor">
+          <IonTitle>Dashboard</IonTitle>
+            <IonButtons slot="end">
+                <IonButton href="/settings">
+                    <IonIcon icon={settingsSharp} color="dark"/>
+                </IonButton>
+            </IonButtons>
+        </IonToolbar>
+      </IonHeader>
+      <IonContent fullscreen>  <IonCard className="card">
+          <IonCardContent>
+              <IonItem  lines="none" className="carditem">
+                  <IonLabel>ChartJS</IonLabel>
+              </IonItem>
+
+          </IonCardContent>
+      </IonCard>
+      </IonContent>
+    </IonPage>
+  );
 };
 
 export default Dashboard;
