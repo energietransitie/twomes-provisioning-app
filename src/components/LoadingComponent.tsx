@@ -6,7 +6,7 @@ interface LoadingProps {
 }
 
 const LoadingComponent : React.FC<LoadingProps> = ({showLoading}) => {
-
+    //Loading component for use throughout the application
     return (
         <IonLoading
             isOpen={showLoading}

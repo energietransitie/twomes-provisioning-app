@@ -20,11 +20,13 @@ const Instructions: React.FC = () => {
     const [currentStep, setCurrentStep] = useState("0");
     const [currentStepSet, setCurrentStepSet] = useState(false);
 
+    //Hide tabbar on entering this page
     useIonViewWillEnter(() => {
         const tabBar = document.getElementById("tabBar");
         tabBar!.style.display = "none";
     })
 
+    //Show tabbar on leaving this page
     useIonViewWillLeave(() => {
         const tabBar = document.getElementById("tabBar");
         tabBar!.style.display = "flex";

@@ -18,9 +18,7 @@ import moment from "moment";
 
 const setItem = LocalStorage().setItem;
 const getItem = LocalStorage().getItem;
-
 const localization = require("moment/locale/nl");
-
 
 const Dashboard: React.FC = () => {
 
@@ -32,7 +30,7 @@ const Dashboard: React.FC = () => {
         API.weather.getRandomNumber().then((response) => {
             var data = {
                 apidata: response.data.toString(),
-                timestamp: moment().format('hh:mm:ss DD-MM-YYYY')
+                timestamp: moment().format('hh:mm:ss DD-MM-YYYY') //Current time
             }
             setItem('randomnumber', JSON.stringify(data));
         }, (err) => {
@@ -70,29 +68,6 @@ const Dashboard: React.FC = () => {
             </IonContent>
         </IonPage>
     );
-  return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar className="gradientBackgroundColor">
-          <IonTitle>Dashboard</IonTitle>
-            <IonButtons slot="end">
-                <IonButton href="/settings">
-                    <IonIcon icon={settingsSharp} color="dark"/>
-                </IonButton>
-            </IonButtons>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent fullscreen>  <IonCard className="card">
-          <IonCardContent>
-              <IonItem  lines="none" className="carditem">
-                  <IonLabel>ChartJS</IonLabel>
-              </IonItem>
-
-          </IonCardContent>
-      </IonCard>
-      </IonContent>
-    </IonPage>
-  );
 };
 
 export default Dashboard;
