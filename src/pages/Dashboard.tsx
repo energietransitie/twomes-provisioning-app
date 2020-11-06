@@ -11,34 +11,65 @@ import {
     IonTitle,
     IonToolbar
 } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
 import './Dashboard.scss';
-import {checkmarkCircleOutline, settingsOutline} from "ionicons/icons";
+import {settingsOutline} from "ionicons/icons";
+import API from "../api/Calls";
+import {LocalStorage} from "../services/Storage";
+import moment from "moment";
+
+const setItem = LocalStorage().setItem;
+const getItem = LocalStorage().getItem;
+
+const localization = require("moment/locale/nl");
 
 const Dashboard: React.FC = () => {
-  return (
-    <IonPage>
-      <IonHeader>
-        <IonToolbar className="gradientBackgroundColor">
-          <IonTitle>Dashboard</IonTitle>
-            <IonButtons slot="end">
-                <IonButton href="/settings">
-                    <IonIcon icon={settingsOutline} color="dark"/>
-                </IonButton>
-            </IonButtons>
-        </IonToolbar>
-      </IonHeader>
-      <IonContent fullscreen>  <IonCard className="card">
-          <IonCardContent>
-              <IonItem  lines="none" className="carditem">
-                  <IonLabel>ChartJS</IonLabel>
-              </IonItem>
 
-          </IonCardContent>
-      </IonCard>
-      </IonContent>
-    </IonPage>
-  );
+    //Set the locale for moment to the Netherlands
+    moment.locale("nl", localization);
+
+    //Get random Number function to test Storage functionality
+    const getRandomNumber = () => {
+        API.weather.getRandomNumber().then((response) => {
+            var data = {
+                apidata: response.data.toString(),
+                timestamp: moment().format('hh:mm:ss DD-MM-YYYY')
+            }
+            setItem('randomnumber', JSON.stringify(data));
+        }, (err) => {
+            getItem('randomnumber').then(value => {
+                var data = JSON.parse(value!);
+                console.log('no wifi, old value:' + data.apidata);
+                console.log('timestamp: ' + data.timestamp);
+            })
+        });
+    }
+
+    return (
+        <IonPage>
+            <IonHeader>
+                <IonToolbar className="gradientBackgroundColor">
+                    <IonTitle>Dashboard</IonTitle>
+                    <IonButtons slot="end">
+                        <IonButton href="/settings">
+                            <IonIcon icon={settingsOutline} color="dark"/>
+                        </IonButton>
+                    </IonButtons>
+                </IonToolbar>
+            </IonHeader>
+            <IonContent fullscreen>
+                <IonCard className="card">
+                    <IonCardContent>
+                        <IonItem lines="none" className="carditem">
+                            <IonLabel>ChartJS</IonLabel>
+                        </IonItem>
+                    </IonCardContent>
+                </IonCard>
+                <IonButton onClick={() => getRandomNumber()}>
+                    Get Random Number
+                </IonButton>
+            </IonContent>
+        </IonPage>
+    );
 };
 
 export default Dashboard;

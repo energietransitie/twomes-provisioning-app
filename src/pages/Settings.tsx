@@ -18,7 +18,6 @@ const Settings: React.FC = () => {
     })
 
     useIonViewWillLeave(() => {
-        console.log('hoi')
         const tabBar = document.getElementById("tabBar");
         tabBar!.style.display = "flex";
     })

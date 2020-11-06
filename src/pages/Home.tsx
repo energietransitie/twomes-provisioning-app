@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import {
     IonAvatar,
     IonButton,
@@ -13,8 +13,35 @@ import {
 } from '@ionic/react';
 import './Home.scss';
 import {checkmarkCircleOutline, settingsOutline} from "ionicons/icons";
+import {LocalStorage} from "../services/Storage";
+
+var getItem = LocalStorage().getItem;
+var setItem = LocalStorage().setItem;
 
 const Home: React.FC = () => {
+
+    const [instructionsChecked, setInstructionsChecked] = useState(false);
+
+    useEffect(() => {
+        if(!instructionsChecked) {
+            getItem('instructionsCompleted').then((value) => {
+                if (value == null) {
+                    setInstructionsChecked(true);
+                    setItem('instructionsCompleted', 'false');
+                    setItem('instructionStep', '0');
+                    window.location.href = '/instructions'
+                } else {
+                    if (value === 'false') {
+                        getItem('instructionStep').then((value) => {
+                            setInstructionsChecked(true);
+                            window.location.href = '/instructions';
+                        })
+                    }
+                }
+            })
+            setInstructionsChecked(true);
+        }
+    }, [])
 
     return (
         <IonPage>
