@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import {Redirect, Route} from 'react-router-dom';
 import {
     IonApp,
@@ -11,10 +11,12 @@ import {
 } from '@ionic/react';
 import {IonReactRouter} from '@ionic/react-router';
 import {ellipse, homeOutline, square, triangle} from 'ionicons/icons';
+import {LocalStorage} from "./services/Storage";
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import Sensors from './pages/Sensors';
 import Settings from "./pages/Settings";
+import Instructions from "./pages/Instructions"
 import {Icons} from "./components/Icons";
 
 /* Core CSS required for Ionic components to work properly */
@@ -41,31 +43,35 @@ var HomeIcon = Icons().HomeIcon();
 var DashboardIcon = Icons().DashboardIcon();
 var SensorIcon = Icons().SensorIcon();
 
-const App: React.FC = () => (
-    <IonApp>
-        <IonReactRouter>
-            <IonTabs>
-                <IonRouterOutlet>
-                    <Route path="/home" component={Home} exact={true}/>
-                    <Route path="/dashboard" component={Dashboard} exact={true}/>
-                    <Route path="/sensors" component={Sensors}/>
-                    <Route path="/settings" component={Settings} exact={true}/>
-                    <Route path="/" render={() => <Redirect to="/home"/>} exact={true}/>
-                </IonRouterOutlet>
-                <IonTabBar slot="bottom" id="tabBar">
-                    <IonTabButton tab="home" href="/home">
-                        {HomeIcon}
-                    </IonTabButton>
-                    <IonTabButton tab="dashboard" href="/dashboard">
-                        {DashboardIcon}
-                    </IonTabButton>
-                    <IonTabButton tab="sensors" href="/sensors">
-                        {SensorIcon}
-                    </IonTabButton>
-                </IonTabBar>
-            </IonTabs>
-        </IonReactRouter>
-    </IonApp>
-);
+const App: React.FC = () => {
+
+    return (
+        <IonApp>
+            <IonReactRouter>
+                <IonTabs>
+                    <IonRouterOutlet>
+                        <Route path="/home" component={Home} exact={true}/>
+                        <Route path="/dashboard" component={Dashboard} exact={true}/>
+                        <Route path="/sensors" component={Sensors}/>
+                        <Route path="/settings" component={Settings} exact={true}/>
+                        <Route path="/instructions" component={Instructions} exact={true}/>
+                        <Route path="/" render={() => <Redirect to="/home"/>} exact={true}/>
+                    </IonRouterOutlet>
+                    <IonTabBar slot="bottom" id="tabBar">
+                        <IonTabButton tab="home" href="/home">
+                            {HomeIcon}
+                        </IonTabButton>
+                        <IonTabButton tab="dashboard" href="/dashboard">
+                            {DashboardIcon}
+                        </IonTabButton>
+                        <IonTabButton tab="sensors" href="/sensors">
+                            {SensorIcon}
+                        </IonTabButton>
+                    </IonTabBar>
+                </IonTabs>
+            </IonReactRouter>
+        </IonApp>
+    )
+};
 
 export default App;

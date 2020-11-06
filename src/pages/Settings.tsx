@@ -12,13 +12,14 @@ import React from 'react';
 
 const Settings: React.FC = () => {
 
+    //Hide tabbar on entering this page
     useIonViewWillEnter(() => {
         const tabBar = document.getElementById("tabBar");
         tabBar!.style.display = "none";
     })
 
+    //Show tabbar on leaving this page
     useIonViewWillLeave(() => {
-        console.log('hoi')
         const tabBar = document.getElementById("tabBar");
         tabBar!.style.display = "flex";
     })
