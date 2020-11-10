@@ -2,6 +2,7 @@ import React from 'react';
 import '../theme/main.scss';
 
 export function Icons() {
+    //Icon for Home Tab
     function HomeIcon() {
         return (
         <svg xmlns="http://www.w3.org/2000/svg" id="icon" className="ionicon" viewBox="0 0 512 512">
@@ -18,6 +19,7 @@ export function Icons() {
         )
     }
 
+    //Icon for Dashboard Tab
     function DashboardIcon()  {
         return (
             <svg xmlns="http://www.w3.org/2000/svg" className="ionicon" id="icon" viewBox="0 0 512 512"><title>Stats Chart</title>
@@ -31,6 +33,7 @@ export function Icons() {
         )
     }
 
+    //Icon for Sensors Tab
     function SensorIcon() {
         return (
             <svg xmlns="http://www.w3.org/2000/svg" className="ionicon" id="icon" viewBox="0 0 512 512"><title>Thermometer</title>

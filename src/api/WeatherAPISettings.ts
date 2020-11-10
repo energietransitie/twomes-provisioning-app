@@ -3,7 +3,7 @@ import axios from 'axios';
 let lodash = require('lodash');
 
 let AppKey = "TwomesApplicatie"
-let WeatherApiUrl = 'Mooi weer wel';
+let WeatherApiUrl = 'https://www.random.org'; //random number API
 let WeatherApiKey = "veilig";
 
 const WeatherAPI = axios.create({
