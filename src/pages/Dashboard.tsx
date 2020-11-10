@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
     IonAvatar,
     IonButton,
@@ -33,7 +33,6 @@ const Dashboard: React.FC = () => {
               <IonItem  lines="none" className="carditem">
                   <IonLabel>ChartJS</IonLabel>
               </IonItem>
-
           </IonCardContent>
       </IonCard>
       </IonContent>

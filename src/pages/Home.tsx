@@ -13,6 +13,8 @@ import {
 } from '@ionic/react';
 import './Home.scss';
 import {checkmarkCircleOutline, settingsSharp} from "ionicons/icons";
+// import "webrtc";
+import 'phonegap-plugin-push/types';
 
 const Home: React.FC = () => {
     return (
