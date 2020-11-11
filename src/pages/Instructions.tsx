@@ -26,18 +26,20 @@ const Instructions: React.FC = () => {
     const [userID] = useState("111")
     const [currentStep, setCurrentStep] = useState("1");
     const [currentStepSet, setCurrentStepSet] = useState(false);
-    //Hide tabbar on entering this page
+    // Hide tabbar on entering this page
     useIonViewWillEnter(() => {
         const tabBar = document.getElementById("tabBar");
         tabBar!.style.display = "none";
     })
 
-    //Show tabbar on leaving this page
+    // Show tabbar on leaving this page
     useIonViewWillLeave(() => {
         const tabBar = document.getElementById("tabBar");
         tabBar!.style.display = "flex";
     })
 
+
+    // Check the current step only once on loading the page
     useEffect(() => {
         if (!currentStepSet) {
             getItem('instructionStep').then((value) => {
@@ -49,12 +51,14 @@ const Instructions: React.FC = () => {
         }
     }, [currentStepSet])
 
+    // Go to the next step
     const stepUp = () => {
         var step = parseInt(currentStep) + 1;
         setCurrentStep(step.toString());
         setItem('instructionStep', step.toString())
     }
 
+    // Set the instructions to completed
     const completeInstructions = () => {
         setItem('instructionsCompleted', 'true');
         window.location.href = '/home';
