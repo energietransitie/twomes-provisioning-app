@@ -1,25 +1,31 @@
 import {
     IonButton,
     IonCard,
-    IonCardContent,
+    IonCardContent, IonCardHeader,
     IonContent,
     IonPage,
     useIonViewWillEnter,
-    useIonViewWillLeave
+    useIonViewWillLeave, IonList, IonToolbar, IonTitle, IonButtons, IonIcon, IonHeader
 } from "@ionic/react";
 import React, {useEffect, useState} from 'react';
 import {LocalStorage} from "../services/Storage";
 import LoadingComponent from "../components/LoadingComponent";
-import './Instructions.scss'
+import InstallOTGW from "../components/InstallOTGW";
+import InstallP1 from "../components/InstallP1";
+import InstallSensors from "../components/InstallSensors";
+import ConfigureWIFI from "../components/ConfigureWIFI";
+import './Instructions.scss';
+import {installationconfig} from '../../package.json';
+import {settingsSharp} from "ionicons/icons";
 
 const getItem = LocalStorage().getItem;
 const setItem = LocalStorage().setItem;
 
 const Instructions: React.FC = () => {
 
-    const [currentStep, setCurrentStep] = useState("0");
+    const [userID] = useState("111")
+    const [currentStep, setCurrentStep] = useState("1");
     const [currentStepSet, setCurrentStepSet] = useState(false);
-
     //Hide tabbar on entering this page
     useIonViewWillEnter(() => {
         const tabBar = document.getElementById("tabBar");
@@ -35,7 +41,9 @@ const Instructions: React.FC = () => {
     useEffect(() => {
         if (!currentStepSet) {
             getItem('instructionStep').then((value) => {
-                setCurrentStep(value!);
+                if (value !== null) {
+                    setCurrentStep(value);
+                }
                 setCurrentStepSet(true);
             })
         }
@@ -55,14 +63,24 @@ const Instructions: React.FC = () => {
     if (currentStepSet) {
         return (
             <IonPage>
+                <IonHeader>
+                    <IonToolbar className="gradientBackgroundColor">
+                        <IonTitle slot="start">Instrucies</IonTitle>
+                    </IonToolbar>
+                </IonHeader>
                 <IonContent>
-                    <IonCard>
-                        <IonCardContent>
-                            De huidige stap is {currentStep}
-                        </IonCardContent>
-                        <IonButton onClick={() => stepUp()}>Stap omhoog</IonButton>
-                        <IonButton onClick={() => completeInstructions()}>Instrucies afronden</IonButton>
-                    </IonCard>
+                    {currentStep === installationconfig.OTGWstep && (
+                        <InstallOTGW stepUpFunction={stepUp}/>
+                    )}
+                    {currentStep === installationconfig.P1step && (
+                        <InstallP1 stepUpFunction={stepUp}/>
+                    )}
+                    {currentStep === installationconfig.Sensorstep && (
+                        <InstallSensors stepUpFunction={stepUp}/>
+                    )}
+                    {currentStep === installationconfig.WIFIstep && (
+                        <ConfigureWIFI finishFunction={completeInstructions}/>
+                    )}
                 </IonContent>
             </IonPage>
         )
