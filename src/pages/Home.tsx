@@ -35,7 +35,7 @@ const Home: React.FC = () => {
                 if (value == null) {
                     setInstructionsChecked(true);
                     setItem('instructionsCompleted', 'false');
-                    setItem('instructionStep', '0');
+                    setItem('instructionStep', '1');
                     window.location.href = '/instructions'
                 } else {
                     // If the value is already set, it checks whether the value is true or false.
@@ -72,9 +72,9 @@ const Home: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent>
-                <IonCard className="card">
+                <IonCard className="sensorcard">
                     <IonCardContent>
-                        <IonItem lines="none" className="carditem">
+                        <IonItem lines="none">
                             <IonAvatar slot="start">
                                 <IonIcon icon={checkmarkCircleOutline} color={'success'}/>
                             </IonAvatar>

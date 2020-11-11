@@ -65,5 +65,11 @@
     "@capacitor/cli": "2.4.2",
     "react-scripts": "3.4.0"
   },
-  "description": "An Ionic project"
+  "description": "An Ionic project",
+  "installationconfig": {
+    "OTGWstep": "1",
+    "P1step": "2",
+    "Sensorstep": "3",
+    "WIFIstep": "4"
+  }
 }
