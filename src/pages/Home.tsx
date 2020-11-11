@@ -13,8 +13,7 @@ import {
 } from '@ionic/react';
 import './Home.scss';
 import {checkmarkCircleOutline, settingsSharp} from "ionicons/icons";
-// import "webrtc";
-import 'phonegap-plugin-push/types';
+import { Push, PushObject, PushOptions } from '@ionic-native/push';
 import {LocalStorage} from "../services/Storage";
 
 var getItem = LocalStorage().getItem;
@@ -50,7 +49,16 @@ const Home: React.FC = () => {
             setInstructionsChecked(true);
         }
     }, [])
-
+    const SendNotification = ({message}: { message: any }) => {
+        Push.hasPermission()
+            .then((res: any) => {
+                if (res.isEnabled) {
+                    console.log('We have permission to send push notifications');
+                } else {
+                    console.log('We do not have permission to send push notifications');
+                }
+            });
+    };
     return (
         <IonPage>
             <IonHeader>
@@ -74,6 +82,7 @@ const Home: React.FC = () => {
                         </IonItem>
                     </IonCardContent>
                 </IonCard>
+                <IonButton onClick={() => SendNotification({message: "test"})}>Test notificatie</IonButton>
             </IonContent>
         </IonPage>
     );
