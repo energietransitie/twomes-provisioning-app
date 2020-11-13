@@ -23,9 +23,11 @@ const setItem = LocalStorage().setItem;
 
 const Instructions: React.FC = () => {
 
-    const [userID] = useState("111")
+    const [userID] = useState("1111");
+    const [userIDChecked, setUserIDChecked] = useState(false);
     const [currentStep, setCurrentStep] = useState("1");
     const [currentStepSet, setCurrentStepSet] = useState(false);
+    const [stepsArray, setStepsArray] = useState<string[]>([]);
     // Hide tabbar on entering this page
     useIonViewWillEnter(() => {
         const tabBar = document.getElementById("tabBar");
@@ -51,11 +53,38 @@ const Instructions: React.FC = () => {
         }
     }, [currentStepSet])
 
+    useEffect(() => {
+        if(userID && !userIDChecked) {
+            var firstNumberInID = userID.split("")[0];
+            var stepArray: string[] = [];
+            switch (firstNumberInID) {
+                case "1":
+                    stepArray.push(installationconfig.OTGWstep);
+                    break;
+                case "2":
+                    stepArray.push(installationconfig.P1step);
+                    stepArray.push(installationconfig.Sensorstep);
+                    break;
+                case "3":
+                    stepArray.push(installationconfig.OTGWstep);
+                    stepArray.push(installationconfig.P1step);
+                    stepArray.push(installationconfig.Sensorstep);
+                    break;
+            }
+            stepArray.push(installationconfig.WIFIstep);
+            stepArray.sort();
+            setCurrentStep(stepArray[0]);
+            setStepsArray(stepArray);
+            setItem('instructionStep', stepArray[0]);
+            setUserIDChecked(true);
+        }
+    }, [userID])
+
     // Go to the next step
     const stepUp = () => {
-        var step = parseInt(currentStep) + 1;
-        setCurrentStep(step.toString());
-        setItem('instructionStep', step.toString())
+        var nextStep = stepsArray[stepsArray.indexOf(currentStep) + 1];
+        setCurrentStep(nextStep);
+        setItem('instructionStep', nextStep);
     }
 
     // Set the instructions to completed
@@ -64,7 +93,7 @@ const Instructions: React.FC = () => {
         window.location.href = '/home';
     }
 
-    if (currentStepSet) {
+    if (currentStepSet && userIDChecked) {
         return (
             <IonPage>
                 <IonHeader>
@@ -74,16 +103,16 @@ const Instructions: React.FC = () => {
                 </IonHeader>
                 <IonContent>
                     {currentStep === installationconfig.OTGWstep && (
-                        <InstallOTGW stepUpFunction={stepUp}/>
+                        <InstallOTGW stepUpFunction={stepUp} finishFunction={completeInstructions} lastStep={userID.split("")[0] === "1"}/>
                     )}
                     {currentStep === installationconfig.P1step && (
                         <InstallP1 stepUpFunction={stepUp}/>
                     )}
                     {currentStep === installationconfig.Sensorstep && (
-                        <InstallSensors stepUpFunction={stepUp}/>
+                        <InstallSensors stepUpFunction={stepUp} finishFunction={completeInstructions} lastStep={userID.split("")[0] !== "1"}/>
                     )}
                     {currentStep === installationconfig.WIFIstep && (
-                        <ConfigureWIFI finishFunction={completeInstructions}/>
+                        <ConfigureWIFI stepUpFunction={stepUp}/>
                     )}
                 </IonContent>
             </IonPage>

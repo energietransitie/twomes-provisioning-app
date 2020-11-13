@@ -6,7 +6,7 @@ import {InstructionsInterface} from "../services/InstructionsInterface";
 const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction}) => {
     return (
         <IonCard className="instructions-card">
-            <IonCardContent>
+            <IonCardContent className="instructions-card-content">
                 <IonLabel>Instructie P1-stick</IonLabel>
                 <IonButton className="instructions-next-button" onClick={() => stepUpFunction()}>Volgende</IonButton>
             </IonCardContent>

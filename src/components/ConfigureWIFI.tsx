@@ -3,12 +3,12 @@ import React from 'react';
 import './ConfigureWIFI.scss';
 import {InstructionsInterface} from "../services/InstructionsInterface";
 
-const ConfigureWIFI: React.FC<InstructionsInterface> = ({finishFunction}) => {
+const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction}) => {
     return (
         <IonCard className="instructions-card">
-            <IonCardContent style={{width: "100%", height: '100%'}}>
+            <IonCardContent className="instructions-card-content">
                 <IonLabel>Instructie wifi configureren</IonLabel>
-                <IonButton className="instructions-next-button" onClick={() => finishFunction()}>Afronden</IonButton>
+                <IonButton className="instructions-next-button" onClick={() => stepUpFunction()}>Volgende</IonButton>
             </IonCardContent>
         </IonCard>
     )
