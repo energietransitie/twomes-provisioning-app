@@ -1,7 +1,7 @@
 import {IonButton, IonCard, IonCardContent, IonLabel} from '@ionic/react';
 import React from 'react';
 import './InstallSensors.scss';
-import {InstructionsInterface} from "../services/InstructionsInterface";
+import {InstructionsInterface} from "../../services/InstructionsInterface";
 
 const InstallSensors: React.FC<InstructionsInterface> = ({stepUpFunction, finishFunction, lastStep}) => {
     return (

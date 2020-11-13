@@ -1,7 +1,7 @@
 import {IonButton, IonCard, IonCardContent, IonLabel, IonAlert} from '@ionic/react';
 import React, {useState} from 'react';
 import './InstallOTGW.scss';
-import {InstructionsInterface} from "../services/InstructionsInterface";
+import {InstructionsInterface} from "../../services/InstructionsInterface";
 
 const InstallOTGW: React.FC<InstructionsInterface> = ({stepUpFunction, finishFunction, lastStep}) => {
 

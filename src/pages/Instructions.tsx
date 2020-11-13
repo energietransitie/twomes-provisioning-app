@@ -1,22 +1,18 @@
 import {
-    IonButton,
-    IonCard,
-    IonCardContent, IonCardHeader,
     IonContent,
     IonPage,
     useIonViewWillEnter,
-    useIonViewWillLeave, IonList, IonToolbar, IonTitle, IonButtons, IonIcon, IonHeader
+    useIonViewWillLeave, IonToolbar, IonTitle, IonHeader
 } from "@ionic/react";
 import React, {useEffect, useState} from 'react';
 import {LocalStorage} from "../services/Storage";
 import LoadingComponent from "../components/LoadingComponent";
-import InstallOTGW from "../components/InstallOTGW";
-import InstallP1 from "../components/InstallP1";
-import InstallSensors from "../components/InstallSensors";
-import ConfigureWIFI from "../components/ConfigureWIFI";
+import InstallOTGW from "../components/InstructionComponents/InstallOTGW";
+import InstallP1 from "../components/InstructionComponents/InstallP1";
+import InstallSensors from "../components/InstructionComponents/InstallSensors";
+import ConfigureWIFI from "../components/InstructionComponents/ConfigureWIFI";
 import './Instructions.scss';
 import {installationconfig} from '../../package.json';
-import {settingsSharp} from "ionicons/icons";
 
 const getItem = LocalStorage().getItem;
 const setItem = LocalStorage().setItem;
@@ -53,6 +49,7 @@ const Instructions: React.FC = () => {
         }
     }, [currentStepSet])
 
+    // Set all necessary configuration steps based on the user's ID
     useEffect(() => {
         if(userID && !userIDChecked) {
             var firstNumberInID = userID.split("")[0];
@@ -71,6 +68,8 @@ const Instructions: React.FC = () => {
                     stepArray.push(installationconfig.Sensorstep);
                     break;
             }
+            // WiFi configuration should always be done
+            // Array is sorted after, based on the configuration in the package.json
             stepArray.push(installationconfig.WIFIstep);
             stepArray.sort();
             setCurrentStep(stepArray[0]);
@@ -80,7 +79,7 @@ const Instructions: React.FC = () => {
         }
     }, [userID])
 
-    // Go to the next step
+    // Go to the next instruction step
     const stepUp = () => {
         var nextStep = stepsArray[stepsArray.indexOf(currentStep) + 1];
         setCurrentStep(nextStep);
