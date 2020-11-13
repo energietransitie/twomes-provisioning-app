@@ -1,31 +1,29 @@
 import {
-    IonButton,
-    IonCard,
-    IonCardContent, IonCardHeader,
     IonContent,
     IonPage,
     useIonViewWillEnter,
-    useIonViewWillLeave, IonList, IonToolbar, IonTitle, IonButtons, IonIcon, IonHeader
+    useIonViewWillLeave, IonToolbar, IonTitle, IonHeader
 } from "@ionic/react";
 import React, {useEffect, useState} from 'react';
 import {LocalStorage} from "../services/Storage";
 import LoadingComponent from "../components/LoadingComponent";
-import InstallOTGW from "../components/InstallOTGW";
-import InstallP1 from "../components/InstallP1";
-import InstallSensors from "../components/InstallSensors";
-import ConfigureWIFI from "../components/ConfigureWIFI";
+import InstallOTGW from "../components/InstructionComponents/InstallOTGW";
+import InstallP1 from "../components/InstructionComponents/InstallP1";
+import InstallSensors from "../components/InstructionComponents/InstallSensors";
+import ConfigureWIFI from "../components/InstructionComponents/ConfigureWIFI";
 import './Instructions.scss';
 import {installationconfig} from '../../package.json';
-import {settingsSharp} from "ionicons/icons";
 
 const getItem = LocalStorage().getItem;
 const setItem = LocalStorage().setItem;
 
 const Instructions: React.FC = () => {
 
-    const [userID] = useState("111")
+    const [userID] = useState("1111");
+    const [userIDChecked, setUserIDChecked] = useState(false);
     const [currentStep, setCurrentStep] = useState("1");
     const [currentStepSet, setCurrentStepSet] = useState(false);
+    const [stepsArray, setStepsArray] = useState<string[]>([]);
     // Hide tabbar on entering this page
     useIonViewWillEnter(() => {
         const tabBar = document.getElementById("tabBar");
@@ -51,11 +49,41 @@ const Instructions: React.FC = () => {
         }
     }, [currentStepSet])
 
-    // Go to the next step
+    // Set all necessary configuration steps based on the user's ID
+    useEffect(() => {
+        if(userID && !userIDChecked) {
+            var firstNumberInID = userID.split("")[0];
+            var stepArray: string[] = [];
+            switch (firstNumberInID) {
+                case "1":
+                    stepArray.push(installationconfig.OTGWstep);
+                    break;
+                case "2":
+                    stepArray.push(installationconfig.P1step);
+                    stepArray.push(installationconfig.Sensorstep);
+                    break;
+                case "3":
+                    stepArray.push(installationconfig.OTGWstep);
+                    stepArray.push(installationconfig.P1step);
+                    stepArray.push(installationconfig.Sensorstep);
+                    break;
+            }
+            // WiFi configuration should always be done
+            // Array is sorted after, based on the configuration in the package.json
+            stepArray.push(installationconfig.WIFIstep);
+            stepArray.sort();
+            setCurrentStep(stepArray[0]);
+            setStepsArray(stepArray);
+            setItem('instructionStep', stepArray[0]);
+            setUserIDChecked(true);
+        }
+    }, [userID])
+
+    // Go to the next instruction step
     const stepUp = () => {
-        var step = parseInt(currentStep) + 1;
-        setCurrentStep(step.toString());
-        setItem('instructionStep', step.toString())
+        var nextStep = stepsArray[stepsArray.indexOf(currentStep) + 1];
+        setCurrentStep(nextStep);
+        setItem('instructionStep', nextStep);
     }
 
     // Set the instructions to completed
@@ -64,7 +92,7 @@ const Instructions: React.FC = () => {
         window.location.href = '/home';
     }
 
-    if (currentStepSet) {
+    if (currentStepSet && userIDChecked) {
         return (
             <IonPage>
                 <IonHeader>
@@ -74,16 +102,16 @@ const Instructions: React.FC = () => {
                 </IonHeader>
                 <IonContent>
                     {currentStep === installationconfig.OTGWstep && (
-                        <InstallOTGW stepUpFunction={stepUp}/>
+                        <InstallOTGW stepUpFunction={stepUp} finishFunction={completeInstructions} lastStep={userID.split("")[0] === "1"}/>
                     )}
                     {currentStep === installationconfig.P1step && (
                         <InstallP1 stepUpFunction={stepUp}/>
                     )}
                     {currentStep === installationconfig.Sensorstep && (
-                        <InstallSensors stepUpFunction={stepUp}/>
+                        <InstallSensors stepUpFunction={stepUp} finishFunction={completeInstructions} lastStep={userID.split("")[0] !== "1"}/>
                     )}
                     {currentStep === installationconfig.WIFIstep && (
-                        <ConfigureWIFI finishFunction={completeInstructions}/>
+                        <ConfigureWIFI stepUpFunction={stepUp}/>
                     )}
                 </IonContent>
             </IonPage>
