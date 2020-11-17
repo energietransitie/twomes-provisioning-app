@@ -13,8 +13,15 @@ import {
 } from '@ionic/react';
 import './Home.scss';
 import {checkmarkCircleOutline, settingsSharp} from "ionicons/icons";
-import { Push, PushObject, PushOptions } from '@ionic-native/push';
 import {LocalStorage} from "../services/Storage";
+import {
+    Plugins,
+    PushNotification,
+    PushNotificationToken,
+    PushNotificationActionPerformed,
+} from '@capacitor/core';
+const { PushNotifications } = Plugins;
+const {LocalNotifications } = Plugins;
 
 var getItem = LocalStorage().getItem;
 var setItem = LocalStorage().setItem;
@@ -49,15 +56,26 @@ const Home: React.FC = () => {
             setInstructionsChecked(true);
         }
     }, [])
+
+    const NgOnInit = () => {
+        LocalNotifications.requestPermission();
+    };
     const SendNotification = ({message}: { message: any }) => {
-        Push.hasPermission()
-            .then((res: any) => {
-                if (res.isEnabled) {
-                    console.log('We have permission to send push notifications');
-                } else {
-                    console.log('We do not have permission to send push notifications');
+        LocalNotifications.schedule({
+            notifications : [
+                {
+                    title: "Melding",
+                    body: message,
+                    id: 1,
+                    extra: {
+                        data: "Dit is de data die wordt meegegeven",
+                        android: ""
+                    },
+                    smallIcon: 'notification_icon',
+                    iconColor: "#FF5F58"
                 }
-            });
+            ]
+        });
     };
     return (
         <IonPage>
@@ -82,7 +100,7 @@ const Home: React.FC = () => {
                         </IonItem>
                     </IonCardContent>
                 </IonCard>
-                <IonButton onClick={() => SendNotification({message: "test"})}>Test notificatie</IonButton>
+                <IonButton onClick={() => SendNotification({message: "test"})}>Notificatie</IonButton>
             </IonContent>
         </IonPage>
     );
