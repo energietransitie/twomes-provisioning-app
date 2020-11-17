@@ -42,7 +42,6 @@ const Home: React.FC = () => {
                 if (value == null) {
                     setInstructionsChecked(true);
                     setItem('instructionsCompleted', 'false');
-                    setItem('instructionStep', '1');
                     window.location.href = '/instructions'
                 } else {
                     // If the value is already set, it checks whether the value is true or false.

@@ -65,9 +65,9 @@
   },
   "description": "An Ionic project",
   "installationconfig": {
-    "OTGWstep": "1",
+    "OTGWstep": "4",
     "P1step": "2",
     "Sensorstep": "3",
-    "WIFIstep": "4"
+    "WIFIstep": "1"
   }
 }
