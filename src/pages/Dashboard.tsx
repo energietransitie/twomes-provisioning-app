@@ -15,6 +15,14 @@ import {settingsSharp} from "ionicons/icons";
 import API from "../api/Calls";
 import {LocalStorage} from "../services/Storage";
 import moment from "moment";
+import {
+    Plugins,
+    PushNotification,
+    PushNotificationToken,
+    PushNotificationActionPerformed,
+} from '@capacitor/core';
+const { PushNotifications } = Plugins;
+const {LocalNotifications } = Plugins;
 
 const setItem = LocalStorage().setItem;
 const getItem = LocalStorage().getItem;
@@ -40,7 +48,24 @@ const Dashboard: React.FC = () => {
                 console.log('timestamp: ' + data.timestamp);
             })
         });
-    }
+    };
+    const SensorWerktNiet = ({nummer}: { nummer: any }) => {
+        //Laat de notificatie zien een geeft het ingevulde sensornummer mee
+        LocalNotifications.schedule({
+            notifications : [
+                {
+                    title: "Sensorfout",
+                    body: `Sensor ${nummer} werkt niet!`,
+                    id: 1,
+                    extra: {
+                    },
+                    // smallIcon: 'otgw_icon',
+                    // iconColor: "#FF5F58"
+                }
+            ]
+        });
+    // Hier moet vervolgens de verandering in de UI
+    };
 
     return (
         <IonPage>
@@ -64,6 +89,10 @@ const Dashboard: React.FC = () => {
                 </IonCard>
                 <IonButton onClick={() => getRandomNumber()}>
                     Get Random Number
+                </IonButton>
+                {/*Testknop om de functie te testen met als voorbeeldnummer 2*/}
+                <IonButton onClick={() => SensorWerktNiet({nummer: 2})}>
+                    Sensor 2
                 </IonButton>
             </IonContent>
         </IonPage>

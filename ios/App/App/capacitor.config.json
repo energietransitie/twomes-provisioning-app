@@ -9,7 +9,7 @@
       "launchShowDuration": 0
     },
     "LocalNotifications": {
-      "iconColor": "#488AFF"
+      "smallIcon": "main_icon"
     }
   },
   "cordova": {}
