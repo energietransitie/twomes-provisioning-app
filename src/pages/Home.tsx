@@ -22,6 +22,11 @@ const Home: React.FC = () => {
 
     const [instructionsChecked, setInstructionsChecked] = useState(false);
 
+    const goToInstructions = () => {
+        setItem('instructionsCompleted', 'false');
+        window.location.href = '/instructions'
+    }
+
     // This function is called when the home screen is entered.
     // It checks the instruction status.
 
@@ -71,6 +76,9 @@ const Home: React.FC = () => {
                         </IonItem>
                     </IonCardContent>
                 </IonCard>
+                <IonItem>
+                    <IonButton onClick={() => goToInstructions()}>To Instructions</IonButton>
+                </IonItem>
             </IonContent>
         </IonPage>
     );
