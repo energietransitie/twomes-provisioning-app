@@ -3,8 +3,30 @@ import {IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonPage, IonTitle
 import ExploreContainer from '../components/ExploreContainer';
 import './Sensors.scss';
 import {settingsSharp} from "ionicons/icons";
+import {
+    Plugins
+} from '@capacitor/core';
+const {LocalNotifications } = Plugins;
 
 const Sensors: React.FC = () => {
+    const SensorNotWorking = ({number}: { number: any }) => {
+        //Shows the notification with the given sensor number
+        let CurrentTime = new Date();
+        LocalNotifications.schedule({
+            notifications : [
+                {
+                    title: "Sensorfout",
+                    body: `Sensor ${number} werkt niet`,
+                    //Creates an unique id based on milliseconds
+                    id: new Date().getUTCMilliseconds(),
+                    //Sets the red sensor icon
+                    smallIcon: 'sensor_icon',
+                    iconColor: "#FF5F58"
+                }
+            ]
+        });
+        // Here are coming the changes in the ui
+    };
     return (
         <IonPage>
             <IonHeader>
@@ -18,12 +40,10 @@ const Sensors: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent fullscreen>
-                <IonHeader collapse="condense">
-                    <IonToolbar>
-                        <IonTitle size="large">Sensors</IonTitle>
-                    </IonToolbar>
-                </IonHeader>
-                <ExploreContainer name="Sensors"/>
+                {/*Button for testing the notification*/}
+                <IonButton onClick={() => SensorNotWorking({number: 2})}>
+                    Sensor 2
+                </IonButton>
             </IonContent>
         </IonPage>
     );

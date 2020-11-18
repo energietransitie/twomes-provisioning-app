@@ -15,10 +15,6 @@ import {settingsSharp} from "ionicons/icons";
 import API from "../api/Calls";
 import {LocalStorage} from "../services/Storage";
 import moment from "moment";
-import {
-    Plugins
-} from '@capacitor/core';
-const {LocalNotifications } = Plugins;
 
 const setItem = LocalStorage().setItem;
 const getItem = LocalStorage().getItem;
@@ -44,24 +40,6 @@ const Dashboard: React.FC = () => {
             })
         });
     };
-    const SensorNotWorking = ({number}: { number: any }) => {
-        //Shows the notification with the given sensor number
-        let CurrentTime = new Date();
-        LocalNotifications.schedule({
-            notifications : [
-                {
-                    title: "Sensorfout",
-                    body: `Sensor ${number} werkt niet!`,
-                    //Creates an unique id based on milliseconds
-                    id: new Date().getUTCMilliseconds(),
-                    //Sets the red sensor icon
-                    smallIcon: 'sensor_icon',
-                    iconColor: "#FF5F58"
-                }
-            ]
-        });
-    // Here are coming the changes in the ui
-    };
 
     return (
         <IonPage>
@@ -85,10 +63,6 @@ const Dashboard: React.FC = () => {
                 </IonCard>
                 <IonButton onClick={() => getRandomNumber()}>
                     Get Random Number
-                </IonButton>
-                {/*Button for testing the notification 2*/}
-                <IonButton onClick={() => SensorNotWorking({number: 2})}>
-                    Sensor 2
                 </IonButton>
             </IonContent>
         </IonPage>
