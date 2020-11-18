@@ -16,12 +16,8 @@ import API from "../api/Calls";
 import {LocalStorage} from "../services/Storage";
 import moment from "moment";
 import {
-    Plugins,
-    PushNotification,
-    PushNotificationToken,
-    PushNotificationActionPerformed,
+    Plugins
 } from '@capacitor/core';
-const { PushNotifications } = Plugins;
 const {LocalNotifications } = Plugins;
 
 const setItem = LocalStorage().setItem;
@@ -29,7 +25,6 @@ const getItem = LocalStorage().getItem;
 const localization = require("moment/locale/nl");
 
 const Dashboard: React.FC = () => {
-
     //Set the locale for moment to the Netherlands
     moment.locale("nl", localization);
 
@@ -39,7 +34,7 @@ const Dashboard: React.FC = () => {
             var data = {
                 apidata: response.data.toString(),
                 timestamp: moment().format('hh:mm:ss DD-MM-YYYY') //Current time
-            }
+            };
             setItem('randomnumber', JSON.stringify(data));
         }, (err) => {
             getItem('randomnumber').then(value => {
@@ -49,22 +44,23 @@ const Dashboard: React.FC = () => {
             })
         });
     };
-    const SensorWerktNiet = ({nummer}: { nummer: any }) => {
-        //Laat de notificatie zien een geeft het ingevulde sensornummer mee
+    const SensorNotWorking = ({number}: { number: any }) => {
+        //Shows the notification with the given sensor number
+        let CurrentTime = new Date();
         LocalNotifications.schedule({
             notifications : [
                 {
                     title: "Sensorfout",
-                    body: `Sensor ${nummer} werkt niet!`,
-                    id: 1,
-                    extra: {
-                    },
-                    // smallIcon: 'otgw_icon',
-                    // iconColor: "#FF5F58"
+                    body: `Sensor ${number} werkt niet!`,
+                    //Creates an unique id based on milliseconds
+                    id: new Date().getUTCMilliseconds(),
+                    //Sets the red sensor icon
+                    smallIcon: 'sensor_icon',
+                    iconColor: "#FF5F58"
                 }
             ]
         });
-    // Hier moet vervolgens de verandering in de UI
+    // Here are coming the changes in the ui
     };
 
     return (
@@ -90,8 +86,8 @@ const Dashboard: React.FC = () => {
                 <IonButton onClick={() => getRandomNumber()}>
                     Get Random Number
                 </IonButton>
-                {/*Testknop om de functie te testen met als voorbeeldnummer 2*/}
-                <IonButton onClick={() => SensorWerktNiet({nummer: 2})}>
+                {/*Button for testing the notification 2*/}
+                <IonButton onClick={() => SensorNotWorking({number: 2})}>
                     Sensor 2
                 </IonButton>
             </IonContent>

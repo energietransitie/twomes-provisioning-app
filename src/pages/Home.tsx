@@ -14,14 +14,6 @@ import {
 import './Home.scss';
 import {checkmarkCircleOutline, settingsSharp} from "ionicons/icons";
 import {LocalStorage} from "../services/Storage";
-import {
-    Plugins,
-    PushNotification,
-    PushNotificationToken,
-    PushNotificationActionPerformed,
-} from '@capacitor/core';
-const { PushNotifications } = Plugins;
-const {LocalNotifications } = Plugins;
 
 var getItem = LocalStorage().getItem;
 var setItem = LocalStorage().setItem;
@@ -55,27 +47,6 @@ const Home: React.FC = () => {
             setInstructionsChecked(true);
         }
     }, [])
-
-    const NgOnInit = () => {
-        LocalNotifications.requestPermission();
-    };
-    const SendNotification = ({message}: { message: any }) => {
-        LocalNotifications.schedule({
-            notifications : [
-                {
-                    title: "Melding",
-                    body: message,
-                    id: 1,
-                    extra: {
-                        data: "Dit is de data die wordt meegegeven",
-                        android: ""
-                    },
-                    smallIcon: 'notification_icon',
-                    iconColor: "#FF5F58"
-                }
-            ]
-        });
-    };
     return (
         <IonPage>
             <IonHeader>
@@ -99,7 +70,6 @@ const Home: React.FC = () => {
                         </IonItem>
                     </IonCardContent>
                 </IonCard>
-                <IonButton onClick={() => SendNotification({message: "test"})}>Notificatie</IonButton>
             </IonContent>
         </IonPage>
     );
