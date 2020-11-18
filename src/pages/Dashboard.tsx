@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
     IonButton,
     IonButtons,
@@ -8,13 +8,14 @@ import {
     IonIcon, IonItem, IonLabel,
     IonPage,
     IonTitle,
-    IonToolbar
+    IonToolbar, useIonViewDidEnter
 } from '@ionic/react';
 import './Dashboard.scss';
 import {settingsSharp} from "ionicons/icons";
 import API from "../api/Calls";
 import {LocalStorage} from "../services/Storage";
 import moment from "moment";
+
 
 const setItem = LocalStorage().setItem;
 const getItem = LocalStorage().getItem;
