@@ -9,8 +9,8 @@ export default {
         },
     },
     weather: {
-        getLocalWeather: function() {
-            return WeatherAPI.get('localweather? geen idee')
+        getLocalWeather: function(lat:number, lon:number) {
+            return WeatherAPI.get(`/data/2.5/weather?lat=${lat}&lon=${lon}`)
         },
         getRandomNumber: function() {
             return WeatherAPI.get('/integers/?num=1&min=1&max=100&col=1&base=10&format=plain&rnd=new')
