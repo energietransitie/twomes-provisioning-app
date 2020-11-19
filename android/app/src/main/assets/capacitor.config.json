@@ -1,6 +1,6 @@
 {
   "appId": "io.ionic.starter",
-  "appName": "twomes",
+  "appName": "Twomes",
   "bundledWebRuntime": false,
   "npmClient": "yarn",
   "webDir": "build",
