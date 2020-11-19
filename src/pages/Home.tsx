@@ -113,7 +113,6 @@ const Home: React.FC = () => {
             setInstructionsChecked(true);
         }
     }, [])
-
     return (
         <IonPage>
             <IonHeader>
