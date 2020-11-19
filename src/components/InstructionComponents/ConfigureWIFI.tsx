@@ -180,12 +180,18 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction}) => {
         // })
 
 
-        WifiWizard2.connect(ssid, true, password, 'WPA').then((value) => {
-            console.log('Succesfully connected.');
+        WifiWizard2.requestPermission().then((value) => {
+            console.log(value);
+            if(value == "PERMISSION_GRANTED") {
+                WifiWizard2.connect(ssid, true, password, 'WPA').then((value) => {
+                    console.log('Succesfully connected.');
+                }, (err) => {
+                    console.log("Error: " + err)
+                })
+            }
         }, (err) => {
-            console.log("Error: " + err)
+            console.log("Error: " + err);
         })
-
     }
 
     const DisconnectSsid = () => {
