@@ -21,7 +21,8 @@ const Sensors: React.FC = () => {
                     id: new Date().getUTCMilliseconds(),
                     //Sets the red sensor icon
                     smallIcon: 'sensor_icon',
-                    iconColor: "#FF5F58"
+                    iconColor: "#FF5F58",
+                    schedule: { on:{year: 2020, month: 10, day: 19, hour:CurrentTime.getHours(), minute:CurrentTime.getMinutes() + 1}}
                 }
             ]
         });
