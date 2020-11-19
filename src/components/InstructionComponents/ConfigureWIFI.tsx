@@ -15,7 +15,7 @@ import {LocalStorage} from "../../services/Storage";
 import InstallOTGW from "./InstallOTGW";
 import InstallP1 from "./InstallP1";
 import InstallSensors from "./InstallSensors";
-import {WifiWizard2} from "@ionic-native/wifi-wizard-2";
+import {WifiConfig, WifiWizard2} from "@ionic-native/wifi-wizard-2";
 import LoadingComponent from "../LoadingComponent";
 import AlertBox from "../AlertBox";
 import {Build} from "ionicons/dist/types/stencil-public-runtime";
@@ -105,12 +105,15 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction}) => {
                     attributes: {
                         minLength: 8,
                     }
-                },{
+                }, {
                     name: 'checkbox1',
                     type: 'checkbox',
                     label: 'Wachtwoord tonen',
                     value: passwordVisible,
-                    checked: (passwordInput:any) => {setPasswordVisible(!passwordVisible); passwordInput.type = 'text'}
+                    checked: (passwordInput: any) => {
+                        setPasswordVisible(!passwordVisible);
+                        passwordInput.type = 'text'
+                    }
                 }
             ]
         };
@@ -141,6 +144,7 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction}) => {
             setScanResults(results);
             for (let i = 0; i < results.length; i++) {
                 console.log(`SSID: ${results[i].SSID} Signaal: ${results[i].level}`)
+                console.log(JSON.stringify(results[i]));
             }
             setShowLoadingComponent(false);
 
@@ -152,11 +156,36 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction}) => {
     }
 
     const ConnectSsid = (ssid: string, password: any) => {
-        WifiWizard2.connect(ssid, false, password, 'WPA').then((value) => {
+        // console.log('give SSID: ' + ssid);
+        // var wifiConfig = WifiWizard2.formatWPAConfig(ssid, password, false);
+        // var config = wifiConfig as WifiConfig;
+        //
+        // // console.log('give WifiConfigSSID:' + config.SSID)
+        // // console.log('give WifiConfigAlgorithm:' + config.auth.algorithm);
+        // // console.log('give WifiConfigPassword:' + config.auth.password);
+        //
+        // console.log(JSON.stringify(config));
+        //
+        //
+        // WifiWizard2.add(config).then((success: any) => {
+        //     console.log("Successfully added.");
+        //
+        //     WifiWizard2.enable(ssid).then((success: any) => {
+        //         console.log("Successfully enabled.");
+        //     }, (err: any) => {
+        //         console.log("ERROR enabling: " + err)
+        //     })
+        // }, (err: any) => {
+        //     console.log("ERROR adding: " + err);
+        // })
+
+
+        WifiWizard2.connect(ssid, true, password, 'WPA').then((value) => {
             console.log('Succesfully connected.');
         }, (err) => {
             console.log("Error: " + err)
         })
+
     }
 
     const DisconnectSsid = () => {

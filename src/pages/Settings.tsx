@@ -9,7 +9,6 @@ import {
     useIonViewWillEnter, useIonViewWillLeave
 } from "@ionic/react"
 import React from 'react';
-import WifiConfiguration from "../components/WifiConfiguration/WifiConfiguration";
 
 
 const Settings: React.FC = () => {
@@ -38,7 +37,6 @@ const Settings: React.FC = () => {
 
             <IonContent>
                 <IonTitle></IonTitle>
-                <WifiConfiguration/>
             </IonContent>
         </IonPage>
     )
