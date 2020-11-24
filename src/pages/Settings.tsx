@@ -31,7 +31,7 @@ const Settings: React.FC = () => {
                 <IonToolbar className="gradientBackgroundColor">
                     <IonTitle >Instellingen</IonTitle>
                     <IonButtons  slot="start">
-                        <IonBackButton className={'backButton'} defaultHref="/home"  text=""/>
+                        <IonBackButton defaultHref="/home"  text=""/>
                     </IonButtons>
                 </IonToolbar>
             </IonHeader>

@@ -1,12 +1,15 @@
 {
   "appId": "io.ionic.starter",
-  "appName": "twomes",
+  "appName": "Twomes",
   "bundledWebRuntime": false,
   "npmClient": "yarn",
   "webDir": "build",
   "plugins": {
     "SplashScreen": {
       "launchShowDuration": 0
+    },
+    "LocalNotifications": {
+      "smallIcon": "main_icon"
     }
   },
   "cordova": {}
