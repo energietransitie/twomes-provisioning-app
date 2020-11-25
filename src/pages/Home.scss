@@ -1,3 +1,52 @@
-.sensorcard {
+.sensorCard {
   background: #4d4d4d;
+}
+
+.weatherCard {
+  background: #4d4d4d;
+}
+
+.centerWeatherIcon {
+  margin: 0;
+  top: 50%;
+  left: 50%;
+  -ms-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+}
+
+.centerWeatherSpinner{
+  left: 50%;
+  -ms-transform: translate(-50%, -0%);
+  transform: translate(-50%, -0%);
+}
+
+.weatherIcon {
+  width: 90px;
+  height: 90px;
+  color: #B1D249;
+}
+
+.weatherSpinner{
+  width: 40px;
+  height: 40px;
+  color: #B1D249;
+  padding-left: 50%;
+  padding-top: 50%;
+}
+
+.temperatureHeader {
+  font-size: 30px !important;
+  font-weight: 100 !important;
+  color: white!important;
+}
+
+.weatherCityName{
+  font-size: 25px!important;
+  color: white!important;
+}
+
+.weatherDescription {
+  color:white!important;
+  font-weight: 100 !important;
+
 }

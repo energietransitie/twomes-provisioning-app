@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
     IonButton,
     IonButtons,
@@ -8,7 +8,7 @@ import {
     IonIcon, IonItem, IonLabel,
     IonPage,
     IonTitle,
-    IonToolbar
+    IonToolbar, useIonViewDidEnter
 } from '@ionic/react';
 import './Dashboard.scss';
 import {settingsSharp} from "ionicons/icons";
@@ -16,12 +16,12 @@ import API from "../api/Calls";
 import {LocalStorage} from "../services/Storage";
 import moment from "moment";
 
+
 const setItem = LocalStorage().setItem;
 const getItem = LocalStorage().getItem;
 const localization = require("moment/locale/nl");
 
 const Dashboard: React.FC = () => {
-
     //Set the locale for moment to the Netherlands
     moment.locale("nl", localization);
 
@@ -31,7 +31,7 @@ const Dashboard: React.FC = () => {
             var data = {
                 apidata: response.data.toString(),
                 timestamp: moment().format('hh:mm:ss DD-MM-YYYY') //Current time
-            }
+            };
             setItem('randomnumber', JSON.stringify(data));
         }, (err) => {
             getItem('randomnumber').then(value => {
@@ -40,7 +40,7 @@ const Dashboard: React.FC = () => {
                 console.log('timestamp: ' + data.timestamp);
             })
         });
-    }
+    };
 
     return (
         <IonPage>

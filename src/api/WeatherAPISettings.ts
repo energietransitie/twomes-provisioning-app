@@ -1,15 +1,15 @@
 import axios from 'axios';
+const lodash = require('lodash');
 
-let lodash = require('lodash');
-
-let AppKey = "TwomesApplicatie"
-let WeatherApiUrl = 'https://www.random.org'; //random number API
-let WeatherApiKey = "veilig";
+const WeatherApiUrl = 'https://api.openweathermap.org';
+const WeatherApiKey = "00f531f732855ae9ec76a74d9b93cf75";
 
 const WeatherAPI = axios.create({
     baseURL: WeatherApiUrl,
-    headers: {
-
+    params: {
+        appid: WeatherApiKey,
+        units: 'metric',
+        lang: 'nl'
     }
 });
 
