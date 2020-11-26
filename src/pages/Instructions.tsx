@@ -37,6 +37,7 @@ const Instructions: React.FC = () => {
     })
 
 
+
     // Check the current step only once on loading the page
     useEffect(() => {
         if (!currentStepSet) {

@@ -1,0 +1,21 @@
+[1mdiff --cc src/pages/Home.tsx[m
+[1mindex 2d59f59,d4c4083..0000000[m
+[1m--- a/src/pages/Home.tsx[m
+[1m+++ b/src/pages/Home.tsx[m
+[36m@@@ -21,11 -21,10 +21,16 @@@[m [mimport [m
+      sunny, reorderThree, thunderstorm, snow, rainy,[m
+  } from "ionicons/icons";[m
+  import {LocalStorage} from "../services/Storage";[m
+[32m++<<<<<<< Updated upstream[m
+[32m +import {Plugins} from "@capacitor/core";[m
+[32m++=======[m
+[32m++>>>>>>> Stashed changes[m
+  import API from "../api/Calls";[m
+[32m+ import { Plugins } from "@capacitor/core";[m
+[32m+ const { Geolocation } = Plugins;[m
+  [m
+[32m +const {Geolocation} = Plugins;[m
+[32m +[m
+  const getItem = LocalStorage().getItem;[m
+  const setItem = LocalStorage().setItem;[m
+  [m

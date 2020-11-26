@@ -1,0 +1,52 @@
+Index: ../src/pages/Home.tsx
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>import React, {useState} from 'react';\r\nimport {\r\n    IonAvatar,\r\n    IonButton,\r\n    IonButtons, IonCard,\r\n    IonCardContent,\r\n    IonContent,\r\n    IonHeader,\r\n    IonIcon, IonItem, IonLabel,\r\n    IonPage,\r\n    IonTitle,\r\n    IonToolbar\r\n} from '@ionic/react';\r\nimport './Home.scss';\r\nimport {checkmarkCircleOutline, settingsOutline} from \"ionicons/icons\";\r\n\r\nconst Home: React.FC = () => {\r\n\r\n    return (\r\n        <IonPage>\r\n            <IonHeader>\r\n                <IonToolbar className=\"gradientBackgroundColor\">\r\n                    <IonTitle slot=\"start\">Home</IonTitle>\r\n                    <IonButtons slot=\"end\">\r\n                        <IonButton href=\"/settings\">\r\n                            <IonIcon icon={settingsOutline} color=\"dark\"/>\r\n                        </IonButton>\r\n                    </IonButtons>\r\n                </IonToolbar>\r\n            </IonHeader>\r\n            <IonContent>\r\n                <IonCard className=\"card\">\r\n                    <IonCardContent>\r\n                        <IonItem lines=\"none\" className=\"carditem\">\r\n                            <IonAvatar slot=\"start\">\r\n                                <IonIcon icon={checkmarkCircleOutline} color={'success'}/>\r\n                            </IonAvatar>\r\n                            <IonLabel>Uw sensoren zijn verbonden</IonLabel>\r\n                        </IonItem>\r\n\r\n                    </IonCardContent>\r\n                </IonCard>\r\n            </IonContent>\r\n        </IonPage>\r\n    );\r\n};\r\n\r\nexport default Home;\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- ../src/pages/Home.tsx	(revision 93dd18a6e7af57e42515b6298296c3f87b6fe747)
++++ ../src/pages/Home.tsx	(date 1603964513672)
+@@ -37,7 +37,6 @@
+                             </IonAvatar>
+                             <IonLabel>Uw sensoren zijn verbonden</IonLabel>
+                         </IonItem>
+-
+                     </IonCardContent>
+                 </IonCard>
+             </IonContent>
+Index: build.gradle
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>// Top-level build file where you can add configuration options common to all sub-projects/modules.\r\n\r\nbuildscript {\r\n    \r\n    repositories {\r\n        google()\r\n        jcenter()\r\n    }\r\n    dependencies {\r\n        classpath 'com.android.tools.build:gradle:3.6.1'\r\n        classpath 'com.google.gms:google-services:4.3.3'\r\n\r\n        // NOTE: Do not place your application dependencies here; they belong\r\n        // in the individual module build.gradle files\r\n    }\r\n}\r\n\r\napply from: \"variables.gradle\"\r\n\r\nallprojects {\r\n    repositories {\r\n        google()\r\n        jcenter()\r\n    }\r\n}\r\n\r\ntask clean(type: Delete) {\r\n    delete rootProject.buildDir\r\n}\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>UTF-8
+===================================================================
+--- build.gradle	(revision 93dd18a6e7af57e42515b6298296c3f87b6fe747)
++++ build.gradle	(date 1603966086109)
+@@ -7,7 +7,7 @@
+         jcenter()
+     }
+     dependencies {
+-        classpath 'com.android.tools.build:gradle:3.6.1'
++        classpath 'com.android.tools.build:gradle:4.1.0'
+         classpath 'com.google.gms:google-services:4.3.3'
+ 
+         // NOTE: Do not place your application dependencies here; they belong
+Index: gradle/wrapper/gradle-wrapper.properties
+IDEA additional info:
+Subsystem: com.intellij.openapi.diff.impl.patch.BaseRevisionTextPatchEP
+<+>distributionBase=GRADLE_USER_HOME\r\ndistributionPath=wrapper/dists\r\ndistributionUrl=https\\://services.gradle.org/distributions/gradle-5.6.4-all.zip\r\nzipStoreBase=GRADLE_USER_HOME\r\nzipStorePath=wrapper/dists\r\n
+Subsystem: com.intellij.openapi.diff.impl.patch.CharsetEP
+<+>windows-1252
+===================================================================
+--- gradle/wrapper/gradle-wrapper.properties	(revision 93dd18a6e7af57e42515b6298296c3f87b6fe747)
++++ gradle/wrapper/gradle-wrapper.properties	(date 1603966086125)
+@@ -1,5 +1,6 @@
++#Thu Oct 29 11:08:06 CET 2020
+ distributionBase=GRADLE_USER_HOME
+ distributionPath=wrapper/dists
+-distributionUrl=https\://services.gradle.org/distributions/gradle-5.6.4-all.zip
+ zipStoreBase=GRADLE_USER_HOME
+ zipStorePath=wrapper/dists
++distributionUrl=https\://services.gradle.org/distributions/gradle-6.5-bin.zip
