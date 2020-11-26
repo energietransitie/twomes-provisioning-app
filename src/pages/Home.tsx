@@ -136,6 +136,9 @@ const Home: React.FC = () => {
                             </IonAvatar>
                             <IonLabel>Uw sensoren zijn verbonden</IonLabel>
                         </IonItem>
+                        <IonItem>
+                            <IonButton onClick={() => {setInstructionsChecked(false); window.location.href = '/instructions'} }>Show Instructions</IonButton>
+                        </IonItem>
                     </IonCardContent>
                 </IonCard>
                 <IonCard className="weatherCard">
