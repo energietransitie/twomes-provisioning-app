@@ -49,9 +49,6 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction}) => {
     // Returns the security type from the given capabilities
     const subStringSecurity = (securityType: string) => securityType != null ? securityType.substring(1, securityType.indexOf('-')) : '';
 
-
-
-
     // Get current connected SSID
     const GetConnectedSSID = () => {
         WifiWizard2.getConnectedSSID().then((value) => {
@@ -154,8 +151,7 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction}) => {
 
         }).catch(function (error) {
             console.log('Error getting results!', error);
-            WifiWizard2.timeout(5000).then(function () {
-            });
+
         });
     }
 
