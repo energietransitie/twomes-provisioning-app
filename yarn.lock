@@ -1259,13 +1259,6 @@
   dependencies:
     "@types/cordova" latest
 
-"@ionic-native/geolocation@^5.29.0":
-  version "5.30.0"
-  resolved "https://registry.yarnpkg.com/@ionic-native/geolocation/-/geolocation-5.30.0.tgz#292dfa04181f5c2e77cb0ef12a4c9a0e1a8bbae5"
-  integrity sha512-4kvs8OCN0AxHX+564FO0/ipnpCl8rQGZhdasEHzd8DXhgMMC1CgqeX/okQFWeudXzXxiyF00+Fh6AWLlQXzn0w==
-  dependencies:
-    "@types/cordova" latest
-
 "@ionic-native/wifi-wizard-2@^5.29.0":
   version "5.30.0"
   resolved "https://registry.yarnpkg.com/@ionic-native/wifi-wizard-2/-/wifi-wizard-2-5.30.0.tgz#c06aa1476349f0ebe5113be2e1cdef074a5a8358"
@@ -3549,11 +3542,6 @@ copy-descriptor@^0.1.0:
   version "0.1.1"
   resolved "https://registry.yarnpkg.com/copy-descriptor/-/copy-descriptor-0.1.1.tgz#676f6eb3c39997c2ee1ac3a924fd6124748f578d"
   integrity sha1-Z29us8OZl8LuGsOpJP1hJHSPV40=
-
-cordova-plugin-geolocation@^4.0.2:
-  version "4.1.0"
-  resolved "https://registry.yarnpkg.com/cordova-plugin-geolocation/-/cordova-plugin-geolocation-4.1.0.tgz#dfea55e212ed1c46e9d82a373e90b45b9887d1f3"
-  integrity sha512-y5io/P10xGMxSn2KEqfv/fExK47eA1pmSonJdmDqDsaSADV9JpgdPx0mUSA08+5pzma/OS9R0LoODeDPx7Jvjg==
 
 cordova-plugin-wifiwizard2@^3.1.1:
   version "3.1.1"

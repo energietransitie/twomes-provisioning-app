@@ -21,8 +21,10 @@ import {
     sunny, reorderThree, thunderstorm, snow, rainy,
 } from "ionicons/icons";
 import {LocalStorage} from "../services/Storage";
-import {Geolocation} from '@ionic-native/geolocation';
+import {Plugins} from "@capacitor/core";
 import API from "../api/Calls";
+
+const {Geolocation} = Plugins;
 
 const getItem = LocalStorage().getItem;
 const setItem = LocalStorage().setItem;
