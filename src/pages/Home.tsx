@@ -21,8 +21,10 @@ import {
     sunny, reorderThree, thunderstorm, snow, rainy,
 } from "ionicons/icons";
 import {LocalStorage} from "../services/Storage";
-import {Geolocation} from '@ionic-native/geolocation';
+import {Plugins} from "@capacitor/core";
 import API from "../api/Calls";
+
+const {Geolocation} = Plugins;
 
 const getItem = LocalStorage().getItem;
 const setItem = LocalStorage().setItem;
@@ -138,6 +140,9 @@ const Home: React.FC = () => {
                                 <IonIcon icon={checkmarkCircle} color={'success'}/>
                             </IonAvatar>
                             <IonLabel>Uw sensoren zijn verbonden</IonLabel>
+                        </IonItem>
+                        <IonItem>
+                            <IonButton onClick={() => {setInstructionsChecked(false); window.location.href = '/instructions'} }>Show Instructions</IonButton>
                         </IonItem>
                     </IonCardContent>
                 </IonCard>
