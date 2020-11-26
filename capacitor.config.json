@@ -1,6 +1,6 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "Twomes",
+  "appId": "app.twomes.warmtewachter",
+  "appName": "WarmteWachter",
   "bundledWebRuntime": false,
   "npmClient": "yarn",
   "webDir": "build",
