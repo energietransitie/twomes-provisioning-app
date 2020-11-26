@@ -15,11 +15,13 @@ import {LocalStorage} from "../../services/Storage";
 import InstallOTGW from "./InstallOTGW";
 import InstallP1 from "./InstallP1";
 import InstallSensors from "./InstallSensors";
-import {WifiConfig, WifiWizard2} from "@ionic-native/wifi-wizard-2";
+import {WifiWizard2} from "@ionic-native/wifi-wizard-2";
+
 import LoadingComponent from "../LoadingComponent";
 import AlertBox from "../AlertBox";
 import {Build} from "ionicons/dist/types/stencil-public-runtime";
 
+declare var WifiWizard: any;
 
 const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction}) => {
     const [currentStep, setCurrentStep] = useState('');
@@ -38,7 +40,6 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction}) => {
         GetConnectedSSID();
         ScanAvailableNetworks();
         resetBox();
-
     })
 
     const resetBox = () => {
@@ -47,6 +48,9 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction}) => {
 
     // Returns the security type from the given capabilities
     const subStringSecurity = (securityType: string) => securityType != null ? securityType.substring(1, securityType.indexOf('-')) : '';
+
+
+
 
     // Get current connected SSID
     const GetConnectedSSID = () => {
@@ -179,28 +183,31 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction}) => {
         //     console.log("ERROR adding: " + err);
         // })
 
-
         WifiWizard2.requestPermission().then((value) => {
             console.log(value);
-            if(value == "PERMISSION_GRANTED") {
-                WifiWizard2.connect(ssid, true, password, 'WPA').then((value) => {
-                    console.log('Succesfully connected.');
-                }, (err) => {
-                    console.log("Error: " + err)
-                })
+            if (value == "PERMISSION_GRANTED") {
+
+                let config = WifiWizard.formatWPAConfig("RowanTest", "12345678", false);
+                WifiWizard.addNetwork(config, () => {
+
+                        WifiWizard.connectNetwork(config.SSID,
+                            (value: any) => {
+                                console.log(value)
+                            },
+                            (err: any) => {
+                                console.log(err)
+                            });
+
+                    },
+                    (err: any) => console.log(err));
+
             }
         }, (err) => {
             console.log("Error: " + err);
         })
+
     }
 
-    const DisconnectSsid = () => {
-        WifiWizard2.disconnect("H368N9E1028").then((value) => {
-            console.log('Succesfully disconnected.');
-        }, (err) => {
-            console.log("Error: " + err)
-        })
-    }
 
     return (
         <IonCard className="instructions-card">
@@ -213,6 +220,12 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction}) => {
                 </div>
                 <IonButton onClick={() => ShowPasswordAlert(currentNetwork)}>
                     Dit netwerk gebruiken
+                </IonButton>
+                <IonButton onClick={() => {
+                    setShowLoadingComponent(true);
+                    ScanAvailableNetworks();
+                }}>
+                    Opnieuw zoeken
                 </IonButton>
                 <IonList>
                     {scanResults.length !== 0 ? (scanResults.map((network) => network['SSID'] != '' && network['SSID'] != currentNetwork &&
