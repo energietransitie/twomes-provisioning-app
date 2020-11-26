@@ -1,10 +1,10 @@
 import {
     IonBackButton,
-    IonButtons,
+    IonButtons, IonCheckbox,
     IonContent,
-    IonHeader,
-    IonPage,
-    IonTitle,
+    IonHeader, IonInput, IonItem, IonItemOption, IonItemOptions, IonItemSliding, IonLabel, IonList, IonListHeader,
+    IonPage, IonRadio,
+    IonTitle, IonToggle,
     IonToolbar,
     useIonViewWillEnter, useIonViewWillLeave
 } from "@ionic/react"
@@ -28,15 +28,46 @@ const Settings: React.FC = () => {
     return (
         <IonPage>
             <IonHeader>
-                <IonToolbar>
-                    <IonButtons slot="start">
-                        <IonBackButton defaultHref="/home" text=""/>
+                <IonToolbar className="gradientBackgroundColor">
+                    <IonTitle >Instellingen</IonTitle>
+                    <IonButtons  slot="start">
+                        <IonBackButton defaultHref="/home"  text=""/>
                     </IonButtons>
                 </IonToolbar>
             </IonHeader>
 
             <IonContent>
-                <IonTitle></IonTitle>
+                {/*-- List of Input Items --*/}
+                <IonList>
+                    <IonListHeader>
+                        <b>Categorie 1</b>
+                    </IonListHeader>
+                    <IonItem>
+                        <IonLabel>Input</IonLabel>
+                        <IonInput></IonInput>
+                    </IonItem>
+                    <IonItem>
+                        <IonLabel>Toggle</IonLabel>
+                        <IonToggle slot="end"></IonToggle>
+                    </IonItem>
+                </IonList>
+                <IonList>
+                    <IonListHeader>
+                        <b>Categorie 2</b>
+                    </IonListHeader>
+                    <IonItem>
+                        <IonLabel>Radio</IonLabel>
+                        <IonRadio slot="end"></IonRadio>
+                    </IonItem>
+                    <IonItem>
+                        <IonLabel>Checkbox</IonLabel>
+                        <IonCheckbox slot="end" />
+                    </IonItem>
+                    <IonItem>
+                        <IonLabel>Checkbox2</IonLabel>
+                        <IonCheckbox slot="end" />
+                    </IonItem>
+                </IonList>
             </IonContent>
         </IonPage>
     )
