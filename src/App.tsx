@@ -12,7 +12,8 @@ import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import Sensors from './pages/Sensors';
 import Settings from "./pages/Settings";
-import Instructions from "./pages/Instructions"
+import Instructions from "./pages/Instructions";
+import {LocalStorage} from "./services/Storage";
 import {Icons} from "./components/Icons";
 
 /* Core CSS required for Ionic components to work properly */
@@ -41,6 +42,9 @@ var HomeIcon = Icons().HomeIcon();
 var DashboardIcon = Icons().DashboardIcon();
 var SensorIcon = Icons().SensorIcon();
 
+const setItem = LocalStorage().setItem;
+const getItem = LocalStorage().getItem;
+
 
 const App: React.FC = () => {
 
@@ -50,6 +54,7 @@ const App: React.FC = () => {
         var url  = data.deepLink;
         var id = url.split('https://app.twomes.warmtewachter/')[1];
         console.log("userID: " + id);
+        setItem("userID", id);
     })
 
     return (
