@@ -1259,6 +1259,13 @@
   dependencies:
     "@types/cordova" latest
 
+"@ionic-native/firebase-dynamic-links@^5.30.0":
+  version "5.30.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/firebase-dynamic-links/-/firebase-dynamic-links-5.30.0.tgz#b438de4c79b3bbf912b1d0d77e671ac74792823c"
+  integrity sha512-iBAHl48Bbhxbhi1HhelFp0KnWcpBbgmepQccf9PG1SKiBLg2kZgO/H7ahsVvSh1/esZmi0lZYpz9eHfIx3sLyg==
+  dependencies:
+    "@types/cordova" latest
+
 "@ionic-native/wifi-wizard-2@^5.29.0":
   version "5.30.0"
   resolved "https://registry.yarnpkg.com/@ionic-native/wifi-wizard-2/-/wifi-wizard-2-5.30.0.tgz#c06aa1476349f0ebe5113be2e1cdef074a5a8358"
@@ -3545,6 +3552,16 @@ copy-descriptor@^0.1.0:
   resolved "https://registry.yarnpkg.com/copy-descriptor/-/copy-descriptor-0.1.1.tgz#676f6eb3c39997c2ee1ac3a924fd6124748f578d"
   integrity sha1-Z29us8OZl8LuGsOpJP1hJHSPV40=
 
+cordova-plugin-firebase-analytics@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/cordova-plugin-firebase-analytics/-/cordova-plugin-firebase-analytics-5.0.0.tgz#4bde8ba55a2ea17e594499911ee02617193422e5"
+  integrity sha512-GiMpcr0dAcibo5lKvm4edvkmLFmOS0/3nBi1jpDEBvGKpVZWxHoU8iaQ7T28E2mbDmyd2GtLr631/1vlGcCrrg==
+
+cordova-plugin-firebase-dynamiclinks@^5.0.0:
+  version "5.0.0"
+  resolved "https://registry.yarnpkg.com/cordova-plugin-firebase-dynamiclinks/-/cordova-plugin-firebase-dynamiclinks-5.0.0.tgz#0b1f7604d700465b5a8500ab9fe103152f8368b2"
+  integrity sha512-5qiVO5Sz0cMX3vkUvv55U+dDTPDoTJmE2ntEZUqetEZT80GhQdF67ryjLrD1WpI/WCvS6xmPT+F/8kH8F/LqxQ==
+
 cordova-plugin-wifiwizard2@^3.1.1:
   version "3.1.1"
   resolved "https://registry.yarnpkg.com/cordova-plugin-wifiwizard2/-/cordova-plugin-wifiwizard2-3.1.1.tgz#4efd08c663eb4855cfa414c6d98043732dfd0ef8"
@@ -3561,6 +3578,11 @@ cordova-res@^0.15.2:
     elementtree "^0.1.7"
     sharp "^0.26.0"
     tslib "^2.0.3"
+
+cordova-support-android-plugin@^1.0.2:
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/cordova-support-android-plugin/-/cordova-support-android-plugin-1.0.2.tgz#db5c8c34190d656d7fa116f702f103d692f492a4"
+  integrity sha512-bgvSG5/A2Z/OerfNHN7AHMV3jt+9bH6J4vw9T8R5OJRkkK+ENRBhL8qx7m6mLmBPvtQoIhCMOCRMM9fd4P/p9w==
 
 core-js-compat@^3.6.2, core-js-compat@^3.7.0:
   version "3.8.0"
