@@ -57,7 +57,7 @@ const InstallOTGW: React.FC<InstructionsInterface> = ({stepUpFunction, finishFun
             );
         }, 2000)
     };
-const OpenDialog = (id: string) =>{
+const openDialog = (id: string) =>{
     setConnectDialog(true);
     setdeviceID(id);
 };
@@ -75,7 +75,7 @@ const OpenDialog = (id: string) =>{
                 )}
                 <IonButton onClick={() => startScanning()}>Op apparaten scannen</IonButton>
                 {bleIDArray.map((id: string) => (
-                    <IonCard class="deviceCard" id={id} onClick={() => OpenDialog(id)}>
+                    <IonCard class="deviceCard" id={id} onClick={() => openDialog(id)}>
                         <IonCardContent>
                             {id}
                         </IonCardContent>
@@ -84,7 +84,6 @@ const OpenDialog = (id: string) =>{
                 <IonAlert
                     isOpen={showConnectDialog}
                     onDidDismiss={() => setConnectDialog(false)}
-                    cssClass='my-custom-class'
                     header={'Verbinden'}
                     message={'Weet u zeker dat u wilt verbinden met dit apparaat?'}
                     buttons={[
@@ -106,7 +105,6 @@ const OpenDialog = (id: string) =>{
                 <IonAlert
                 isOpen={showSuccessDialog}
                 onDidDismiss={() => setSuccessDialog(false)}
-                cssClass='my-custom-class'
                 header={'Verbonden'}
                 message={`Verbonden met ${deviceID}`}
                 buttons={[
@@ -122,7 +120,6 @@ const OpenDialog = (id: string) =>{
                 <IonAlert
                     isOpen={showErrorDialog}
                     onDidDismiss={() => setErrorDialog(false)}
-                    cssClass='my-custom-class'
                     header={'Verbinding mislukt'}
                     message={`Verbinding mislukt met ${deviceID}`}
                     buttons={[
