@@ -9,11 +9,11 @@ const InstallOTGW: React.FC<InstructionsInterface> = ({stepUpFunction, finishFun
 
     const [OTGWStep, setOTGWStep] = useState(0);
     const [scanningBLE, setScanningBLE] = useState(false);
-    const [BleIDArray, setBleIDArray] = useState<string[]>([]);
+    const [bleIDArray, setBleIDArray] = useState<string[]>([]);
     const [showConnectDialog, setConnectDialog] = useState(false);
     const [showSuccessDialog, setSuccessDialog] = useState(false);
     const [showErrorDialog, setErrorDialog] = useState(false);
-    const [deviceID, setDeviceID] = useState("");
+    const [deviceID, setdeviceID] = useState("");
     const [showLoadingComponent, setShowLoadingComponent] = useState(false);
 
     const startScanning = () => {
@@ -59,7 +59,7 @@ const InstallOTGW: React.FC<InstructionsInterface> = ({stepUpFunction, finishFun
     };
 const OpenDialog = (id: string) =>{
     setConnectDialog(true);
-    setDeviceID(id);
+    setdeviceID(id);
 };
     return (
         <IonCard className="instructions-card">
@@ -74,8 +74,8 @@ const OpenDialog = (id: string) =>{
                                onClick={() => finishFunction()}>Afronden</IonButton>
                 )}
                 <IonButton onClick={() => startScanning()}>Op apparaten scannen</IonButton>
-                {BleIDArray.map((id: string) => (
-                    <IonCard class="DeviceCard" id={id} onClick={() => OpenDialog(id)}>
+                {bleIDArray.map((id: string) => (
+                    <IonCard class="deviceCard" id={id} onClick={() => OpenDialog(id)}>
                         <IonCardContent>
                             {id}
                         </IonCardContent>
