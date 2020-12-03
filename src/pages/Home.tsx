@@ -126,6 +126,7 @@ const Home: React.FC = () => {
 
     useEffect(() => {
         if(!chartsSet) {
+            //Chart elements from doc are selected and charts are added to them
             var chartElement1 = document.getElementById('chart1');
             var chartElement2 = document.getElementById('chart2');
             var chartElement3 = document.getElementById('chart3');
