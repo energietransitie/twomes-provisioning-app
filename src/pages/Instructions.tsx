@@ -98,7 +98,7 @@ const Instructions: React.FC = () => {
             <IonPage>
                 <IonHeader>
                     <IonToolbar className="gradientBackgroundColor">
-                        <IonTitle slot="start">Instrucies</IonTitle>
+                        <IonTitle slot="start">Instructies</IonTitle>
                     </IonToolbar>
                 </IonHeader>
                 <IonContent>

@@ -73,11 +73,11 @@
 
 .dashboardCard {
   background: #4d4d4d;
-  height: 200px;
+  height: 100px;
 }
 
 .dashboardCardHeader {
-
+  height: 75px;
 }
 
 .dashboardCardContent {
@@ -101,6 +101,7 @@
 }
 
 .chart {
-  width: 200px!important;
-  height: 100px!important;
+  width: 100px!important;
+  height: 50px!important;
+  margin-top: 10px;
 }

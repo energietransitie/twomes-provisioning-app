@@ -93,6 +93,11 @@ const Home: React.FC = () => {
         }
     }
 
+    const goToInstructions = () => {
+        setItem('instructionsCompleted', 'false');
+        window.location.href = '/instructions'
+    }
+
     // This function is called when the home screen is entered.
     // It checks the instruction status.
 
@@ -123,6 +128,7 @@ const Home: React.FC = () => {
         if(!chartsSet) {
             var chartElement1 = document.getElementById('chart1');
             var chartElement2 = document.getElementById('chart2');
+            var chartElement3 = document.getElementById('chart3');
             var chart1 = new Chart(chartElement1, {
                 type: 'pie',
                 data: {
@@ -157,6 +163,21 @@ const Home: React.FC = () => {
                 },
                 options: {
 
+                }
+            })
+            var chart3 = new Chart(chartElement3, {
+                type: 'pie',
+                data: {
+                    datasets: [{
+                        label: 'MockGraph3',
+                        data: [25, 25, 25],
+                        backgroundColor: [
+                            'rgba(0, 200, 0)',
+                            'rgba(0, 150, 0)',
+                            'rgba(0, 255, 0)'
+                        ],
+                        borderWidth: 0
+                    }]
                 }
             })
             setChartsSet(true);
@@ -213,6 +234,7 @@ const Home: React.FC = () => {
                         <IonItem lines="none" className={"dashboardCardHeader"}>
                             <canvas className="chart" id="chart1"/>
                             <canvas className="chart" id="chart2"/>
+                            <canvas className="chart" id="chart3"/>
                         </IonItem>
                         <IonCardContent className={"dashboardCardContent"}>
                             <IonLabel>Dashboard</IonLabel>
