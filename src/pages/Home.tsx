@@ -128,7 +128,7 @@ const Home: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent>
-                <IonCard className="sensorCard">
+                <IonCard className="sensorStatusCard">
                     <IonCardContent>
                         <IonItem lines="none">
                             <IonAvatar slot="start">

@@ -1,0 +1,12 @@
+.sensorCard{
+  width: 50%;
+  .disconnected{
+    background-color: red;
+  }
+  .connected{
+    background-color: #2dd36f;
+  }
+}
+.sensorIcon{
+width: 200px;
+}
