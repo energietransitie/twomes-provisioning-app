@@ -19,9 +19,9 @@ const InstallOTGW: React.FC<InstructionsInterface> = ({stepUpFunction, finishFun
     const startScanning = () => {
         setShowLoadingComponent(true);
         var list: string[] = [];
+        //Scans for devices and add them to the list
         BLE.startScan([]).subscribe(device => {
             console.log(JSON.stringify(device));
-            // list.push(`${device.name} (${device.id})`);
             list.push(device.id);
         });
 
@@ -33,6 +33,7 @@ const InstallOTGW: React.FC<InstructionsInterface> = ({stepUpFunction, finishFun
         }, 5000);
     };
 
+    //Connects to the given MAC-adress
     const connect = (id: string) => {
         setShowLoadingComponent(true);
             BLE.connect(id).subscribe((device) => {
@@ -57,8 +58,11 @@ const InstallOTGW: React.FC<InstructionsInterface> = ({stepUpFunction, finishFun
             );
         }, 2000)
     };
+
+//    Opens the dialog asking to connect
 const openDialog = (id: string) =>{
     setConnectDialog(true);
+    //Sets the device to connect
     setdeviceID(id);
 };
     return (
