@@ -1,13 +1,16 @@
 import {
-    IonAvatar,
+    IonAvatar, IonBadge,
     IonButton,
     IonCard,
-    IonCardContent,
+    IonCardContent, IonCardHeader, IonCardSubtitle, IonCardTitle, IonCol, IonContent, IonGrid, IonIcon, IonImg,
     IonItem,
     IonLabel,
-    IonList,
+    IonList, IonRow, IonSpinner,
     useIonViewWillEnter
 } from '@ionic/react';
+import {
+    wifiOutline
+} from "ionicons/icons";
 import React, {useEffect, useState} from 'react';
 import './ConfigureWIFI.scss';
 import {InstructionsInterface} from "../../services/InstructionsInterface";
@@ -19,6 +22,7 @@ import {WifiConfig, WifiWizard2} from "@ionic-native/wifi-wizard-2";
 import LoadingComponent from "../LoadingComponent";
 import AlertBox from "../AlertBox";
 import {Build} from "ionicons/dist/types/stencil-public-runtime";
+import {installationconfig} from '../../../package.json';
 
 
 const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction}) => {
@@ -29,27 +33,57 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction}) => {
     const [alert, setAlert] = useState<any>({showBox: false})
     const [scanResults, setScanResults] = useState([]);
     const [showNetworks, setShowNetworks] = useState(false);
-    const [showLoadingComponent, setShowLoadingComponent] = useState(false);
     const [passwordVisible, setPasswordVisible] = useState(false);
-
+    const [isSearching, setIsSearching] = useState(true);
 
     // These functions will be executed when the user is about to enter te view
     useIonViewWillEnter(() => {
-        GetConnectedSSID();
-        ScanAvailableNetworks();
+        startWifiConfig();
         resetBox();
-
     })
 
+    // resets the alertbox
     const resetBox = () => {
         setAlert({showBox: false});
+    }
+
+    // starts all the wifi related methods
+    const startWifiConfig = () => {
+        checkIfWifiEnabled().then((result) => {
+            if (result) {
+                getConnectedSSID();
+                scanAvailableNetworks();
+            } else {
+                showEnableWifiAlert();
+                setTimeout(() => {startWifiConfig();}, 300);
+            }
+        });
     }
 
     // Returns the security type from the given capabilities
     const subStringSecurity = (securityType: string) => securityType != null ? securityType.substring(1, securityType.indexOf('-')) : '';
 
+    // Shows an alert that the wifi is disabled
+    const showEnableWifiAlert = () => {
+        let scanalertdata = {
+            showBox: true,
+            header: 'WiFi is uitgeschakeld.',
+            message: "Schakel de WiFi van het apparaat aan om de configuratie voort te zetten.",
+            buttons: [
+                {
+                    text: "Ok",
+                    cssClass: "secondary",
+                    handler: () => {
+                        resetBox();
+                    }
+                }]
+        };
+        setAlert(scanalertdata);
+    }
+
+
     // Get current connected SSID
-    const GetConnectedSSID = () => {
+    const getConnectedSSID = () => {
         WifiWizard2.getConnectedSSID().then((value) => {
             setCurrentNetwork(value);
             let scanalertdata = {
@@ -61,7 +95,6 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction}) => {
                         text: 'Ander netwerk selecteren',
                         cssClass: 'secondary',
                         handler: () => {
-                            setShowLoadingComponent(true);
                             setShowNetworks(true);
                             resetBox();
                         }
@@ -69,7 +102,7 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction}) => {
                     {
                         text: 'Dit netwerk gebruiken',
                         handler: () => {
-                            IsConnectedToInternet();
+                            isConnectedToInternet();
                             resetBox();
                         }
                     }]
@@ -81,7 +114,8 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction}) => {
         })
     }
 
-    const ShowPasswordAlert = (networkSSID: string) => {
+    // shows an alert where the user can fill in the password of the network
+    const showPasswordAlert = (networkSSID: string) => {
         let scanAlertData = {
             showBox: true,
             header: 'Wachtwoord',
@@ -92,7 +126,7 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction}) => {
                     text: 'Test verbinding',
                     cssClass: 'primary',
                     handler: (alertData: any) => {
-                        ConnectSsid(networkSSID, alertData.networkPassword);
+                        connectSsid(networkSSID, alertData.networkPassword);
                         console.log(`SSID: ${networkSSID} \n Password: ${alertData.networkPassword}`);
                     }
                 }],
@@ -105,39 +139,32 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction}) => {
                     attributes: {
                         minLength: 8,
                     }
-                }, {
-                    name: 'checkbox1',
-                    type: 'checkbox',
-                    label: 'Wachtwoord tonen',
-                    value: passwordVisible,
-                    checked: (passwordInput: any) => {
-                        setPasswordVisible(!passwordVisible);
-                        passwordInput.type = 'text'
-                    }
-                }
+                },
+                // {
+                //     name: 'checkbox1',
+                //     type: 'checkbox',
+                //     label: 'Wachtwoord tonen',
+                //     value: passwordVisible,
+                //     checked: (passwordInput: any) => {
+                //         setPasswordVisible(!passwordVisible);
+                //         passwordInput.type = 'text'
+                //     }
+                // }
             ]
         };
         setAlert(scanAlertData);
     }
 
     // Check if Wifi is enabled
-    const CheckIfWifiEnabled = () => WifiWizard2.isWifiEnabled().then((result) => console.log(result)).catch((error) => console.log(error));
-
-    const RequestPermission = () => WifiWizard2.requestPermission().then((result) => console.log(result)).catch((error) => console.log(error));
-
-    // This function enables the Wifi module
-    const EnableWifi = () => WifiWizard2.enableWifi().then((result) => result).catch((error) => console.log(error));
-
+    const checkIfWifiEnabled = () => WifiWizard2.isWifiEnabled().then((result) => result).catch((error) => console.log(error));
 
     // Check if connected to the internet
-    const IsConnectedToInternet = () => WifiWizard2.canPingWifiRouter().then((result) => {
+    const isConnectedToInternet = () => WifiWizard2.canPingWifiRouter().then((result) => {
         console.log(result)
     }).catch((error) => console.log(`error: ${error}`));
 
     // Scan for available networks
-    const ScanAvailableNetworks = () => {
-        // setShowLoading(false);
-
+    const scanAvailableNetworks = () => {
         WifiWizard2.scan().then(function (results) {
             console.log(results.length, 'networks found! ');
 
@@ -146,42 +173,30 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction}) => {
                 console.log(`SSID: ${results[i].SSID} Signaal: ${results[i].level}`)
                 console.log(JSON.stringify(results[i]));
             }
-            setShowLoadingComponent(false);
+            setIsSearching(false);
 
         }).catch(function (error) {
             console.log('Error getting results!', error);
-
         });
     }
 
-    const ConnectSsid = (ssid: string, password: any) => {
-        // console.log('give SSID: ' + ssid);
-        // var wifiConfig = WifiWizard2.formatWPAConfig(ssid, password, false);
-        // var config = wifiConfig as WifiConfig;
-        //
-        // // console.log('give WifiConfigSSID:' + config.SSID)
-        // // console.log('give WifiConfigAlgorithm:' + config.auth.algorithm);
-        // // console.log('give WifiConfigPassword:' + config.auth.password);
-        //
-        // console.log(JSON.stringify(config));
-        //
-        //
-        // WifiWizard2.add(config).then((success: any) => {
-        //     console.log("Successfully added.");
-        //
-        //     WifiWizard2.enable(ssid).then((success: any) => {
-        //         console.log("Successfully enabled.");
-        //     }, (err: any) => {
-        //         console.log("ERROR enabling: " + err)
-        //     })
-        // }, (err: any) => {
-        //     console.log("ERROR adding: " + err);
-        // })
+    // returns the icon of the wifisignal based on the rssi
+    const getSignalIcon = (rssi: number) => {
+        rssi *= -1;
+        if (rssi <= 67) {
+            return "Wifi-3"
+        } else if (rssi <= 70) {
+            return "Wifi-2"
+        } else {
+            return "Wifi-1"
+        }
+    }
 
-
+    // creates an connection between the device and the access point
+    const connectSsid = (ssid: string, password: any) => {
         WifiWizard2.requestPermission().then((value) => {
             console.log(value);
-            if(value == "PERMISSION_GRANTED") {
+            if (value == "PERMISSION_GRANTED") {
                 WifiWizard2.connect(ssid, true, password, 'WPA').then((value) => {
                     console.log('Succesfully connected.');
                 }, (err) => {
@@ -193,45 +208,64 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction}) => {
         })
     }
 
-    const DisconnectSsid = () => {
-        WifiWizard2.disconnect("H368N9E1028").then((value) => {
-            console.log('Succesfully disconnected.');
-        }, (err) => {
-            console.log("Error: " + err)
-        })
-    }
-
     return (
         <IonCard className="instructions-card">
-            <LoadingComponent showLoading={showLoadingComponent}/>
             <AlertBox {...alert}/>
+            <IonCardHeader>
+                <IonBadge className={'stepCountBadge'} color="success">Stap {installationconfig.WIFIstep}</IonBadge>
+                <IonCardTitle>Configureren WiFi</IonCardTitle>
+                <IonCardSubtitle className={'subTitleStep'}>Invullen inloggegevens van het
+                    thuisnetwerk.</IonCardSubtitle>
+            </IonCardHeader>
             <IonCardContent className="instructions-card-content">
-                <IonLabel>Instructie wifi configureren</IonLabel>
-                <div>
-                    <h3>Momenteel verbonden: <h2><b>{currentNetwork}</b></h2></h3>
-                </div>
-                <IonButton onClick={() => ShowPasswordAlert(currentNetwork)}>
-                    Dit netwerk gebruiken
+                <IonGrid hidden={currentNetwork == ""} className={"deviceStatusesGrid"}>
+                    <IonRow>
+                        <h3>Momenteel verbonden: <h2><b>{currentNetwork}</b></h2></h3>
+                        <IonButton color={"warning"} onClick={() => showPasswordAlert(currentNetwork)}>
+                            Dit netwerk gebruiken
+                        </IonButton>
+                    </IonRow>
+                </IonGrid>
+                <IonButton className={"search-again-button"} color={"warning"} onClick={() => {setIsSearching(true); scanAvailableNetworks();}}>
+                    Opnieuw zoeken
                 </IonButton>
-                <IonList>
-                    {scanResults.length !== 0 ? (scanResults.map((network) => network['SSID'] != '' && network['SSID'] != currentNetwork &&
-                        <IonItem button onClick={() => ShowPasswordAlert(network['SSID'])
-                        }>
-                            <IonAvatar slot="start">
-                                <img src="public\assets\icon\.icon.png"/>
-                            </IonAvatar>
-                            <IonLabel color={'white'}>
-                                <h2>{network['SSID']}</h2>
-                                <h3>{subStringSecurity(network['capabilities'])}</h3>
-                            </IonLabel>
-                        </IonItem>
-                    )) : (
-                        <h3>Geen netwerken gevonden.</h3>
-                    )}
-                </IonList>
+                <IonContent className={isSearching ? "scrollListLoading" : "scrollList"}>
+                    <IonCardContent className={isSearching ? "cardContentLoading" : "cardContent"}>
+                        <IonRow hidden={!isSearching}>
+                            <IonItem className={'centerWeatherSpinner'} lines="none">
+                                <IonSpinner className={'weatherSpinner'}></IonSpinner>
+                            </IonItem>
+                        </IonRow>
+                        <IonRow hidden={!isSearching}>
+                            <IonItem className={'centerWeatherSpinner'} lines="none">
+                                <h3>Netwerken zoeken...</h3>
+                            </IonItem>
+                        </IonRow>
+                            <IonCardContent className={"cardContent"}>
 
-                <IonButton className="instructions-next-button" onClick={() => stepUpFunction()}>Volgende</IonButton>
+                                <IonList hidden={isSearching} className={"networkList"}>
+                                    {scanResults.length !== 0 && (scanResults.map((network) => network['SSID'] != '' && network['SSID'] != currentNetwork &&
+                                        <IonItem lines="none" button className={"itemNetwork"}
+                                                 onClick={() => showPasswordAlert(network['SSID'])
+                                                 }>
+                                            <IonAvatar className={"centerContent"} slot="start">
+                                                <IonImg className={"wifiSignalIcon"}
+                                                        src={"/assets/Instructions/" + getSignalIcon(network["level"]) + ".png"}></IonImg>
+                                            </IonAvatar>
+                                            <IonLabel color={'white'}>
+                                                <h2>{network['SSID']}</h2>
+                                                <h3>{subStringSecurity(network['capabilities'])}</h3>
+                                            </IonLabel>
+                                        </IonItem>
+                                    ))}
+                                </IonList>
+                            </IonCardContent>
+                    </IonCardContent>
+                </IonContent>
+
             </IonCardContent>
+            <IonButton color={'warning'} className="instructions-next-button"
+                       onClick={() => stepUpFunction()}>Volgende</IonButton>
         </IonCard>
     )
 }
