@@ -1,22 +1,19 @@
-import React, {useEffect, useState} from 'react';
+import React from 'react';
 import {Redirect, Route} from 'react-router-dom';
 import {
     IonApp,
-    IonIcon,
-    IonLabel,
     IonRouterOutlet,
     IonTabBar,
     IonTabButton,
     IonTabs
 } from '@ionic/react';
 import {IonReactRouter} from '@ionic/react-router';
-import {ellipse, homeOutline, square, triangle} from 'ionicons/icons';
-import {LocalStorage} from "./services/Storage";
 import Home from './pages/Home';
 import Dashboard from './pages/Dashboard';
 import Sensors from './pages/Sensors';
 import Settings from "./pages/Settings";
-import Instructions from "./pages/Instructions"
+import Instructions from "./pages/Instructions";
+import {LocalStorage} from "./services/Storage";
 import {Icons} from "./components/Icons";
 
 /* Core CSS required for Ionic components to work properly */
@@ -39,11 +36,26 @@ import '@ionic/react/css/core.css';
 import './theme/variables.scss';
 import './theme/main.scss';
 
+import {FirebaseDynamicLinks} from "@ionic-native/firebase-dynamic-links";
+
 var HomeIcon = Icons().HomeIcon();
 var DashboardIcon = Icons().DashboardIcon();
 var SensorIcon = Icons().SensorIcon();
 
+const setItem = LocalStorage().setItem;
+const getItem = LocalStorage().getItem;
+
+
 const App: React.FC = () => {
+
+    FirebaseDynamicLinks.onDynamicLink().subscribe((data: any) => {
+        console.log("dynamic Link triggered");
+        console.log("data: " + JSON.stringify(data));
+        var url  = data.deepLink;
+        var id = url.split('https://app.twomes.warmtewachter/')[1];
+        console.log("userID: " + id);
+        setItem("userID", id);
+    })
 
     return (
         <IonApp>

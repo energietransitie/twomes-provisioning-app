@@ -1,119 +1,144 @@
-import {
-    IonButton,
-    IonCard,
-    IonCardContent,
-    IonLabel,
-    IonAlert,
-    IonCardSubtitle,
-    IonCardHeader,
-    IonCardTitle,
-    IonImg,
-    IonThumbnail,
-    IonList,
-    IonItem,
-    IonBadge,
-    IonNote,
-    IonRow,
-    IonCol,
-    IonAvatar,
-    IonGrid,
-    IonIcon,
-    IonSpinner
-} from '@ionic/react';
-import React, {useState} from 'react';
+import {IonButton, IonCard, IonCardContent, IonLabel, IonAlert, IonItem} from '@ionic/react';
+import React, {useEffect, useState} from 'react';
 import './InstallOTGW.scss';
-import {
-    closeCircleOutline, checkmarkCircleOutline
-} from "ionicons/icons";
 import {InstructionsInterface} from "../../services/InstructionsInterface";
-import {installationconfig} from '../../../package.json';
+import {BLE} from "@ionic-native/ble";
+import LoadingComponent from "../LoadingComponent";
 
 const InstallOTGW: React.FC<InstructionsInterface> = ({stepUpFunction, finishFunction, lastStep}) => {
 
     const [OTGWStep, setOTGWStep] = useState(0);
-    const [sensorIsLoading, setSensorIsLoading] = useState(false);
+    const [scanningBLE, setScanningBLE] = useState(false);
+    const [bleIDArray, setBleIDArray] = useState<string[]>([]);
+    const [showConnectDialog, setConnectDialog] = useState(false);
+    const [showSuccessDialog, setSuccessDialog] = useState(false);
+    const [showErrorDialog, setErrorDialog] = useState(false);
+    const [deviceID, setdeviceID] = useState("");
+    const [showLoadingComponent, setShowLoadingComponent] = useState(false);
 
-    // @ts-ignore
+    const startScanning = () => {
+        setShowLoadingComponent(true);
+        var list: string[] = [];
+        //Scans for devices and add them to the list
+        BLE.startScan([]).subscribe(device => {
+            console.log(JSON.stringify(device));
+            list.push(device.id);
+        });
+
+        setTimeout(() => {
+            BLE.stopScan().then(() => {
+                setBleIDArray(list);
+                setShowLoadingComponent(false);
+            });
+        }, 5000);
+    };
+
+    //Connects to the given MAC-adress
+    const connect = (id: string) => {
+        setShowLoadingComponent(true);
+            BLE.connect(id).subscribe((device) => {
+                console.log('connected');
+                console.log(JSON.stringify(device));
+                setShowLoadingComponent(false);
+                setSuccessDialog(true);
+            }, (device) => {
+                setShowLoadingComponent(false);
+                setErrorDialog(true);
+                console.log('disconnected');
+                console.log(JSON.stringify(device));
+            })
+
+        setInterval(() => {
+            BLE.isConnected(
+                id).then(() => {
+                    console.log("Peripheral is connected");
+                }, () => {
+                    console.log("Peripheral is *not* connected");
+                }
+            );
+        }, 2000)
+    };
+
+//    Opens the dialog asking to connect
+const openDialog = (id: string) =>{
+    setConnectDialog(true);
+    //Sets the device to connect
+    setdeviceID(id);
+};
     return (
         <IonCard className="instructions-card">
-            <IonCardHeader>
-                <IonBadge className={'stepCountBadge'}>Stap {installationconfig.OTGWstep}</IonBadge>
-                <IonCardTitle>Installeren apparaat</IonCardTitle>
-                <IonCardSubtitle className={'subTitleStep'}>Voer de onderstaande stappen uit om het apparaat te
-                    configureren.</IonCardSubtitle>
-
-            </IonCardHeader>
-            <IonGrid className={"deviceStatusesGrid"}>
-                <IonRow className={"titleStatusesDevices"}>Status apparaten:</IonRow>
-                <IonRow>
-                    <IonCol className={"centerContent"}>
-                        <IonItem className={'ion-text-center'} lines="none">
-                            <IonSpinner hidden={!sensorIsLoading} className={'weatherSpinner'}></IonSpinner>
-                            <IonIcon hidden={sensorIsLoading} className={"statusIconSuccess"} icon={checkmarkCircleOutline}/>
-                        </IonItem>
-                    </IonCol>
-                    <IonCol className={"centerContent"}>
-                        <IonItem  className={'ion-text-center'} lines="none">
-                            <IonSpinner hidden={!sensorIsLoading} className={'weatherSpinner'}></IonSpinner>
-                            <IonIcon hidden={sensorIsLoading} className={"statusIconError"} icon={closeCircleOutline}/>
-                        </IonItem>
-                    </IonCol>
-                    <IonCol className={"centerContent"}>
-                        <IonItem class="ion-align-items-center" lines="none">
-                            <IonSpinner hidden={!sensorIsLoading} className={'weatherSpinner'}></IonSpinner>
-                            <IonIcon hidden={sensorIsLoading} className={"statusIconSuccess"} icon={checkmarkCircleOutline}/>
-                        </IonItem>
-                    </IonCol>
-                </IonRow>
-                <IonRow>
-                    <IonCol className={"centerContent"}>
-                        <IonItem className={'ion-text-center'} lines="none">
-                            Sensor 1
-                        </IonItem>
-                    </IonCol>
-                    <IonCol className={"centerContent"}>
-                        <IonItem className={'ion-text-center'} lines="none">
-                            Sensor 2
-                        </IonItem>
-                    </IonCol>
-                    <IonCol className={"centerContent"}>
-                        <IonItem className={' '} lines="none">
-                            P1-stick
-                        </IonItem>
-                    </IonCol>
-                </IonRow>
-            </IonGrid>
-            {/*<IonImg className={'instructionImage'} src="/assets/Instructions/OpenThermLogo.jpg"/>*/}
-            <IonCardContent className={'instructionsContent'}>
-                Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-                <IonItem lines="none">
-                    <IonLabel> Lorem ipsum dolor sit amet</IonLabel>
-                    <IonNote className={"ionNoteSteps"} slot="start">
-                        <IonBadge className={"stepBadge"}>1</IonBadge>
-                    </IonNote>
-                </IonItem>
-                <IonItem lines="none">
-                    <IonLabel> Lorem ipsum dolor sit amet</IonLabel>
-                    <IonNote className={"ionNoteSteps"} slot="start">
-                        <IonBadge className={"stepBadge"}>2</IonBadge>
-                    </IonNote>
-                </IonItem>
-                <IonItem lines="none">
-                    <IonLabel> Lorem ipsum dolor sit amet</IonLabel>
-                    <IonNote className={"ionNoteSteps"} slot="start">
-                        <IonBadge className={"stepBadge"}>3</IonBadge>
-                    </IonNote>
-                </IonItem>
+            <LoadingComponent showLoading={showLoadingComponent}/>
+            <IonCardContent className="instructions-card-content">
+                <IonLabel>Instructie OTGW</IonLabel>
+                {!lastStep ? (
+                    <IonButton className="instructions-next-button"
+                               onClick={() => stepUpFunction()}>Volgende</IonButton>
+                ) : (
+                    <IonButton className="instructions-next-button"
+                               onClick={() => finishFunction()}>Afronden</IonButton>
+                )}
+                <IonButton onClick={() => startScanning()}>Op apparaten scannen</IonButton>
+                {bleIDArray.map((id: string) => (
+                    <IonCard class="deviceCard" id={id} onClick={() => openDialog(id)}>
+                        <IonCardContent>
+                            {id}
+                        </IonCardContent>
+                    </IonCard>
+                ))}
+                <IonAlert
+                    isOpen={showConnectDialog}
+                    onDidDismiss={() => setConnectDialog(false)}
+                    header={'Verbinden'}
+                    message={'Weet u zeker dat u wilt verbinden met dit apparaat?'}
+                    buttons={[
+                        {
+                            text: 'Annuleren',
+                            role: 'cancel',
+                            cssClass: 'secondary',
+                            handler: blah => {
+                            }
+                        },
+                        {
+                            text: 'Verbinden',
+                            handler: () => {
+                                connect(deviceID);
+                            }
+                        }
+                    ]}
+                />
+                <IonAlert
+                isOpen={showSuccessDialog}
+                onDidDismiss={() => setSuccessDialog(false)}
+                header={'Verbonden'}
+                message={`Verbonden met ${deviceID}`}
+                buttons={[
+                    {
+                        text: 'Ok',
+                        role: 'cancel',
+                        cssClass: 'secondary',
+                        handler: blah => {
+                        }
+                    }
+                ]}
+            />
+                <IonAlert
+                    isOpen={showErrorDialog}
+                    onDidDismiss={() => setErrorDialog(false)}
+                    header={'Verbinding mislukt'}
+                    message={`Verbinding mislukt met ${deviceID}`}
+                    buttons={[
+                        {
+                            text: 'Ok',
+                            role: 'cancel',
+                            cssClass: 'secondary',
+                            handler: blah => {
+                            }
+                        }
+                    ]}
+                />
             </IonCardContent>
-            {!lastStep ? (
-                <IonButton className="instructions-next-button" color={'warning'}
-                           onClick={() => stepUpFunction()}>Volgende</IonButton>
-            ) : (
-                <IonButton className="instructions-next-button" color={'warning'}
-                           onClick={() => finishFunction()}>Afronden</IonButton>
-            )}
         </IonCard>
     )
-}
+};
 
 export default InstallOTGW;
