@@ -7,8 +7,8 @@ export default {
         getTemperature: function() {
             return DatabaseAPI.get('/temperature')
         },
-        sendDeviceToken: function(token: any) {
-            return DatabaseAPI.post('/geenideenog', token)
+        sendDeviceToken: function(data: any) {
+            return DatabaseAPI.post('/geenideenog', data)
         }
     },
     weather: {
