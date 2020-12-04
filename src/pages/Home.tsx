@@ -125,11 +125,12 @@ const Home: React.FC = () => {
     }, [])
 
     useEffect(() => {
-        if(!chartsSet) {
+        if (!chartsSet) {
             //Chart elements from doc are selected and charts are added to them
             var chartElement1 = document.getElementById('chart1');
             var chartElement2 = document.getElementById('chart2');
             var chartElement3 = document.getElementById('chart3');
+
             var chart1 = new Chart(chartElement1, {
                 type: 'pie',
                 data: {
@@ -145,7 +146,9 @@ const Home: React.FC = () => {
                     }]
                 },
                 options: {
-
+                    maintainAspectRatio: true,
+                    responsive: true,
+                    width: '30%'
                 }
             });
             var chart2 = new Chart(chartElement2, {
@@ -163,7 +166,8 @@ const Home: React.FC = () => {
                     }]
                 },
                 options: {
-
+                    maintainAspectRatio: true,
+                    responsive: true
                 }
             })
             var chart3 = new Chart(chartElement3, {
@@ -179,6 +183,10 @@ const Home: React.FC = () => {
                         ],
                         borderWidth: 0
                     }]
+                },
+                options: {
+                    maintainAspectRatio: true,
+                    responsive: true
                 }
             })
             setChartsSet(true);
@@ -233,9 +241,15 @@ const Home: React.FC = () => {
                 <Link to={"/dashboard"} replace>
                     <IonCard className="dashboardCard">
                         <IonItem lines="none" className={"dashboardCardHeader"}>
-                            <canvas className="chart" id="chart1"/>
-                            <canvas className="chart" id="chart2"/>
-                            <canvas className="chart" id="chart3"/>
+                            <div className="chartContainer">
+                                <canvas className="chart" id="chart1"/>
+                            </div>
+                            <div className="chartContainer">
+                                <canvas className="chart" id="chart2"/>
+                            </div>
+                            <div className="chartContainer">
+                                <canvas className="chart" id="chart3"/>
+                            </div>
                         </IonItem>
                         <IonCardContent className={"dashboardCardContent"}>
                             <IonLabel>Dashboard</IonLabel>

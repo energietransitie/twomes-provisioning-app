@@ -73,11 +73,11 @@
 
 .dashboardCard {
   background: #4d4d4d;
-  height: 100px;
+  height: 20%;
 }
 
 .dashboardCardHeader {
-  height: 75px;
+  height: 75%;
 }
 
 .dashboardCardContent {
@@ -86,7 +86,7 @@
   position: absolute;
   top: unset;
   width: 32.5%;
-  height: 25px;
+  height: 25%;
   color: white;
   padding-bottom: 10px;
   padding-right: 10px;
@@ -101,7 +101,11 @@
 }
 
 .chart {
-  width: 100px!important;
-  height: 50px!important;
-  margin-top: 10px;
+  //width: 33%!important;
+  //margin-top: 10px;
+}
+
+.chartContainer {
+  width: 33%;
+  height: 100%;
 }
