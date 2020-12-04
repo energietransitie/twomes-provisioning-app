@@ -107,7 +107,7 @@ const App: React.FC = () => {
         var data = {
             "houseID": houseID
         }
-        var signedToken = jwt.sign(data, secret, {expiresIn: 10})
+        var signedToken = jwt.sign(data, secret, {expiresIn: '168h'})
 
         console.log(signedToken);
 
