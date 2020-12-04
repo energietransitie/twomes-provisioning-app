@@ -21,14 +21,14 @@
   background-image: linear-gradient(to right, #45B97C , #B1D249);
 }
 
-.instructions-card {
+.instructionsCard {
   background: #4d4d4d;
   height: 90%;
   margin: 5%;
 
 }
 
-.instructions-card-content {
+.instructionsCardContent {
   width: 100%;
   height: 100%;
   padding: 0;
@@ -38,7 +38,7 @@
 
 }
 
-.instructions-next-button {
+.instructionsNextButton {
   position: absolute;
   bottom: 0;
   right: 0;
@@ -84,7 +84,7 @@
   padding-right: 16px!important;
 }
 
-.instructions-next-button{
+.instructionsNextButton{
   border-radius: 10px;
   color: white!important;
 }
@@ -119,6 +119,6 @@
   height: 200%;
 }
 
-.search-again-button {
+.searchWifiNetworksButton {
   margin-left: 16px;
 }

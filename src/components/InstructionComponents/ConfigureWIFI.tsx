@@ -55,7 +55,9 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction}) => {
                 scanAvailableNetworks();
             } else {
                 showEnableWifiAlert();
-                setTimeout(() => {startWifiConfig();}, 300);
+                setTimeout(() => {
+                    startWifiConfig();
+                }, 300);
             }
         });
     }
@@ -209,7 +211,7 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction}) => {
     }
 
     return (
-        <IonCard className="instructions-card">
+        <IonCard className="instructionsCard">
             <AlertBox {...alert}/>
             <IonCardHeader>
                 <IonBadge className={'stepCountBadge'} color="success">Stap {installationconfig.WIFIstep}</IonBadge>
@@ -217,7 +219,7 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction}) => {
                 <IonCardSubtitle className={'subTitleStep'}>Invullen inloggegevens van het
                     thuisnetwerk.</IonCardSubtitle>
             </IonCardHeader>
-            <IonCardContent className="instructions-card-content">
+            <IonCardContent className="instructionsCardContent">
                 <IonGrid hidden={currentNetwork == ""} className={"deviceStatusesGrid"}>
                     <IonRow>
                         <h3>Momenteel verbonden: <h2><b>{currentNetwork}</b></h2></h3>
@@ -226,7 +228,10 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction}) => {
                         </IonButton>
                     </IonRow>
                 </IonGrid>
-                <IonButton className={"search-again-button"} color={"warning"} onClick={() => {setIsSearching(true); scanAvailableNetworks();}}>
+                <IonButton className={"searchWifiNetworksButton"} color={"warning"} onClick={() => {
+                    setIsSearching(true);
+                    scanAvailableNetworks();
+                }}>
                     Opnieuw zoeken
                 </IonButton>
                 <IonContent className={isSearching ? "scrollListLoading" : "scrollList"}>
@@ -241,30 +246,30 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction}) => {
                                 <h3>Netwerken zoeken...</h3>
                             </IonItem>
                         </IonRow>
-                            <IonCardContent className={"cardContent"}>
+                        <IonCardContent className={"cardContent"}>
 
-                                <IonList hidden={isSearching} className={"networkList"}>
-                                    {scanResults.length !== 0 && (scanResults.map((network) => network['SSID'] != '' && network['SSID'] != currentNetwork &&
-                                        <IonItem lines="none" button className={"itemNetwork"}
-                                                 onClick={() => showPasswordAlert(network['SSID'])
-                                                 }>
-                                            <IonAvatar className={"centerContent"} slot="start">
-                                                <IonImg className={"wifiSignalIcon"}
-                                                        src={"/assets/Instructions/" + getSignalIcon(network["level"]) + ".png"}></IonImg>
-                                            </IonAvatar>
-                                            <IonLabel color={'white'}>
-                                                <h2>{network['SSID']}</h2>
-                                                <h3>{subStringSecurity(network['capabilities'])}</h3>
-                                            </IonLabel>
-                                        </IonItem>
-                                    ))}
-                                </IonList>
-                            </IonCardContent>
+                            <IonList hidden={isSearching} className={"networkList"}>
+                                {scanResults.length !== 0 && (scanResults.map((network) => network['SSID'] != '' && network['SSID'] != currentNetwork &&
+                                    <IonItem lines="none" button className={"itemNetwork"}
+                                             onClick={() => showPasswordAlert(network['SSID'])
+                                             }>
+                                        <IonAvatar className={"centerContent"} slot="start">
+                                            <IonImg className={"wifiSignalIcon"}
+                                                    src={"/assets/Instructions/" + getSignalIcon(network["level"]) + ".png"}></IonImg>
+                                        </IonAvatar>
+                                        <IonLabel color={'white'}>
+                                            <h2>{network['SSID']}</h2>
+                                            <h3>{subStringSecurity(network['capabilities'])}</h3>
+                                        </IonLabel>
+                                    </IonItem>
+                                ))}
+                            </IonList>
+                        </IonCardContent>
                     </IonCardContent>
                 </IonContent>
 
             </IonCardContent>
-            <IonButton color={'warning'} className="instructions-next-button"
+            <IonButton color={'warning'} className="instructionsNextButton"
                        onClick={() => stepUpFunction()}>Volgende</IonButton>
         </IonCard>
     )

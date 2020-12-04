@@ -35,7 +35,7 @@ const InstallSensors: React.FC<InstructionsInterface> = ({stepUpFunction, finish
 
     // @ts-ignore
     return (
-        <IonCard className="instructions-card">
+        <IonCard className="instructionsCard">
             <IonCardHeader>
                 <IonBadge className={'stepCountBadge'}>Stap {installationconfig.OTGWstep}</IonBadge>
                 <IonCardTitle>Installeren apparaat</IonCardTitle>
@@ -106,10 +106,10 @@ const InstallSensors: React.FC<InstructionsInterface> = ({stepUpFunction, finish
                 </IonItem>
             </IonCardContent>
             {!lastStep ? (
-                <IonButton className="instructions-next-button" color={'warning'}
+                <IonButton className="instructionsNextButton" color={'warning'}
                            onClick={() => stepUpFunction()}>Volgende</IonButton>
             ) : (
-                <IonButton className="instructions-next-button" color={'warning'}
+                <IonButton className="instructionsNextButton" color={'warning'}
                            onClick={() => finishFunction()}>Afronden</IonButton>
             )}
         </IonCard>
