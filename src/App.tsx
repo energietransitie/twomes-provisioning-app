@@ -40,9 +40,9 @@ import './theme/main.scss';
 
 import {FirebaseDynamicLinks} from "@ionic-native/firebase-dynamic-links";
 
-var DashboardIcon = Icons().DashboardIcon();
-var HomeIcon = Icons().HomeIcon();
-var SensorIcon = Icons().SensorIcon();
+var dashboardIcon = Icons().DashboardIcon();
+var homeIcon = Icons().HomeIcon();
+var sensorIcon = Icons().SensorIcon();
 
 const setItem = LocalStorage().setItem;
 const getItem = LocalStorage().getItem;
@@ -129,13 +129,13 @@ const App: React.FC = () => {
                     </IonRouterOutlet>
                     <IonTabBar slot="bottom" id="tabBar">
                         <IonTabButton tab="home" href="/home">
-                            {HomeIcon}
+                            {homeIcon}
                         </IonTabButton>
                         <IonTabButton tab="dashboard" href="/dashboard">
-                            {DashboardIcon}
+                            {dashboardIcon}
                         </IonTabButton>
                         <IonTabButton tab="sensors" href="/sensors">
-                            {SensorIcon}
+                            {sensorIcon}
                         </IonTabButton>
                     </IonTabBar>
                 </IonTabs>

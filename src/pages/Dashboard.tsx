@@ -23,7 +23,7 @@ import {RefresherEventDetail} from '@ionic/core';
 const setItem = LocalStorage().setItem;
 const getItem = LocalStorage().getItem;
 const localization = require("moment/locale/nl");
-const Chart = require('chart.js');
+const chart = require('chart.js');
 
 const Dashboard: React.FC = () => {
 
@@ -36,23 +36,7 @@ const Dashboard: React.FC = () => {
     //Set the locale for moment to the Netherlands
     moment.locale("nl", localization);
 
-    //Get random Number function to test Storage functionality
-    const getRandomNumber = () => {
-        API.weather.getRandomNumber().then((response) => {
-            var data = {
-                apidata: response.data.toString(),
-                timestamp: moment().format('hh:mm:ss DD-MM-YYYY') //Current time
-            };
-            setItem('randomnumber', JSON.stringify(data));
-        }, (err) => {
-            getItem('randomnumber').then(value => {
-                var data = JSON.parse(value!);
-                console.log('no wifi, old value:' + data.apidata);
-                console.log('timestamp: ' + data.timestamp);
-            })
-        });
-    };
-
+    // Fill datasets with data
     useEffect(() => {
         if (!dataSet || (dataSet && refreshing)) {
             var tempdata = [{
@@ -227,10 +211,10 @@ const Dashboard: React.FC = () => {
         }
     }, [refreshing])
 
+    // Create charts based on datasets
     useEffect(() => {
         if ((!graphsSet && dataSet) || (graphsSet && refreshing)) {
-            console.log(graphData1);
-            var chart1 = new Chart("dataChart1", {
+            var chart1 = new chart("dataChart1", {
                 type: 'line',
                 data: {
                     labels: graphData1.labels,
@@ -238,7 +222,7 @@ const Dashboard: React.FC = () => {
                         label: graphData1.title,
                         data: graphData1.data,
                         backgroundColor: 'transparent',
-                        borderColor: 'rgba(255,153,51)'
+                        borderColor: 'rgba(255,153,51)' // Light orange
                     }]
                 },
                 options: {
@@ -270,7 +254,7 @@ const Dashboard: React.FC = () => {
                     }
                 }
             })
-            var chart2 = new Chart("dataChart2", {
+            var chart2 = new chart("dataChart2", {
                 type: 'line',
                 data: {
                     labels: graphData2.labels,
@@ -278,7 +262,7 @@ const Dashboard: React.FC = () => {
                         label: graphData2.title,
                         data: graphData2.data,
                         backgroundColor: 'transparent',
-                        borderColor: 'rgba(0,255,128)'
+                        borderColor: 'rgba(0,255,128)' // Light green
                     }]
                 },
                 options: {
@@ -314,6 +298,8 @@ const Dashboard: React.FC = () => {
         }
     }, [dataSet, refreshing])
 
+
+    // Refresh function, all useEffects with 'refreshing' as dependency will be triggered on pulldown
     const refresh = (event: CustomEvent<RefresherEventDetail>) => {
         setRefreshing(true);
         setTimeout(() => {
