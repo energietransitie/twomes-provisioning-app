@@ -36,8 +36,6 @@ const Instructions: React.FC = () => {
         tabBar!.style.display = "flex";
     })
 
-
-
     // Check the current step only once on loading the page
     useEffect(() => {
         if (!currentStepSet) {
@@ -101,7 +99,7 @@ const Instructions: React.FC = () => {
                         <IonTitle slot="start">Instructies</IonTitle>
                     </IonToolbar>
                 </IonHeader>
-                <IonContent>
+                <IonContent fullscreen>
                     {currentStep === installationconfig.OTGWstep && (
                         <InstallOTGW stepUpFunction={stepUp} finishFunction={completeInstructions} lastStep={userID.split("")[0] === "1"}/>
                     )}
