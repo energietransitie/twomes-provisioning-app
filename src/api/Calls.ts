@@ -9,6 +9,12 @@ export default {
         },
         sendDeviceToken: function(data: any) {
             return DatabaseAPI.post('/geenideenog', data)
+        },
+        createToken: function(id: string) {
+            var data: any = {
+                houseID: id
+            };
+            return DatabaseAPI.get('/create_token', data);
         }
     },
     weather: {

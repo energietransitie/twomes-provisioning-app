@@ -120,6 +120,17 @@ const Home: React.FC = () => {
             setInstructionsChecked(true);
         }
     }, [])
+
+    useEffect(() => {
+        API.database.createToken("123").then((response) => {
+            console.log("Success");
+            console.log(response.data);
+        }, (err) => {
+            console.log("Failure");
+            console.log(err);
+        })
+    })
+
     return (
         <IonPage>
             <IonHeader>

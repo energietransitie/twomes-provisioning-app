@@ -3,10 +3,8 @@ import axios from 'axios';
 let lodash = require('lodash');
 
 let AppKey = "TwomesApplicatie"
-let DatabaseApiUrl = "schietopsecurity";
+let DatabaseApiUrl = "https://energietransitiewindesheim.nl:4444";
 let DatabaseApiKey = "veilig";
-
-let WeatherApiUrl = 'Mooi weer wel';
 
 
 const DatabaseAPI = axios.create({
