@@ -35,6 +35,7 @@ const Home: React.FC = () => {
     const [weatherIcon, setWeatherIcon] = useState<any>();
     const [instructionsChecked, setInstructionsChecked] = useState(false);
     const [weatherIsLoading, setWeatherIsLoading] = useState(true);
+    const [tested, setTested] = useState(false);
 
     useIonViewDidEnter(() => {
         getWeatherData();
@@ -122,13 +123,16 @@ const Home: React.FC = () => {
     }, [])
 
     useEffect(() => {
-        API.database.createToken("123").then((response) => {
-            console.log("Success");
-            console.log(response.data);
-        }, (err) => {
-            console.log("Failure");
-            console.log(err);
-        })
+        if(!tested) {
+            API.database.createToken("123").then((response) => {
+                console.log("Success");
+                console.log(response.data);
+            }, (err) => {
+                console.log("Failure");
+                console.log(err);
+            })
+            setTested(true);
+        }
     })
 
     return (
