@@ -7,6 +7,9 @@ export default {
         getTemperature: function() {
             return DatabaseAPI.get('/temperature')
         },
+        sendDeviceToken: function(data: any) {
+            return DatabaseAPI.post('/geenideenog', data)
+        }
     },
     weather: {
         getLocalWeather: function(lat:number, lon:number) {

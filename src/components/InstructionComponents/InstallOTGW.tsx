@@ -36,17 +36,17 @@ const InstallOTGW: React.FC<InstructionsInterface> = ({stepUpFunction, finishFun
     //Connects to the given MAC-adress
     const connect = (id: string) => {
         setShowLoadingComponent(true);
-            BLE.connect(id).subscribe((device) => {
-                console.log('connected');
-                console.log(JSON.stringify(device));
-                setShowLoadingComponent(false);
-                setSuccessDialog(true);
-            }, (device) => {
-                setShowLoadingComponent(false);
-                setErrorDialog(true);
-                console.log('disconnected');
-                console.log(JSON.stringify(device));
-            })
+        BLE.connect(id).subscribe((device) => {
+            console.log('connected');
+            console.log(JSON.stringify(device));
+            setShowLoadingComponent(false);
+            setSuccessDialog(true);
+        }, (device) => {
+            setShowLoadingComponent(false);
+            setErrorDialog(true);
+            console.log('disconnected');
+            console.log(JSON.stringify(device));
+        })
 
         setInterval(() => {
             BLE.isConnected(
@@ -59,22 +59,22 @@ const InstallOTGW: React.FC<InstructionsInterface> = ({stepUpFunction, finishFun
         }, 2000)
     };
 
-//    Opens the dialog asking to connect
-const openDialog = (id: string) =>{
-    setConnectDialog(true);
-    //Sets the device to connect
-    setdeviceID(id);
-};
+    //Opens the dialog asking to connect
+    const openDialog = (id: string) => {
+        setConnectDialog(true);
+        //Sets the device to connect
+        setdeviceID(id);
+    };
     return (
-        <IonCard className="instructions-card">
+        <IonCard className="instructionsCard">
             <LoadingComponent showLoading={showLoadingComponent}/>
-            <IonCardContent className="instructions-card-content">
+            <IonCardContent className="instructionsCardContent">
                 <IonLabel>Instructie OTGW</IonLabel>
                 {!lastStep ? (
-                    <IonButton className="instructions-next-button"
+                    <IonButton className="instructionsNextButton"
                                onClick={() => stepUpFunction()}>Volgende</IonButton>
                 ) : (
-                    <IonButton className="instructions-next-button"
+                    <IonButton className="instructionsNextButton"
                                onClick={() => finishFunction()}>Afronden</IonButton>
                 )}
                 <IonButton onClick={() => startScanning()}>Op apparaten scannen</IonButton>
@@ -107,20 +107,20 @@ const openDialog = (id: string) =>{
                     ]}
                 />
                 <IonAlert
-                isOpen={showSuccessDialog}
-                onDidDismiss={() => setSuccessDialog(false)}
-                header={'Verbonden'}
-                message={`Verbonden met ${deviceID}`}
-                buttons={[
-                    {
-                        text: 'Ok',
-                        role: 'cancel',
-                        cssClass: 'secondary',
-                        handler: blah => {
+                    isOpen={showSuccessDialog}
+                    onDidDismiss={() => setSuccessDialog(false)}
+                    header={'Verbonden'}
+                    message={`Verbonden met ${deviceID}`}
+                    buttons={[
+                        {
+                            text: 'Ok',
+                            role: 'cancel',
+                            cssClass: 'secondary',
+                            handler: blah => {
+                            }
                         }
-                    }
-                ]}
-            />
+                    ]}
+                />
                 <IonAlert
                     isOpen={showErrorDialog}
                     onDidDismiss={() => setErrorDialog(false)}
