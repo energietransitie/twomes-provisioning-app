@@ -252,7 +252,6 @@ const Home: React.FC = () => {
                             </div>
                         </IonItem>
                         <IonCardContent className={"dashboardCardContent"}>
-                            <IonLabel>Dashboard</IonLabel>
                             <IonIcon className="dashboardIcon" icon={arrowForwardOutline}/>
                         </IonCardContent>
                     </IonCard>
