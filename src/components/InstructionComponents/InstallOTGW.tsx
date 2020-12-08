@@ -5,8 +5,8 @@ import {
     IonLabel,
     IonAlert,
     IonItem,
-    useIonViewDidEnter,
-    IonList
+    IonList,
+    useIonViewDidEnter, IonAvatar
 } from '@ionic/react';
 import React, {useEffect, useState} from 'react';
 import './InstallOTGW.scss';
@@ -30,6 +30,7 @@ const InstallOTGW: React.FC<InstructionsInterface> = ({stepUpFunction, finishFun
         checkBleutooth();
     });
 
+    //Enables the bluetooth in android, will give an alert in IOS if bluetooth is off
     const checkBleutooth = () =>{
         BLE.enable();
         if(!BLE.isEnabled()){
@@ -102,11 +103,12 @@ const openDialog = (id: string) =>{
                 <IonButton onClick={() => startScanning()}>Op apparaten scannen</IonButton>
                 <IonList className="idList">
                     {bleIDArray.map((value: any) => (
-                        <IonCard class="deviceCard" id={value.id} onClick={() => openDialog(value.id)}>
-                            <IonCardContent>
-                                {value.name} ({value.id})
-                            </IonCardContent>
-                        </IonCard>
+                        <IonItem button id={value.id} onClick={() => openDialog(value.id)}>
+                            <IonLabel color={'white'}>
+                                <h2>{value.name}</h2>
+                                <h3>{value.id}</h3>
+                            </IonLabel>
+                        </IonItem>
                     ))}
                 </IonList>
                 <IonAlert

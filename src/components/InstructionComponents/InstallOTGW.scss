@@ -6,6 +6,9 @@
 .deviceCard:active{
   background: #2dd36f;
   color: white;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
 }
 .idList{
   overflow: scroll;
