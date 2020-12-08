@@ -1,0 +1,16 @@
+{
+  "appId": "app.twomes.warmtewachter",
+  "appName": "WarmteWachter",
+  "bundledWebRuntime": false,
+  "npmClient": "yarn",
+  "webDir": "build",
+  "plugins": {
+    "SplashScreen": {
+      "launchShowDuration": 0
+    },
+    "LocalNotifications": {
+      "smallIcon": "main_icon"
+    }
+  },
+  "cordova": {}
+}

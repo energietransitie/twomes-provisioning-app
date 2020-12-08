@@ -1,12 +1,15 @@
 {
-  "appId": "io.ionic.starter",
-  "appName": "twomes",
+  "appId": "app.twomes.warmtewachter",
+  "appName": "WarmteWachter",
   "bundledWebRuntime": false,
-  "npmClient": "npm",
+  "npmClient": "yarn",
   "webDir": "build",
   "plugins": {
     "SplashScreen": {
-      "launchShowDuration": 0
+      "launchAutoHide": true
+    },
+    "LocalNotifications": {
+      "smallIcon": "main_icon"
     }
   },
   "cordova": {}

@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "320547820715",
+    "firebase_url": "https://warmtewachter.firebaseio.com",
+    "project_id": "warmtewachter",
+    "storage_bucket": "warmtewachter.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:320547820715:android:a916684c2099beb1d393ee",
+        "android_client_info": {
+          "package_name": "app.twomes.warmtewachter"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "320547820715-ah98953847ab9egfhe2jdbf3fd7b6666.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "app.twomes.warmtewachter",
+            "certificate_hash": "1baab5bd28efe4ca111cb3efe63b01ba03150565"
+          }
+        },
+        {
+          "client_id": "320547820715-4aji28vmbndvt08ktslu5d23m1t06adm.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCSe9M1CFhyX1yqE3ZU5aVtSZWQQHOrDh0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "320547820715-4aji28vmbndvt08ktslu5d23m1t06adm.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
