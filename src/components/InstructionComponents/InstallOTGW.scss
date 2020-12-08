@@ -1,8 +1,12 @@
 .deviceCard{
   background: #333333;
   color: white;
+  height: 200px;
 }
 .deviceCard:active{
   background: #2dd36f;
   color: white;
+}
+.idList{
+  overflow: scroll;
 }
