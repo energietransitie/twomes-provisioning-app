@@ -71,6 +71,7 @@ const App: React.FC = () => {
                 senddata = {
                     houseID: info.uuid.toString()
                 }
+                console.log(info.uuid.toString());
             })
 
             //Get encrypted key from API
