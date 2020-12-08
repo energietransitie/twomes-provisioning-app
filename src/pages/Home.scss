@@ -1,5 +1,25 @@
 .sensorStatusCard {
   background: #4d4d4d;
+  height: 80px;
+}
+
+.sensorCardContent {
+  padding-top: 8px;
+}
+
+.sensorAvatar {
+  width: 50px;
+  height: 50px;
+  margin-left: -20px;
+}
+
+.sensorIcon {
+  width: 50px;
+  height: 50px;
+}
+
+.sensorLabel {
+  font-size: 10px;
 }
 
 .weatherCard {
@@ -49,4 +69,28 @@
   color:white!important;
   font-weight: 100 !important;
 
+}
+
+.dashboardCard {
+  background: #4d4d4d;
+}
+
+.dashboardCardContent {
+  bottom: 0;
+  right: 0;
+  position: absolute;
+  top: unset;
+  width: 32.5%;
+  height: 25%;
+  color: white;
+  padding-bottom: 10px;
+  padding-right: 10px;
+}
+
+.dashboardIcon {
+  color: white;
+  right: 10px;
+  height: 25px;
+  width: 25px;
+  position: absolute;
 }

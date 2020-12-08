@@ -1,45 +1,159 @@
 .tab-selected {
-  #svgGradient {
-    --color-stop-1:#45B97C;
-    --color-stop-2:#B1D249;
+  #svgGradientHome {
+    --color-stop-1: #45B97C;
+    --color-stop-2: #B1D249;
   }
 
-  #icon {
-    stroke: url(#svgGradient) black;
-    fill: url(#svgGradient) black;
+  #svgGradientDashboard {
+    --color-stop-1: #45B97C;
+    --color-stop-2: #B1D249;
+  }
+
+  #svgGradientSensors {
+    --color-stop-1: #45B97C;
+    --color-stop-2: #B1D249;
+  }
+
+  #tabHomeIcon {
+    stroke: url(#svgGradientHome) black;
+    fill: url(#svgGradientHome) black;
     width: 25%;
   }
+
+  #tabDashboardIcon {
+    stroke: url(#svgGradientDashboard) black;
+    fill: url(#svgGradientDashboard) black;
+    width: 25%;
+  }
+
+  #tabSensorsIcon {
+    stroke: url(#svgGradientSensors) black;
+    fill: url(#svgGradientSensors) black;
+    width: 25%;
+  }
+
 }
 
-#icon {
+#tabHomeIcon {
+  stroke: white;
+  fill: white;
+  width: 25%;
+}
+
+#tabDashboardIcon {
+  stroke: white;
+  fill: white;
+  width: 25%;
+}
+
+#tabSensorsIcon {
   stroke: white;
   fill: white;
   width: 25%;
 }
 
 .gradientBackgroundColor {
-  background-image: linear-gradient(to right, #45B97C , #B1D249);
+  background-image: linear-gradient(to right, #45B97C, #B1D249);
 }
 
-.instructions-card {
+.instructionsCard {
   background: #4d4d4d;
   height: 90%;
   margin: 5%;
+
 }
 
-.instructions-card-content {
+.instructionsCardContent {
   width: 100%;
   height: 100%;
   padding: 0;
   padding-inline-start: 0;
   padding-inline-end: 0;
   color: white;
+
 }
 
-.instructions-next-button {
+.instructionsNextButton {
   position: absolute;
   bottom: 0;
   right: 0;
   margin-right: 5%;
   margin-bottom: 5%;
+}
+
+// Styling Instructionspage
+
+.subTitleStep {
+  color: white;
+  font-weight: normal;
+  text-transform: unset !important;
+}
+
+.instructionImage {
+  padding: 16px;
+}
+
+.instructionsContent {
+  color: white !important;
+  font-size: 16px;
+}
+
+.instructionsList IonItem {
+  font-size: 16px !important;
+}
+
+.stepCountBadge {
+  background-color: #45B97C !important;
+  color: white;
+  font-size: 16px;
+  font-weight: normal;
+  padding: 3px 8px;
+}
+
+.stepBadge {
+  background-color: #45B97C !important;
+}
+
+.ionNoteSteps {
+  margin: 0px !important;
+  padding-right: 16px !important;
+}
+
+.instructionsNextButton {
+  border-radius: 10px;
+  color: white !important;
+}
+
+.button-inner {
+  color: white !important;
+}
+
+.networkList {
+  padding: 0px !important;
+  background-color: #4d4d4d !important;
+}
+
+.scrollList {
+  padding-top: 100px !important;
+  --background: #4d4d4d !important;
+}
+
+.scrollListLoading {
+  padding-top: 100px !important;
+  background-color: #4d4d4d !important;
+  --overflow: hidden !important;
+}
+
+.cardContent {
+  background-color: #4d4d4d !important;
+  padding: 0px !important;
+}
+
+.cardContentLoading {
+  background-color: #4d4d4d !important;
+  height: 200%;
+}
+
+.searchWifiNetworksButton {
+  margin-left: 16px;
 }
