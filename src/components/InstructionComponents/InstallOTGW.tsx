@@ -27,11 +27,11 @@ const InstallOTGW: React.FC<InstructionsInterface> = ({stepUpFunction, finishFun
     var list: object[] = [];
 
     useIonViewDidEnter(() => {
-        checkBleutooth();
+        checkBluetooth();
     });
 
-    //Enables the bluetooth in android, will give an alert in IOS if bluetooth is off
-    const checkBleutooth = () =>{
+    //Enables the bluetooth in Android, will give an alert in iOS if bluetooth is off
+    const checkBluetooth = () =>{
         BLE.enable();
         if(!BLE.isEnabled()){
             alert("Zet uw Bluetooth aan om verbinding te kunnen maken met de apparaten.")
