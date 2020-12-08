@@ -8,11 +8,12 @@ import {
     IonTabs
 } from '@ionic/react';
 import {IonReactRouter} from '@ionic/react-router';
-import Home from './pages/Home';
-import Dashboard from './pages/Dashboard';
-import Sensors from './pages/Sensors';
-import Settings from "./pages/Settings";
-import Instructions from "./pages/Instructions";
+import Home from './pages/app/Home';
+import Dashboard from './pages/app/Dashboard';
+import Sensors from './pages/app/Sensors';
+import Settings from "./pages/app/Settings";
+import Instructions from "./pages/app/Instructions";
+import Error from "./pages/Error";
 import {LocalStorage} from "./services/Storage";
 import {Icons} from "./components/Icons";
 import API from "./api/Calls";
@@ -53,6 +54,7 @@ const jwt = require('jsonwebtoken');
 const App: React.FC = () => {
 
     const [tokenChecked, setTokenChecked] = useState(false);
+    const [firebaseLinkUsed, setFirebaseLinkUsed] = useState(false);
 
     FirebaseDynamicLinks.onDynamicLink().subscribe((data: any) => {
         console.log("dynamic Link triggered");
@@ -61,10 +63,21 @@ const App: React.FC = () => {
         var id = url.split('https://app.twomes.warmtewachter/')[1];
         console.log("userID: " + id);
         setItem("userID", id);
+        setItem("firebaseLinkUsed", '1');
     });
 
     useEffect(() => {
-        if (!tokenChecked) {
+        if(!firebaseLinkUsed) {
+            getItem("firebaseLinkUsed").then((linkUsed: any) => {
+                if (linkUsed == '1') {
+                    setFirebaseLinkUsed(true);
+                }
+            })
+        }
+    })
+
+    useEffect(() => {
+        if (!tokenChecked && firebaseLinkUsed) {
             var senddata = {}
             //Get System UUID for API
             Device.getInfo().then((info: any) => {
@@ -118,6 +131,7 @@ const App: React.FC = () => {
     return (
         <IonApp>
             <IonReactRouter>
+                {firebaseLinkUsed ? (
                 <IonTabs>
                     <IonRouterOutlet>
                         <Route path="/home" component={Home} exact={true}/>
@@ -139,6 +153,12 @@ const App: React.FC = () => {
                         </IonTabButton>
                     </IonTabBar>
                 </IonTabs>
+                ) : (
+                    <IonRouterOutlet>
+                        <Route path="/error" component={Error} exact={true}/>
+                        <Route path="/" render={() => <Redirect to="/error"/>} exact={true} />
+                    </IonRouterOutlet>
+                )}
             </IonReactRouter>
         </IonApp>
     )

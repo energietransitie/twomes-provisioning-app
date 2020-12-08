@@ -1,6 +1,6 @@
 import React from 'react';
 import {IonButton, IonButtons, IonContent, IonHeader, IonIcon, IonPage, IonTitle, IonToolbar} from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
+import ExploreContainer from '../../components/ExploreContainer';
 import './Sensors.scss';
 import {settingsSharp} from "ionicons/icons";
 import {
