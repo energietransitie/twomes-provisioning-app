@@ -40,8 +40,8 @@ import './theme/main.scss';
 
 import {FirebaseDynamicLinks} from "@ionic-native/firebase-dynamic-links";
 
-var HomeIcon = Icons().HomeIcon();
 var DashboardIcon = Icons().DashboardIcon();
+var HomeIcon = Icons().HomeIcon();
 var SensorIcon = Icons().SensorIcon();
 
 const setItem = LocalStorage().setItem;
