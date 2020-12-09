@@ -56,21 +56,25 @@ const App: React.FC = () => {
     const [tokenChecked, setTokenChecked] = useState(false);
     const [firebaseLinkUsed, setFirebaseLinkUsed] = useState(false);
     const [linkChecked, setLinkChecked] = useState(false);
+    const [firebaseTriggered, setFirebaseTriggered] = useState(false);
 
     FirebaseDynamicLinks.onDynamicLink().subscribe((data: any) => {
+        setFirebaseTriggered(true);
         console.log("dynamic Link triggered");
         console.log("data: " + JSON.stringify(data));
         var url = data.deepLink;
         var id = url.split('https://app.twomes.warmtewachter/')[1];
         console.log("userID: " + id);
         setItem("userID", id);
-        setItem("firebaseLinkUsed", '1');
+        setItem("firebaseLinkUsed", 'true');
+        setFirebaseLinkUsed(true);
+        window.location.href = '/home';
     });
 
     useEffect(() => {
-        if (!firebaseLinkUsed) {
+        if (!linkChecked) {
             getItem("firebaseLinkUsed").then((linkUsed: any) => {
-                if (linkUsed == '1') {
+                if (linkUsed == 'true') {
                     setFirebaseLinkUsed(true);
                 }
                 setLinkChecked(true);
@@ -109,7 +113,7 @@ const App: React.FC = () => {
             });
             // }, (err) => {console.log(err)})
         }
-    }, [])
+    }, [firebaseLinkUsed])
 
     // Generate JWT token based on secret key
     const generateJWTToken = (secret: string) => {
@@ -130,11 +134,10 @@ const App: React.FC = () => {
         setTokenChecked(true);
     }
 
-    if (linkChecked) {
+    if (firebaseTriggered) {
         return (
             <IonApp>
                 <IonReactRouter>
-                    {firebaseLinkUsed ? (
                         <IonTabs>
                             <IonRouterOutlet>
                                 <Route path="/home" component={Home} exact={true}/>
@@ -156,19 +159,18 @@ const App: React.FC = () => {
                                 </IonTabButton>
                             </IonTabBar>
                         </IonTabs>
-                    ) : (
-                        <IonRouterOutlet>
-                            <Route path="/error" component={Error} exact={true}/>
-                            <Route path="/" render={() => <Redirect to="/error"/>} exact={true}/>
-                        </IonRouterOutlet>
-                    )}
                 </IonReactRouter>
             </IonApp>
         )
     } else {
         return (
             <IonApp>
-
+                <IonReactRouter>
+                    <IonRouterOutlet>
+                        <Route path="/error" component={Error} exact={true}/>
+                        <Route path="/" render={() => <Redirect to="/error"/>} exact={true}/>
+                    </IonRouterOutlet>
+                </IonReactRouter>
             </IonApp>
         )
     }

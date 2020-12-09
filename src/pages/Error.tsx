@@ -9,7 +9,7 @@ import {
     IonCardHeader,
     IonButton
 } from '@ionic/react';
-import React from 'react';
+import React, {useEffect} from 'react';
 import {LocalStorage} from "../services/Storage";
 
 const getItem = LocalStorage().getItem;
@@ -20,6 +20,10 @@ const Error: React.FC = () => {
         setItem("firebaseLinkUsed", '1');
         window.location.href = '/home';
     }
+
+    useEffect(() => {
+        getItem(())
+    })
 
     return (
         <IonPage>
