@@ -55,6 +55,7 @@ const App: React.FC = () => {
 
     const [tokenChecked, setTokenChecked] = useState(false);
     const [firebaseLinkUsed, setFirebaseLinkUsed] = useState(false);
+    const [linkChecked, setLinkChecked] = useState(false);
 
     FirebaseDynamicLinks.onDynamicLink().subscribe((data: any) => {
         console.log("dynamic Link triggered");
@@ -67,11 +68,12 @@ const App: React.FC = () => {
     });
 
     useEffect(() => {
-        if(!firebaseLinkUsed) {
+        if (!firebaseLinkUsed) {
             getItem("firebaseLinkUsed").then((linkUsed: any) => {
                 if (linkUsed == '1') {
                     setFirebaseLinkUsed(true);
                 }
+                setLinkChecked(true);
             })
         }
     })
@@ -128,40 +130,48 @@ const App: React.FC = () => {
         setTokenChecked(true);
     }
 
-    return (
-        <IonApp>
-            <IonReactRouter>
-                {firebaseLinkUsed ? (
-                <IonTabs>
-                    <IonRouterOutlet>
-                        <Route path="/home" component={Home} exact={true}/>
-                        <Route path="/dashboard" component={Dashboard} exact={true}/>
-                        <Route path="/sensors" component={Sensors}/>
-                        <Route path="/settings" component={Settings} exact={true}/>
-                        <Route path="/instructions" component={Instructions} exact={true}/>
-                        <Route path="/" render={() => <Redirect to="/home"/>} exact={true}/>
-                    </IonRouterOutlet>
-                    <IonTabBar slot="bottom" id="tabBar">
-                        <IonTabButton tab="home" href="/home">
-                            {homeIcon}
-                        </IonTabButton>
-                        <IonTabButton tab="dashboard" href="/dashboard">
-                            {dashboardIcon}
-                        </IonTabButton>
-                        <IonTabButton tab="sensors" href="/sensors">
-                            {sensorIcon}
-                        </IonTabButton>
-                    </IonTabBar>
-                </IonTabs>
-                ) : (
-                    <IonRouterOutlet>
-                        <Route path="/error" component={Error} exact={true}/>
-                        <Route path="/" render={() => <Redirect to="/error"/>} exact={true} />
-                    </IonRouterOutlet>
-                )}
-            </IonReactRouter>
-        </IonApp>
-    )
+    if (linkChecked) {
+        return (
+            <IonApp>
+                <IonReactRouter>
+                    {firebaseLinkUsed ? (
+                        <IonTabs>
+                            <IonRouterOutlet>
+                                <Route path="/home" component={Home} exact={true}/>
+                                <Route path="/dashboard" component={Dashboard} exact={true}/>
+                                <Route path="/sensors" component={Sensors}/>
+                                <Route path="/settings" component={Settings} exact={true}/>
+                                <Route path="/instructions" component={Instructions} exact={true}/>
+                                <Route path="/" render={() => <Redirect to="/home"/>} exact={true}/>
+                            </IonRouterOutlet>
+                            <IonTabBar slot="bottom" id="tabBar">
+                                <IonTabButton tab="home" href="/home">
+                                    {homeIcon}
+                                </IonTabButton>
+                                <IonTabButton tab="dashboard" href="/dashboard">
+                                    {dashboardIcon}
+                                </IonTabButton>
+                                <IonTabButton tab="sensors" href="/sensors">
+                                    {sensorIcon}
+                                </IonTabButton>
+                            </IonTabBar>
+                        </IonTabs>
+                    ) : (
+                        <IonRouterOutlet>
+                            <Route path="/error" component={Error} exact={true}/>
+                            <Route path="/" render={() => <Redirect to="/error"/>} exact={true}/>
+                        </IonRouterOutlet>
+                    )}
+                </IonReactRouter>
+            </IonApp>
+        )
+    } else {
+        return (
+            <IonApp>
+
+            </IonApp>
+        )
+    }
 };
 
 export default App;
