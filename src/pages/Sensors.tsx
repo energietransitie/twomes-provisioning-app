@@ -13,13 +13,12 @@ import {
 } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import './Sensors.scss';
-import {hardwareChip, settingsSharp} from "ionicons/icons";
+import {hardwareChip, settingsSharp, thermometer} from "ionicons/icons";
 import {
     Plugins
 } from '@capacitor/core';
 import {Icons} from "../components/Icons";
 const {LocalNotifications } = Plugins;
-var sensorIcon = Icons().SensorIcon();
 
 const Sensors: React.FC = () => {
     const [sensorArray, setSensorArray] = useState<object[]>([]);
@@ -102,8 +101,8 @@ const Sensors: React.FC = () => {
                 {sensorArray.map((value: any) => (
                     <IonCard className="sensorCard">
                     <IonCardContent className={value.status}>
-                    <div className="sensorIcon">
-                    {sensorIcon}
+                    <div>
+                        <IonIcon className='sensorIcon' icon={thermometer}/>
                     </div>
                     {value.name}
                     </IonCardContent>

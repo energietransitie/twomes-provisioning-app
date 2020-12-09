@@ -42,7 +42,7 @@ import {FirebaseDynamicLinks} from "@ionic-native/firebase-dynamic-links";
 
 var dashboardIcon = Icons().DashboardIcon();
 var homeIcon = Icons().HomeIcon();
-var sensorIcon = Icons().SensorIcon();
+var sensorsIcon = Icons().sensorsIcon();
 
 const setItem = LocalStorage().setItem;
 const getItem = LocalStorage().getItem;
@@ -135,7 +135,7 @@ const App: React.FC = () => {
                             {dashboardIcon}
                         </IonTabButton>
                         <IonTabButton tab="sensors" href="/sensors">
-                            {sensorIcon}
+                            {sensorsIcon}
                         </IonTabButton>
                     </IonTabBar>
                 </IonTabs>

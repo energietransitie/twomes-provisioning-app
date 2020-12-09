@@ -140,7 +140,7 @@ const Home: React.FC = () => {
                     <IonCardContent className={"sensorCardContent"}>
                         <IonItem lines="none">
                             <IonAvatar slot="start" className={"sensorAvatar"}>
-                                <IonIcon className={"sensorIcon"} icon={checkmarkCircle} color={'success'}/>
+                                <IonIcon className={"sensorsIcon"} icon={checkmarkCircle} color={'success'}/>
                             </IonAvatar>
                             <IonLabel className={"ion-text-wrap"}>Uw sensoren zijn verbonden</IonLabel>
                         </IonItem>
