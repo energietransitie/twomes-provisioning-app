@@ -1,12 +1,32 @@
 .sensorCard{
-  width: 50%;
-  .disconnected{
-    background-color: red;
-  }
-  .connected{
-    background-color: #2dd36f;
-  }
+  width: 48%;
+  color: white;
+  margin: 1%;
 }
 .sensorIcon{
-width: 200px;
+  width: 150px;
+}
+.hardwareCard{
+  //width: 90%;
+  color: white;
+}
+.hardwareIcon{
+  font-size: 30px;
+}
+.disconnected{
+  background-color: #FF5F58;
+}
+.connected{
+  background-color: #2dd36f;
+}
+.flex-container{
+  display: flex;
+  flex-wrap: wrap;
+  padding-left: 1%;
+  padding-right: 1%;
+}
+.hardware-container{
+  display: flex;
+  margin: 0;
+  padding: 0;
 }

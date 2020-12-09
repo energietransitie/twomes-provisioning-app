@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import {
     IonButton,
     IonButtons,
@@ -9,11 +9,11 @@ import {
     IonPage,
     IonTitle,
     IonToolbar,
-    IonCardContent
+    IonCardContent, IonItem, IonLabel, useIonViewDidEnter
 } from '@ionic/react';
 import ExploreContainer from '../components/ExploreContainer';
 import './Sensors.scss';
-import {settingsSharp} from "ionicons/icons";
+import {hardwareChip, settingsSharp} from "ionicons/icons";
 import {
     Plugins
 } from '@capacitor/core';
@@ -22,6 +22,43 @@ const {LocalNotifications } = Plugins;
 var sensorIcon = Icons().SensorIcon();
 
 const Sensors: React.FC = () => {
+    const [sensorArray, setSensorArray] = useState<object[]>([]);
+    const [hardwareArray, setHardwareArray] = useState<object[]>([]);
+    var sensorList: object[] = [];
+    var hardwareList: object[] = [];
+
+    useIonViewDidEnter(() => {
+        sensorList = [
+            {
+                name : "Sensor 1",
+                status: "connected"
+            },
+            {
+                name : "Sensor 2",
+                status: "disconnected"
+            },
+            {
+                name : "Sensor 3",
+                status: "disconnected"
+            },
+            {
+                name : "Sensor 4",
+                status: "connected"
+            }
+        ];
+        setSensorArray(sensorList);
+        hardwareList = [
+            {
+                name : "OpenTherm GateWay",
+                status: "connected"
+            },
+            {
+                name : "P1-Stick",
+                status: "disconnected"
+            }
+        ];
+        setHardwareArray(hardwareList);
+    });
     const SensorNotWorking = ({number}: { number: any }) => {
         //Shows the notification with the given sensor number
         let CurrentTime = new Date();
@@ -61,13 +98,28 @@ const Sensors: React.FC = () => {
                 <IonButton onClick={() => SensorNotWorking({number: 2})}>
                     Sensor 2
                 </IonButton>
-                <IonCard className="sensorCard">
-                    <IonCardContent className="sensorCard connected">
-                        <div className="sensorIcon">
-                            {sensorIcon}
-                        </div>
+                <div className="flex-container">
+                {sensorArray.map((value: any) => (
+                    <IonCard className="sensorCard">
+                    <IonCardContent className={value.status}>
+                    <div className="sensorIcon">
+                    {sensorIcon}
+                    </div>
+                    {value.name}
                     </IonCardContent>
-                </IonCard>
+                    </IonCard>
+                ))}
+                </div>
+                    {hardwareArray.map((value: any) => (
+                        <IonCard className="hardwareCard">
+                            <IonCardContent className={value.status}>
+                                <div>
+                                    <IonIcon className='hardwareIcon' icon={hardwareChip}/>
+                                </div>
+                                {value.name}
+                            </IonCardContent>
+                        </IonCard>
+                    ))}
             </IonContent>
         </IonPage>
     );
