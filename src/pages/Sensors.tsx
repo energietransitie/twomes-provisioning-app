@@ -17,7 +17,6 @@ import {hardwareChip, settingsSharp, thermometer} from "ionicons/icons";
 import {
     Plugins
 } from '@capacitor/core';
-import {Icons} from "../components/Icons";
 const {LocalNotifications } = Plugins;
 
 const Sensors: React.FC = () => {
@@ -27,43 +26,48 @@ const Sensors: React.FC = () => {
     var hardwareList: object[] = [];
 
     useIonViewDidEnter(() => {
+        //Lists with testdata for making the UI dynamic
         sensorList = [
             {
                 name : "Sensor 1",
-                status: "connected"
+                status: "connected",
+                lastReceived : "10-12-2020 11:44"
             },
             {
                 name : "Sensor 2",
-                status: "connected"
+                status: "connected",
+                lastReceived : "10-12-2020 11:44"
             },
             {
                 name : "Sensor 3",
-                status: "disconnected"
+                status: "disconnected",
+                lastReceived : "10-12-2020 09:44"
             },
             {
                 name : "Sensor 4",
-                status: "disconnected"
+                status: "disconnected",
+                lastReceived : "10-12-2020 09:44"
             }
         ];
-        setSensorArray(sensorList);
         hardwareList = [
             {
                 name : "OpenTherm GateWay",
-                status: "disconnected"
+                status: "disconnected",
+                lastReceived : "10-12-2020 09:44"
             },
             {
                 name : "P1-Stick",
-                status: "connected"
+                status: "connected",
+                lastReceived : "10-12-2020 11:44"
             }
         ];
+        setSensorArray(sensorList);
         setHardwareArray(hardwareList);
     });
+    //For firing the notification
     const SensorNotWorking = ({number}: { number: any }) => {
         //Shows the notification with the given sensor number
         let CurrentTime = new Date();
-        console.log(CurrentTime.getFullYear());
-        console.log(CurrentTime.getMonth());
-        console.log(CurrentTime.getDay());
         LocalNotifications.schedule({
             notifications : [
                 {
@@ -101,10 +105,14 @@ const Sensors: React.FC = () => {
                 {sensorArray.map((value: any) => (
                     <IonCard className="sensorCard">
                     <IonCardContent className={value.status}>
-                    <div>
-                        <IonIcon className='sensorIcon' icon={thermometer}/>
-                    </div>
-                    {value.name}
+                        <div>
+                            <IonIcon className='sensorIcon' icon={thermometer}/>
+                        </div>
+                        <p className="cardInfo">
+                            <b>{value.name}</b>
+                            <br/>Laatst data ontvangen:
+                            <br/><b>{value.lastReceived}</b>
+                        </p>
                     </IonCardContent>
                     </IonCard>
                 ))}
@@ -115,7 +123,11 @@ const Sensors: React.FC = () => {
                                 <div>
                                     <IonIcon className='hardwareIcon' icon={hardwareChip}/>
                                 </div>
-                                {value.name}
+                                <p className="cardInfo">
+                                    <b>{value.name}</b>
+                                    <br/>Laatst data ontvangen:
+                                    <br/><b>{value.lastReceived}</b>
+                                </p>
                             </IonCardContent>
                         </IonCard>
                     ))}
