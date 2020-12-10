@@ -65,7 +65,7 @@ const Sensors: React.FC = () => {
         setHardwareArray(hardwareList);
     });
     //For firing the notification
-    const SensorNotWorking = ({number}: { number: any }) => {
+    const sensorNotWorking = ({number}: { number: any }) => {
         //Shows the notification with the given sensor number
         let CurrentTime = new Date();
         LocalNotifications.schedule({
@@ -98,7 +98,7 @@ const Sensors: React.FC = () => {
             </IonHeader>
             <IonContent fullscreen>
                 {/*Button for testing the notification*/}
-                <IonButton onClick={() => SensorNotWorking({number: 2})}>
+                <IonButton onClick={() => sensorNotWorking({number: 2})}>
                     Sensor 2
                 </IonButton>
                 <div className="flex-container">
