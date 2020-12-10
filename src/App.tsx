@@ -60,27 +60,27 @@ const App: React.FC = () => {
 
     FirebaseDynamicLinks.onDynamicLink().subscribe((data: any) => {
         setFirebaseTriggered(true);
-        console.log("dynamic Link triggered");
-        console.log("data: " + JSON.stringify(data));
-        var url = data.deepLink;
-        var id = url.split('https://app.twomes.warmtewachter/')[1];
-        console.log("userID: " + id);
-        setItem("userID", id);
-        setItem("firebaseLinkUsed", 'true');
-        setFirebaseLinkUsed(true);
-        window.location.href = '/home';
+        setItem("firebaseLinkUsed", 'true').then((success) => {
+            setFirebaseLinkUsed(true);
+            setLinkChecked(false);
+            console.log("dynamic Link triggered");
+            console.log("data: " + JSON.stringify(data));
+            var url = data.deepLink;
+            var id = url.split('https://app.twomes.warmtewachter/')[1];
+            console.log("userID: " + id);
+            setItem("userID", id);
+            window.location.href = '/home';
+        });
     });
 
     useEffect(() => {
         if (!linkChecked) {
-            getItem("firebaseLinkUsed").then((linkUsed: any) => {
-                if (linkUsed == 'true') {
+                if (firebaseTriggered) {
                     setFirebaseLinkUsed(true);
                 }
                 setLinkChecked(true);
-            })
         }
-    })
+    }, [firebaseTriggered])
 
     useEffect(() => {
         if (!tokenChecked && firebaseLinkUsed) {
@@ -134,46 +134,40 @@ const App: React.FC = () => {
         setTokenChecked(true);
     }
 
-    if (firebaseTriggered) {
-        return (
-            <IonApp>
-                <IonReactRouter>
-                        <IonTabs>
-                            <IonRouterOutlet>
-                                <Route path="/home" component={Home} exact={true}/>
-                                <Route path="/dashboard" component={Dashboard} exact={true}/>
-                                <Route path="/sensors" component={Sensors}/>
-                                <Route path="/settings" component={Settings} exact={true}/>
-                                <Route path="/instructions" component={Instructions} exact={true}/>
-                                <Route path="/" render={() => <Redirect to="/home"/>} exact={true}/>
-                            </IonRouterOutlet>
-                            <IonTabBar slot="bottom" id="tabBar">
-                                <IonTabButton tab="home" href="/home">
-                                    {homeIcon}
-                                </IonTabButton>
-                                <IonTabButton tab="dashboard" href="/dashboard">
-                                    {dashboardIcon}
-                                </IonTabButton>
-                                <IonTabButton tab="sensors" href="/sensors">
-                                    {sensorIcon}
-                                </IonTabButton>
-                            </IonTabBar>
-                        </IonTabs>
-                </IonReactRouter>
-            </IonApp>
-        )
-    } else {
-        return (
-            <IonApp>
-                <IonReactRouter>
+    return (
+        <IonApp>
+            <IonReactRouter>
+                {firebaseTriggered || firebaseLinkUsed ? (
+                    <IonTabs>
+                        <IonRouterOutlet>
+                            <Route path="/home" component={Home} exact={true}/>
+                            <Route path="/dashboard" component={Dashboard} exact={true}/>
+                            <Route path="/sensors" component={Sensors}/>
+                            <Route path="/settings" component={Settings} exact={true}/>
+                            <Route path="/instructions" component={Instructions} exact={true}/>
+                            <Route path="/" render={() => <Redirect to="/home"/>} exact={true}/>
+                        </IonRouterOutlet>
+                        <IonTabBar slot="bottom" id="tabBar">
+                            <IonTabButton tab="home" href="/home">
+                                {homeIcon}
+                            </IonTabButton>
+                            <IonTabButton tab="dashboard" href="/dashboard">
+                                {dashboardIcon}
+                            </IonTabButton>
+                            <IonTabButton tab="sensors" href="/sensors">
+                                {sensorIcon}
+                            </IonTabButton>
+                        </IonTabBar>
+                    </IonTabs>
+                ) : (
                     <IonRouterOutlet>
                         <Route path="/error" component={Error} exact={true}/>
                         <Route path="/" render={() => <Redirect to="/error"/>} exact={true}/>
                     </IonRouterOutlet>
-                </IonReactRouter>
-            </IonApp>
-        )
-    }
-};
+                )}
+            </IonReactRouter>
+        </IonApp>
+    )
+}
 
 export default App;
