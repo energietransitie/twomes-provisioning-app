@@ -135,17 +135,21 @@ const Home: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent>
-                <IonCard className="sensorCard">
-                    <IonCardContent className="sensorCardContent">
+                <Link to={"/sensors"} replace>
+                <IonCard className="sensorStatusCard">
+                    <IonCardContent className={"sensorCardContent"}>
                         <IonItem lines="none">
                             <IonAvatar slot="start" className={"sensorAvatar"}>
-                                <IonIcon className={"sensorIcon"} icon={checkmarkCircle} color={'success'}/>
+                                <IonIcon className={"sensorsIcon"} icon={checkmarkCircle} color={'success'}/>
                             </IonAvatar>
                             <IonLabel className={"ion-text-wrap"}>Uw sensoren zijn verbonden</IonLabel>
-
                         </IonItem>
                     </IonCardContent>
+                    <IonCardContent className={"dashboardCardContent"}>
+                        <IonIcon className="dashboardIcon" icon={arrowForwardOutline}/>
+                    </IonCardContent>
                 </IonCard>
+                </Link>
                 <IonCard className="weatherCard">
                     <IonCardContent>
                         <IonRow hidden={weatherIsLoading}>
