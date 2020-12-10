@@ -144,7 +144,9 @@ const Home: React.FC = () => {
                             </IonAvatar>
                             <IonLabel className={"ion-text-wrap"}>Uw sensoren zijn verbonden</IonLabel>
                         </IonItem>
-                        <IonIcon className="sensorLink" icon={arrowForwardOutline}/>
+                    </IonCardContent>
+                    <IonCardContent className={"dashboardCardContent"}>
+                        <IonIcon className="dashboardIcon" icon={arrowForwardOutline}/>
                     </IonCardContent>
                 </IonCard>
                 </Link>

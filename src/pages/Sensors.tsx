@@ -34,7 +34,7 @@ const Sensors: React.FC = () => {
             },
             {
                 name : "Sensor 2",
-                status: "disconnected"
+                status: "connected"
             },
             {
                 name : "Sensor 3",
@@ -42,18 +42,18 @@ const Sensors: React.FC = () => {
             },
             {
                 name : "Sensor 4",
-                status: "connected"
+                status: "disconnected"
             }
         ];
         setSensorArray(sensorList);
         hardwareList = [
             {
                 name : "OpenTherm GateWay",
-                status: "connected"
+                status: "disconnected"
             },
             {
                 name : "P1-Stick",
-                status: "disconnected"
+                status: "connected"
             }
         ];
         setHardwareArray(hardwareList);
