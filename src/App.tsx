@@ -65,34 +65,43 @@ const App: React.FC = () => {
 
     useEffect(() => {
         if (!tokenChecked) {
-            var senddata = {}
+
             //Get System UUID for API
             Device.getInfo().then((info: any) => {
-                senddata = {
-                    houseID: info.uuid.toString()
-                }
+                //Get encrypted key from API
+
+                // API.database.sendDeviceToken(info.uuid.toString()).then((response: any) => {
+                    var key = CryptoJS.enc.Hex.parse('47c039fc3443700r');
+                    var cipher = CryptoJS.lib.CipherParams.create({
+                        ciphertext:  CryptoJS.enc.Base64.parse('449077b401509ad18cf5662ff8f4be646f89b921453aac01424b749879e7e093')
+                    })
+                    // var encrypted = {ciphertext: CryptoJS.enc.Base64.parse('449077b401509ad18cf5662ff8f4be646f89b921453aac01424b749879e7e093').toString(CryptoJS.enc.Utf8)};
+                    var data = {
+                        mode: CryptoJS.mode.ECB,
+                    }
+                    var secretArray = CryptoJS.AES.decrypt(cipher, key, data);
+                    var secret = secretArray.toString(CryptoJS.enc.Utf8);
+                    console.log(secret);
+                    // Check if JWTToken exists and is still valid+
+
+                    // getItem("JWTToken").then((oldToken: any) => {
+                    //     if (oldToken == null || oldToken == "") {
+                    //         generateJWTToken(secret);
+                    //     } else {
+                    //         jwt.verify(oldToken, secret, (err: any, decoded: any) => {
+                    //             console.log(decoded);
+                    //             console.log(err);
+                    //             if (decoded == undefined) {
+                    //                 generateJWTToken(secret);
+                    //             }
+                    //         });
+                    //     }
+                    // });
+                // }, (err) => {
+                //     console.log(err)
+                // })
+                setTokenChecked(true);
             })
-
-            //Get encrypted key from API
-
-            // API.database.sendDeviceToken(senddata).then((response: any) => {
-            // var secret = CryptoJS.AES.decrypt(response.data.key, info.uuid.toString());
-            var secret = "hallo"
-            // Check if JWTToken exists and is still valid
-            getItem("JWTToken").then((oldToken: any) => {
-                if (oldToken == null || oldToken == "") {
-                    generateJWTToken(secret);
-                } else {
-                    jwt.verify(oldToken, secret, (err: any, decoded: any) => {
-                        console.log(decoded);
-                        console.log(err);
-                        if (decoded == undefined) {
-                            generateJWTToken(secret);
-                        }
-                    });
-                }
-            });
-            // }, (err) => {console.log(err)})
         }
     }, [])
 
