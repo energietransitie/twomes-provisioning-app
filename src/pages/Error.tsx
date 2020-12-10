@@ -16,6 +16,10 @@ const Error: React.FC = () => {
 
     const [linkChecked, setLinkChecked] = useState(false);
     const [link, setLink] = useState<any>(25);
+    const [checkInterval, setCheckInterval] = useState<any>();
+    const [intervalSet, setIntervalSet] = useState(false);
+    const [timeoutSet, setTimeoutSet] = useState(false);
+
 
     //Hide tabbar on entering this page
     useIonViewWillEnter(() => {
@@ -33,44 +37,78 @@ const Error: React.FC = () => {
         window.location.href = '/home';
     }
 
+    // useEffect(() => {
+    //     if (!linkChecked) {
+    //         var linkUsed = localStorage.getItem("firebaseTriggered");
+    //         if (linkUsed == 'true') {
+    //             window.location.href = '/home';
+    //             setLinkChecked(true);
+    //             setLink(linkUsed);
+    //         }
+    //     }
+    // })
+
     useEffect(() => {
-        if (!linkChecked) {
-            var linkUsed = localStorage.getItem("firebaseTriggered");
-            if (linkUsed == 'true') {
-                window.location.href = '/home';
-                setLinkChecked(true);
-                setLink(linkUsed);
-            }
+        if (!intervalSet) {
+            setCheckInterval(setInterval(() => {
+                var linkUsed = localStorage.getItem("firebaseTriggered");
+                console.log("hiero")
+                console.log(linkUsed);
+                if (linkUsed == 'true') {
+                    window.location.href = '/home';
+                    setLinkChecked(true);
+                    setLink(linkUsed);
+                    clearInterval(checkInterval);
+                }
+            }, 100));
+            setIntervalSet(true);
         }
     })
 
-    return (
-        <IonPage>
-            <IonHeader>
-                <IonToolbar className="gradientBackgroundColor">
-                    <IonTitle>WarmteWachter</IonTitle>
-                </IonToolbar>
-            </IonHeader>
-            <IonContent>
-                <IonCard className="cardContent">
-                    <IonCardHeader className="errorCardHeader">Welkom!</IonCardHeader>
-                    <IonCardContent className="errorCardContent">Deze app is gebouwd voor het Twomes project. De app
-                        kan
-                        alleen gebruikt worden met
-                        een link van de
-                        organisatoren. Als u als testgebruiker bent aangewezen voor de WarmteWachter app, gebruik
-                        dan de
-                        link die u heeft gekregen via de e-mail.</IonCardContent>
-                </IonCard>
-                <IonButton onClick={() => forceThrough()}>Ik ben developer!</IonButton>
-                <IonCard className={"cardContent"}>
-                    <IonCardContent className="errorCardContent">
-                        link used: {link}
-                    </IonCardContent>
-                </IonCard>
-            </IonContent>
-        </IonPage>
-    )
+    useEffect(() => {
+        if(!timeoutSet) {
+            setTimeout(() => {
+                setLinkChecked(true);
+            }, 2000)
+            setTimeoutSet(true);
+        }
+    })
+
+    if(linkChecked) {
+        return (
+            <IonPage>
+                <IonHeader>
+                    <IonToolbar className="gradientBackgroundColor">
+                        <IonTitle>WarmteWachter</IonTitle>
+                    </IonToolbar>
+                </IonHeader>
+                <IonContent>
+                    <IonCard className="cardContent">
+                        <IonCardHeader className="errorCardHeader">Welkom!</IonCardHeader>
+                        <IonCardContent className="errorCardContent">Deze app is gebouwd voor het Twomes project. De app
+                            kan
+                            alleen gebruikt worden met
+                            een link van de
+                            organisatoren. Als u als testgebruiker bent aangewezen voor de WarmteWachter app, gebruik
+                            dan de
+                            link die u heeft gekregen via de e-mail.</IonCardContent>
+                    </IonCard>
+                    <IonButton onClick={() => forceThrough()}>Ik ben developer!</IonButton>
+                    <IonCard className={"cardContent"}>
+                        <IonCardContent className="errorCardContent">
+                            link used: {link}
+                        </IonCardContent>
+                    </IonCard>
+                </IonContent>
+            </IonPage>
+        )
+    } else {
+        return (
+            <IonPage>
+                <LoadingComponent showLoading={true}/>
+            </IonPage>
+        )
+    }
 }
 
 export default Error;

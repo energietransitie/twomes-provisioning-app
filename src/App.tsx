@@ -56,6 +56,7 @@ const App: React.FC = () => {
     const [tokenChecked, setTokenChecked] = useState(false);
     const [linkChecked, setLinkChecked] = useState(false);
     const [firebaseTriggered, setFirebaseTriggered] = useState(false);
+    const [firebaseOutsideTriggered, setFirebaseOutsideTriggered] = useState(false);
 
     FirebaseDynamicLinks.onDynamicLink().subscribe((data: any) => {
         localStorage.setItem("firebaseTriggered", 'true');
@@ -68,6 +69,21 @@ const App: React.FC = () => {
         setFirebaseTriggered(true);
     });
 
+    FirebaseDynamicLinks.getDynamicLink().then((data) => {
+        if(data) {
+            localStorage.setItem("firebaseTriggered", 'true');
+            console.log("dynamic Link triggered");
+            console.log("data: " + JSON.stringify(data));
+            var url = data.deepLink;
+            var id = url.split('https://app.twomes.warmtewachter/')[1];
+            console.log("userID: " + id);
+            setItem("userID", id);
+            setFirebaseOutsideTriggered(true);
+        } else {
+            console.log("geen link gevonden");
+        }
+    })
+
     useEffect(() => {
         if (!linkChecked && firebaseTriggered) {
             window.location.href = '/home';
@@ -76,7 +92,7 @@ const App: React.FC = () => {
     }, [firebaseTriggered])
 
     useEffect(() => {
-        if (!tokenChecked && firebaseTriggered) {
+        if (!tokenChecked && (firebaseTriggered || firebaseOutsideTriggered)) {
             var senddata = {}
             //Get System UUID for API
             Device.getInfo().then((info: any) => {
@@ -107,7 +123,7 @@ const App: React.FC = () => {
             });
             // }, (err) => {console.log(err)})
         }
-    }, [firebaseTriggered])
+    }, [firebaseTriggered, firebaseOutsideTriggered])
 
     // Generate JWT token based on secret key
     const generateJWTToken = (secret: string) => {
