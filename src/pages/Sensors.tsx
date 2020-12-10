@@ -67,7 +67,7 @@ const Sensors: React.FC = () => {
     //For firing the notification
     const sensorNotWorking = ({number}: { number: any }) => {
         //Shows the notification with the given sensor number
-        let CurrentTime = new Date();
+        let currentTime = new Date();
         LocalNotifications.schedule({
             notifications : [
                 {
@@ -78,7 +78,7 @@ const Sensors: React.FC = () => {
                     //Sets the red sensor icon
                     smallIcon: 'sensor_icon',
                     iconColor: "#FF5F58",
-                    schedule: { on:{year: 2020, month: 11, day: 2, hour:CurrentTime.getHours(), minute:CurrentTime.getMinutes() + 1}}
+                    schedule: { on:{year: 2020, month: 11, day: 2, hour:currentTime.getHours(), minute:currentTime.getMinutes() + 1}}
                 }
             ]
         });
@@ -101,7 +101,7 @@ const Sensors: React.FC = () => {
                 <IonButton onClick={() => sensorNotWorking({number: 2})}>
                     Sensor 2
                 </IonButton>
-                <div className="flex-container">
+                <div className="flexContainer">
                 {sensorArray.map((value: any) => (
                     <IonCard className="sensorCard">
                     <IonCardContent className={value.status}>
