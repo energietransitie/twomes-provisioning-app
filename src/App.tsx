@@ -46,9 +46,10 @@ var sensorIcon = Icons().SensorIcon();
 
 const setItem = LocalStorage().setItem;
 const getItem = LocalStorage().getItem;
-const CryptoJS = require('crypto-js');
 const {Device} = Plugins;
 const jwt = require('jsonwebtoken');
+const fernet = require('fernet');
+const Crypto = require('crypto');
 
 const App: React.FC = () => {
 
@@ -66,42 +67,39 @@ const App: React.FC = () => {
     useEffect(() => {
         if (!tokenChecked) {
 
-            //Get System UUID for API
-            Device.getInfo().then((info: any) => {
-                //Get encrypted key from API
+            //Get encrypted key from API
+            var key = Crypto.randomBytes(32).toString('base64');
 
-                // API.database.sendDeviceToken(info.uuid.toString()).then((response: any) => {
-                    var key = CryptoJS.enc.Hex.parse('47c039fc3443700r');
-                    var cipher = CryptoJS.lib.CipherParams.create({
-                        ciphertext:  CryptoJS.enc.Base64.parse('449077b401509ad18cf5662ff8f4be646f89b921453aac01424b749879e7e093')
-                    })
-                    // var encrypted = {ciphertext: CryptoJS.enc.Base64.parse('449077b401509ad18cf5662ff8f4be646f89b921453aac01424b749879e7e093').toString(CryptoJS.enc.Utf8)};
-                    var data = {
-                        mode: CryptoJS.mode.ECB,
+            API.database.sendDeviceToken(key).then((response: any) => {
+                console.log(key)
+                var secret = new fernet.Secret(key);
+                var token = new fernet.Token({
+                    secret: secret,
+                    token: response.data,
+                    ttl: 0
+                })
+
+                var secretkey = token.decode();
+
+                // Check if JWTToken exists and is still valid
+
+                getItem("JWTToken").then((oldToken: any) => {
+                    if (oldToken == null || oldToken == "") {
+                        generateJWTToken(secretkey);
+                    } else {
+                        jwt.verify(oldToken, secretkey, (err: any, decoded: any) => {
+                            console.log(decoded);
+                            console.log(err);
+                            if (decoded == undefined) {
+                                generateJWTToken(secretkey);
+                            }
+                        });
                     }
-                    var secretArray = CryptoJS.AES.decrypt(cipher, key, data);
-                    var secret = secretArray.toString(CryptoJS.enc.Utf8);
-                    console.log(secret);
-                    // Check if JWTToken exists and is still valid+
-
-                    // getItem("JWTToken").then((oldToken: any) => {
-                    //     if (oldToken == null || oldToken == "") {
-                    //         generateJWTToken(secret);
-                    //     } else {
-                    //         jwt.verify(oldToken, secret, (err: any, decoded: any) => {
-                    //             console.log(decoded);
-                    //             console.log(err);
-                    //             if (decoded == undefined) {
-                    //                 generateJWTToken(secret);
-                    //             }
-                    //         });
-                    //     }
-                    // });
-                // }, (err) => {
-                //     console.log(err)
-                // })
-                setTokenChecked(true);
+                });
+            }, (err) => {
+                console.log(err)
             })
+            setTokenChecked(true);
         }
     }, [])
 
