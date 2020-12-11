@@ -37,23 +37,11 @@ const Error: React.FC = () => {
         window.location.href = '/home';
     }
 
-    // useEffect(() => {
-    //     if (!linkChecked) {
-    //         var linkUsed = localStorage.getItem("firebaseTriggered");
-    //         if (linkUsed == 'true') {
-    //             window.location.href = '/home';
-    //             setLinkChecked(true);
-    //             setLink(linkUsed);
-    //         }
-    //     }
-    // })
-
+    // Set interval for checking the firsebase link
     useEffect(() => {
         if (!intervalSet) {
             setCheckInterval(setInterval(() => {
                 var linkUsed = localStorage.getItem("firebaseTriggered");
-                console.log("hiero")
-                console.log(linkUsed);
                 if (linkUsed == 'true') {
                     window.location.href = '/home';
                     setLinkChecked(true);
@@ -65,6 +53,7 @@ const Error: React.FC = () => {
         }
     })
 
+    // If after two seconds no firebase link is found, show the error page.
     useEffect(() => {
         if(!timeoutSet) {
             setTimeout(() => {

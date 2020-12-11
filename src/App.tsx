@@ -58,6 +58,7 @@ const App: React.FC = () => {
     const [firebaseTriggered, setFirebaseTriggered] = useState(false);
     const [firebaseOutsideTriggered, setFirebaseOutsideTriggered] = useState(false);
 
+    // Gets dynamic link when app is in the background while link is clicked
     FirebaseDynamicLinks.onDynamicLink().subscribe((data: any) => {
         localStorage.setItem("firebaseTriggered", 'true');
         console.log("dynamic Link triggered");
@@ -69,6 +70,7 @@ const App: React.FC = () => {
         setFirebaseTriggered(true);
     });
 
+    // Gets dynamic link when app is terminated while link is clicked
     FirebaseDynamicLinks.getDynamicLink().then((data) => {
         if(data) {
             localStorage.setItem("firebaseTriggered", 'true');
