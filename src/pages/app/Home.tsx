@@ -21,9 +21,9 @@ import {
     sunny, reorderThree, thunderstorm, snow, rainy, arrowForwardOutline,
 } from "ionicons/icons";
 import {Link, Redirect} from "react-router-dom";
-import {LocalStorage} from "../services/Storage";
+import {LocalStorage} from "../../services/Storage";
 import {Plugins} from "@capacitor/core";
-import API from "../api/Calls";
+import API from "../../api/Calls";
 
 const {Geolocation} = Plugins;
 

@@ -11,12 +11,9 @@ import {
     IonToolbar,
     IonCardContent, IonItem, IonLabel, useIonViewDidEnter
 } from '@ionic/react';
-import ExploreContainer from '../components/ExploreContainer';
 import './Sensors.scss';
 import {hardwareChip, settingsSharp, thermometer} from "ionicons/icons";
-import {
-    Plugins
-} from '@capacitor/core';
+import {Plugins} from '@capacitor/core';
 const {LocalNotifications } = Plugins;
 
 const Sensors: React.FC = () => {
