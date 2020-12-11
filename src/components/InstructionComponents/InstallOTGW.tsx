@@ -26,10 +26,6 @@ const InstallOTGW: React.FC<InstructionsInterface> = ({stepUpFunction, finishFun
     const [showLoadingComponent, setShowLoadingComponent] = useState(false);
     var list: object[] = [];
 
-    useIonViewDidEnter(() => {
-        checkBluetooth();
-    });
-
     //Enables the bluetooth in Android, will give an alert in iOS if bluetooth is off
     const checkBluetooth = () => {
         BLE.enable();
@@ -38,6 +34,7 @@ const InstallOTGW: React.FC<InstructionsInterface> = ({stepUpFunction, finishFun
         }
     };
     const startScanning = () => {
+        checkBluetooth();
         setShowLoadingComponent(true);
         //Scans for devices and add them to the list
         BLE.startScan([]).subscribe(device => {
