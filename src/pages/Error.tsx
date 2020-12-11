@@ -34,6 +34,7 @@ const Error: React.FC = () => {
     })
 
     const forceThrough = () => {
+        localStorage.setItem("firebaseTriggered", 'true');
         window.location.href = '/home';
     }
 
