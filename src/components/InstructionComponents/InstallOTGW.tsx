@@ -87,6 +87,13 @@ const InstallOTGW: React.FC<InstructionsInterface> = ({stepUpFunction, finishFun
                         console.log("FAILURE")
                         console.log(err);
                     })
+                    BLE.read(id, "4fafc201-1fb5-459e-8fcc-c5c9c331914b", "beb5483e-36e1-4688-b7f5-ea07361b26a8").then((success) => {
+                        console.log("Read something");
+                        console.log(success);
+                    }, (err) => {
+                        console.log("Could not read something")
+                        console.log(err);
+                    })
                 }, () => {
                     console.log("Peripheral is *not* connected");
                 }
