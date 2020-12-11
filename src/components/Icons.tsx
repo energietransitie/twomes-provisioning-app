@@ -34,7 +34,7 @@ export function Icons() {
     }
 
     //Icon for Sensors Tab
-    function SensorIcon() {
+    function sensorsIcon() {
         return (
             <svg xmlns="http://www.w3.org/2000/svg" className="ionicon" id="tabSensorsIcon" viewBox="0 0 512 512"><title>Thermometer</title>
                 <linearGradient id="svgGradientSensors">
@@ -50,6 +50,6 @@ export function Icons() {
     return {
         HomeIcon: HomeIcon,
         DashboardIcon: DashboardIcon,
-        SensorIcon: SensorIcon
+        sensorsIcon: sensorsIcon
     }
 }
