@@ -31,9 +31,9 @@ const InstallOTGW: React.FC<InstructionsInterface> = ({stepUpFunction, finishFun
     });
 
     //Enables the bluetooth in Android, will give an alert in iOS if bluetooth is off
-    const checkBluetooth = () =>{
+    const checkBluetooth = () => {
         BLE.enable();
-        if(!BLE.isEnabled()){
+        if (!BLE.isEnabled()) {
             alert("Zet uw Bluetooth aan om verbinding te kunnen maken met de apparaten.")
         }
     };
@@ -59,27 +59,39 @@ const InstallOTGW: React.FC<InstructionsInterface> = ({stepUpFunction, finishFun
     //Connects to the given MAC-adress
     const connect = (id: string) => {
         setShowLoadingComponent(true);
-            BLE.connect(id).subscribe((device) => {
-                console.log('connected');
-                console.log(JSON.stringify(device));
-                setShowLoadingComponent(false);
-                setSuccessDialog(true);
-            }, (device) => {
-                setShowLoadingComponent(false);
-                setErrorDialog(true);
-                console.log('disconnected');
-                console.log(JSON.stringify(device));
-            });
+        BLE.connect(id).subscribe((device) => {
+            console.log('connected');
+            console.log(JSON.stringify(device));
+            setShowLoadingComponent(false);
+            setSuccessDialog(true);
+        }, (device) => {
+            setShowLoadingComponent(false);
+            setErrorDialog(true);
+            console.log('disconnected');
+            console.log(JSON.stringify(device));
+        });
 
         setInterval(() => {
             BLE.isConnected(
                 id).then(() => {
                     console.log("Peripheral is connected");
+                    var string = "Hallo!"
+                    var array = new Uint8Array(string.length);
+                    for (var i = 0, l = string.length; i < l; i++) {
+                        array[i] = string.charCodeAt(i);
+                    }
+                    BLE.write(id, "4fafc201-1fb5-459e-8fcc-c5c9c331914b", "beb5483e-36e1-4688-b7f5-ea07361b26a8", array.buffer).then((success) => {
+                        console.log("SUCCESS")
+                        console.log(success);
+                    }, (err) => {
+                        console.log("FAILURE")
+                        console.log(err);
+                    })
                 }, () => {
                     console.log("Peripheral is *not* connected");
                 }
             );
-        }, 2000)
+        }, 10000)
     };
 
     //Opens the dialog asking to connect
