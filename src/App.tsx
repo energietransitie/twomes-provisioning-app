@@ -47,7 +47,6 @@ var sensorsIcon = Icons().sensorsIcon();
 
 const setItem = LocalStorage().setItem;
 const getItem = LocalStorage().getItem;
-const {Device} = Plugins;
 const jwt = require('jsonwebtoken');
 const fernet = require('fernet');
 const Crypto = require('crypto');
@@ -97,7 +96,7 @@ const App: React.FC = () => {
     useEffect(() => {
         if (!tokenChecked) {
 
-            //Get encrypted key from API
+            // Get encrypted key from API
             var key = Crypto.randomBytes(32).toString('base64');
 
             API.database.sendDeviceToken(key).then((response: any) => {
