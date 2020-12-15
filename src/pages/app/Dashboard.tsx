@@ -14,10 +14,10 @@ import {
 } from '@ionic/react';
 import './Dashboard.scss';
 import {settingsSharp} from "ionicons/icons";
-import API from "../api/Calls";
-import {LocalStorage} from "../services/Storage";
+import API from "../../api/Calls";
+import {LocalStorage} from "../../services/Storage";
 import moment from "moment";
-import LoadingComponent from "../components/LoadingComponent";
+import LoadingComponent from "../../components/LoadingComponent";
 import {RefresherEventDetail} from '@ionic/core';
 
 const setItem = LocalStorage().setItem;

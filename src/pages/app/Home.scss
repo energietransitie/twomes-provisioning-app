@@ -1,4 +1,4 @@
-.sensorCard {
+.sensorStatusCard {
   background: #4d4d4d;
   height: 80px;
 }
@@ -13,7 +13,7 @@
   margin-left: -20px;
 }
 
-.sensorIcon {
+.sensorsIcon {
   width: 50px;
   height: 50px;
 }
@@ -93,4 +93,13 @@
   height: 25px;
   width: 25px;
   position: absolute;
+}
+.ion-text-wrap{
+  text-decoration: none;
+}
+.sensorCardContent{
+  position: absolute;
+}
+.cardInfo{
+  text-align: center;
 }

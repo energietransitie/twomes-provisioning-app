@@ -4,16 +4,13 @@ const https = require('https');
 let lodash = require('lodash');
 
 let AppKey = "TwomesApplicatie"
-let DatabaseApiUrl = "https://energietransitiewindesheim.nl:4444";
+let DatabaseApiUrl = "http://energietransitiewindesheim.nl:4444";
 let DatabaseApiKey = "veilig";
 
 let WeatherApiUrl = 'Mooi weer wel';
 
 
 const DatabaseAPI = axios.create({
-    httpsAgent: new https.Agent({
-        rejectUnauthorized: false
-    }),
     baseURL: DatabaseApiUrl,
     headers: {
     }
