@@ -9,7 +9,6 @@ export default {
         },
         sendDeviceToken: function(houseID: string) {
             var url = `/startSession?house_id=${houseID}&house_key=34TF5373W532455OBCMCA67E16S3D`;
-            console.log("URL: " + url);
             return DatabaseAPI.get(url)
         },
         getHouseData: function(token: string) {
