@@ -95,7 +95,7 @@ const App: React.FC = () => {
     }, [firebaseTriggered])
 
     useEffect(() => {
-        if (!tokenChecked && (firebaseTriggered || firebaseOutsideTriggered)) {
+        if (!tokenChecked) {
 
             //Get encrypted key from API
             var key = Crypto.randomBytes(32).toString('base64');
@@ -142,7 +142,8 @@ const App: React.FC = () => {
         });
 
         var data = {
-            "houseID": houseID
+            "house_id": 132,
+            "APIkey": "34TF5373W532455OBCMCA67E16S3D"
         }
         var signedToken = jwt.sign(data, secret, {expiresIn: '168h'})
 
