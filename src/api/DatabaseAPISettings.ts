@@ -2,17 +2,14 @@ import axios from 'axios';
 
 let lodash = require('lodash');
 
-let AppKey = "TwomesApplicatie"
-let DatabaseApiUrl = "schietopsecurity";
-let DatabaseApiKey = "veilig";
+let appKey = "TwomesApplicatie"
+let databaseApiUrl = "http://energietransitiewindesheim.nl:4444";
 
-let WeatherApiUrl = 'Mooi weer wel';
 
 
 const DatabaseAPI = axios.create({
-    baseURL: DatabaseApiUrl,
+    baseURL: databaseApiUrl,
     headers: {
-
     }
 });
 

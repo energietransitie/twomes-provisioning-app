@@ -10,7 +10,8 @@ import {
     IonTitle,
     IonToolbar,
     IonRefresher,
-    IonRefresherContent
+    IonRefresherContent,
+    IonCardHeader
 } from '@ionic/react';
 import './Dashboard.scss';
 import {settingsSharp} from "ionicons/icons";
@@ -32,6 +33,9 @@ const Dashboard: React.FC = () => {
     const [graphData2, setGraphData2] = useState<any>({});
     const [graphsSet, setGraphsSet] = useState(false);
     const [refreshing, setRefreshing] = useState(false);
+    const [error, setError] = useState(false);
+    const [oldData, setOldData] = useState(false);
+    const [oldDataDate, setOldDataDate] = useState<any>("");
 
     //Set the locale for moment to the Netherlands
     moment.locale("nl", localization);
@@ -39,175 +43,70 @@ const Dashboard: React.FC = () => {
     // Fill datasets with data
     useEffect(() => {
         if (!dataSet || (dataSet && refreshing)) {
-            var tempdata = [{
-                "record_id": 17,
-                "house_id": 132,
-                "postal_code": "1234km",
-                "house_number": 23,
-                "house_number_addition": "",
-                "smart_meter_id": "FF:FF:FF:FF:FF",
-                "temperature_sensor_id": null,
-                "system_id": null,
-                "pipe_temp1": null,
-                "pipe_temp2":
-                    null,
-                "time": null,
-                "room_temp": null,
-                "time_dst": "S",
-                "electricity_delivered_to_t1": 23,
-                "electricity_delivered_to_t2": 23,
-                "electricity_delivered_by_t1": 23,
-                "electricity_delivered_by_t2": 23,
-                "tariff_indicator": 23,
-                "electricity_received": 23,
-                "electricity_delivered": 23,
-                "gas": 23,
-                "time_gas": null,
-                "time_gas_dst": "S"
-            }, {
-                "record_id": 18,
-                "house_id": 132,
-                "postal_code": "1234km",
-                "house_number": 23,
-                "house_number_addition": "",
-                "smart_meter_id": "FF:FF:FF:FF:FF",
-                "temperature_sensor_id": null,
-                "system_id": null,
-                "pipe_temp1": null,
-                "pipe_temp2": null,
-                "time": null,
-                "room_temp": null,
-                "time_dst": "S",
-                "electricity_delivered_to_t1":
-                    2955336,
-                "electricity_delivered_to_t2": 3403620,
-                "electricity_delivered_by_t1": 2,
-                "electricity_delivered_by_t2": 0,
-                "tariff_indicator": 2,
-                "electricity_received": 349,
-                "electricity_delivered": 0,
-                "gas": 2478797,
-                "time_gas": null,
-                "time_gas_dst": "S"
-            }, {
-                "record_id": 19,
-                "house_id": 132,
-                "postal_code": "1234km",
-                "house_number": 23,
-                "house_number_addition": "",
-                "smart_meter_id": "FF:FF:FF:FF:FF",
-                "temperature_sensor_id": null,
-                "system_id": null,
-                "pipe_temp1": null,
-                "pipe_temp2": null,
-                "time": null,
-                "room_temp": null,
-                "time_dst": "S",
-                "electricity_delivered_to_t1":
-                    23,
-                "electricity_delivered_to_t2": 23,
-                "electricity_delivered_by_t1": 23,
-                "electricity_delivered_by_t2": 23,
-                "tariff_indicator": 23,
-                "electricity_received": 23,
-                "electricity_delivered": 23,
-                "gas": 23,
-                "time_gas": null,
-                "time_gas_dst": "S"
-            }, {
-                "record_id": 20,
-                "house_id": 132,
-                "postal_code": "1234km",
-                "house_number": 23,
-                "house_number_addition": "",
-                "smart_meter_id": "FF:FF:FF:FF:FF",
-                "temperature_sensor_id": null,
-                "system_id": null,
-                "pipe_temp1": null,
-                "pipe_temp2": null,
-                "time": null,
-                "room_temp": null,
-                "time_dst": "S",
-                "electricity_delivered_to_t1":
-                    2955336,
-                "electricity_delivered_to_t2": 3403620,
-                "electricity_delivered_by_t1": 2,
-                "electricity_delivered_by_t2": 0,
-                "tariff_indicator": 2,
-                "electricity_received": 349,
-                "electricity_delivered": 0,
-                "gas": 2478797,
-                "time_gas": null,
-                "time_gas_dst": "S"
-            }, {
-                "record_id": 21,
-                "house_id": 132,
-                "postal_code": "1234km",
-                "house_number": 23,
-                "house_number_addition": "",
-                "smart_meter_id": "FF:FF:FF:FF:FF",
-                "temperature_sensor_id": null,
-                "system_id": null,
-                "pipe_temp1": null,
-                "pipe_temp2": null,
-                "time": null,
-                "room_temp": null,
-                "time_dst": "S",
-                "electricity_delivered_to_t1":
-                    23,
-                "electricity_delivered_to_t2": 23,
-                "electricity_delivered_by_t1": 23,
-                "electricity_delivered_by_t2": 23,
-                "tariff_indicator": 23,
-                "electricity_received": 23,
-                "electricity_delivered": 23,
-                "gas": 23,
-                "time_gas": null,
-                "time_gas_dst": "S"
-            }, {
-                "record_id": 22,
-                "house_id": 132,
-                "postal_code": "1234km",
-                "house_number": 23,
-                "house_number_addition": "",
-                "smart_meter_id": "FF:FF:FF:FF:FF",
-                "temperature_sensor_id": null,
-                "system_id": null,
-                "pipe_temp1": null,
-                "pipe_temp2": null,
-                "time": null,
-                "room_temp": null,
-                "time_dst": "S",
-                "electricity_delivered_to_t1":
-                    2955336,
-                "electricity_delivered_to_t2": 3403620,
-                "electricity_delivered_by_t1": 2,
-                "electricity_delivered_by_t2": 0,
-                "tariff_indicator": 2,
-                "electricity_received": 349,
-                "electricity_delivered": 0,
-                "gas": 2478797,
-                "time_gas": null,
-                "time_gas_dst": "S"
-            }]
+            var tempdata:any = [];
+            getItem('JWTToken').then((token) => {
 
-            var dataset1: any = {title: 'Electricity Delivered'};
-            var dataset2: any = {title: 'Electricity Received'};
-            var data1: string[] = [];
-            var data2: string[] = [];
-            var labels: string[] = [];
-            tempdata.forEach((dataitem: any) => {
-                data1.push(dataitem['electricity_delivered']);
-                data2.push(dataitem['electricity_received']);
-                labels.push(dataitem['record_id'])
+                // Retreive housedata
+
+                API.database.getHouseData(token!).then((response) => {
+                    tempdata = response.data;
+                    var dataset1: any = {title: 'Electricity delivered'};
+                    var dataset2: any = {title: 'Electricity received'};
+                    var data1: string[] = [];
+                    var data2: string[] = [];
+                    var labels: string[] = [];
+                    tempdata.forEach((dataitem: any) => {
+                        data1.push(dataitem['electricity_delivered']);
+                        data2.push(dataitem['electricity_received']);
+                        var recorddate = moment(dataitem['time']).format('DD MMM');
+                        labels.push(recorddate)
+                    })
+                    console.log(tempdata);
+                    dataset1.data = data1;
+                    dataset1.labels = labels;
+                    dataset2.data = data2;
+                    dataset2.labels = labels;
+                    setGraphData1(dataset1);
+                    setGraphData2(dataset2);
+                    setDataSet(true);
+                    setItem("HouseData", JSON.stringify(tempdata));
+                }, (err) => {
+                    // If no data is retrieved, use data from last save
+                    console.log(err.message);
+                    getItem("HouseData").then((data) => {
+                        if(data !== null && data !== undefined) {
+                            tempdata = JSON.parse(data);
+                            var dataset1: any = {title: 'Electricity delivered'};
+                            var dataset2: any = {title: 'Electricity received'};
+                            var data1: string[] = [];
+                            var data2: string[] = [];
+                            var labels: string[] = [];
+                            tempdata.forEach((dataitem: any) => {
+                                data1.push(dataitem['electricity_delivered']);
+                                data2.push(dataitem['electricity_received']);
+                                var recorddate = moment(dataitem['time']).format('DD MMM');
+                                labels.push(recorddate)
+                            })
+                            console.log(labels);
+                            dataset1.data = data1;
+                            dataset1.labels = labels;
+                            dataset2.data = data2;
+                            dataset2.labels = labels;
+                            setGraphData1(dataset1);
+                            setGraphData2(dataset2);
+                            var date = moment(tempdata[tempdata.length -1].time).format("DD MMMM YYYY");
+                            setOldDataDate(date);
+                            setOldData(true);
+                            setDataSet(true);
+
+                        } else {
+                            // If there is also no data from a last save, show error
+                            setError(true);
+                            setDataSet(true);
+                        }
+                    })
+                })
             })
-            dataset1.data = data1;
-            dataset1.labels = labels;
-            dataset2.data = data2;
-            dataset2.labels = labels;
-            setGraphData1(dataset1);
-            setGraphData2(dataset2);
-            setDataSet(true);
         }
     }, [refreshing])
 
@@ -325,22 +224,37 @@ const Dashboard: React.FC = () => {
                     <IonRefresher slot="fixed" onIonRefresh={refresh}>
                         <IonRefresherContent/>
                     </IonRefresher>
-                    <IonCard className="cardContent">
-                        <IonCardContent>
-                            <div>
-                                <IonLabel className="graphTitle">{graphData1.title}</IonLabel>
-                                <canvas id="dataChart1"/>
-                            </div>
-                        </IonCardContent>
-                    </IonCard>
-                    <IonCard className="cardContent">
-                        <IonCardContent>
-                            <div>
-                                <IonLabel className="graphTitle">{graphData2.title}</IonLabel>
-                                <canvas id="dataChart2"/>
-                            </div>
-                        </IonCardContent>
-                    </IonCard>
+                    {error ? (
+                        <IonCard className="cardContent">
+                            <IonCardHeader>Kon geen data vinden</IonCardHeader>
+                        </IonCard>
+                    ) : (
+                        <div>
+                            {oldData && (
+                                <IonCard className="cardContent">
+                                    <IonCardHeader>Dit is eerder opgehaalde data van {oldDataDate}</IonCardHeader>
+                                </IonCard>
+
+                            )}
+                            <IonCard className="cardContent">
+                                <IonCardContent>
+                                    <div>
+                                        <IonLabel className="graphTitle">{graphData1.title}</IonLabel>
+                                        <canvas id="dataChart1"/>
+                                    </div>
+                                </IonCardContent>
+                            </IonCard>
+                            <IonCard className="cardContent">
+                                <IonCardContent>
+                                    <div>
+                                        <IonLabel className="graphTitle">{graphData2.title}</IonLabel>
+                                        <canvas id="dataChart2"/>
+                                    </div>
+                                </IonCardContent>
+                            </IonCard>
+                        </div>
+                    )}
+
                 </IonContent>
             </IonPage>
         );

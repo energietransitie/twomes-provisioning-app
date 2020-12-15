@@ -7,8 +7,13 @@ export default {
         getTemperature: function() {
             return DatabaseAPI.get('/temperature')
         },
-        sendDeviceToken: function(data: any) {
-            return DatabaseAPI.post('/geenideenog', data)
+        sendDeviceToken: function(houseID: string) {
+            var url = `/startSession?house_id=${houseID}&house_key=34TF5373W532455OBCMCA67E16S3D`;
+            return DatabaseAPI.get(url)
+        },
+        getHouseData: function(token: string) {
+            var url = `/get/house/data?token=${token}`
+            return DatabaseAPI.get(url);
         }
     },
     weather: {
