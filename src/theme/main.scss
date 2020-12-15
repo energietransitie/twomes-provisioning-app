@@ -2,16 +2,54 @@
   #svgGradient {
     --color-stop-1: #45B97C;
     --color-stop-2: #B1D249;
+  #svgGradientHome {
+    --color-stop-1: #45B97C;
+    --color-stop-2: #B1D249;
   }
 
-  #icon {
-    stroke: url(#svgGradient) black;
-    fill: url(#svgGradient) black;
+  #svgGradientDashboard {
+    --color-stop-1: #45B97C;
+    --color-stop-2: #B1D249;
+  }
+
+  #svgGradientSensors {
+    --color-stop-1: #45B97C;
+    --color-stop-2: #B1D249;
+  }
+
+  #tabHomeIcon {
+    stroke: url(#svgGradientHome) black;
+    fill: url(#svgGradientHome) black;
     width: 25%;
   }
+
+  #tabDashboardIcon {
+    stroke: url(#svgGradientDashboard) black;
+    fill: url(#svgGradientDashboard) black;
+    width: 25%;
+  }
+
+  #tabSensorsIcon {
+    stroke: url(#svgGradientSensors) black;
+    fill: url(#svgGradientSensors) black;
+    width: 25%;
+  }
+
 }
 
-#icon {
+#tabHomeIcon {
+  stroke: white;
+  fill: white;
+  width: 25%;
+}
+
+#tabDashboardIcon {
+  stroke: white;
+  fill: white;
+  width: 25%;
+}
+
+#tabSensorsIcon {
   stroke: white;
   fill: white;
   width: 25%;
@@ -48,70 +86,70 @@
 
 // Styling Instructionspage
 
-.subTitleStep {
+.subTitleStep{
   color: white;
   font-weight: normal;
-  text-transform: unset !important;
+  text-transform: unset!important;
 }
 
-.instructionImage {
+.instructionImage{
   padding: 16px;
 }
 
-.instructionsContent {
-  color: white !important;
+.instructionsContent{
+  color: white!important;
   font-size: 16px;
 }
 
-.instructionsList IonItem {
-  font-size: 16px !important;
+.instructionsList IonItem{
+  font-size: 16px!important;
 }
 
-.stepCountBadge {
-  background-color: #45B97C !important;
-  color: white;
+.stepCountBadge{
+  background-color: #45B97C!important;
+  color:white;
   font-size: 16px;
   font-weight: normal;
   padding: 3px 8px;
 }
 
-.stepBadge {
-  background-color: #45B97C !important;
+.stepBadge{
+  background-color: #45B97C!important;
 }
 
-.ionNoteSteps {
-  margin: 0px !important;
-  padding-right: 16px !important;
+.ionNoteSteps{
+  margin:0px!important;
+  padding-right: 16px!important;
 }
 
-.instructionsNextButton {
+.instructionsNextButton{
   border-radius: 10px;
-  color: white !important;
+  color: white!important;
 }
 
-.button-inner {
-  color: white !important;
+.button-inner{
+  color: white!important;
 }
 
-.networkList {
-  padding: 0px !important;
-  background-color: #4d4d4d !important;
+.networkList{
+  padding:0px!important;
+  background-color: #4d4d4d!important;
 }
 
-.scrollList {
-  padding-top: 100px !important;
-  --background: #4d4d4d !important;
+.scrollList{
+  padding-top: 100px!important;
+  --background: #4d4d4d!important;
 }
 
-.scrollListLoading {
-  padding-top: 100px !important;
-  background-color: #4d4d4d !important;
-  --overflow: hidden !important;
+.scrollListLoading{
+  padding-top: 100px!important;
+  background-color: #4d4d4d!important;
+  --overflow:hidden!important;
 }
 
-.cardContent {
-  background-color: #4d4d4d !important;
-  padding: 0px !important;
+.cardContent{
+  background-color: #4d4d4d!important;
+  padding: 0px!important;
 }
 
 .centerContent {

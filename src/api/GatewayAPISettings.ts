@@ -2,11 +2,11 @@ import axios from 'axios';
 
 let lodash = require('lodash');
 
-let AppKey = "TwomesApplicatie"
-let GatewayApiUrl = "192.168.4.1";
+let appKey = "TwomesApplicatie"
+let gatewayApiUrl = "192.168.4.1";
 
 const GatewayAPI = axios.create({
-    baseURL: GatewayApiUrl,
+    baseURL: gatewayApiUrl,
     headers: {
 
     }

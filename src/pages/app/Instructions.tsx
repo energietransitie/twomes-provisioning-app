@@ -5,17 +5,17 @@ import {
     useIonViewWillLeave, IonToolbar, IonTitle, IonHeader, IonRouterOutlet, IonApp
 } from "@ionic/react";
 import React, {useEffect, useRef, useState} from 'react';
-import {LocalStorage} from "../services/Storage";
-import LoadingComponent from "../components/LoadingComponent";
-import InstallOTGW from "../components/InstructionComponents/InstallOTGW";
-import InstallP1 from "../components/InstructionComponents/InstallP1";
-import InstallSensors from "../components/InstructionComponents/InstallSensors";
-import ConfigureWIFI from "../components/InstructionComponents/ConfigureWIFI";
+import {LocalStorage} from "../../services/Storage";
+import LoadingComponent from "../../components/LoadingComponent";
+import InstallOTGW from "../../components/InstructionComponents/InstallOTGW";
+import InstallP1 from "../../components/InstructionComponents/InstallP1";
+import InstallSensors from "../../components/InstructionComponents/InstallSensors";
+import ConfigureWIFI from "../../components/InstructionComponents/ConfigureWIFI";
 import './Instructions.scss';
-import {installationconfig} from '../../package.json';
 import {IonReactRouter} from "@ionic/react-router";
 import Home from "./Home";
 import {Route} from "react-router";
+import {installationconfig} from '../../../package.json';
 
 const getItem = LocalStorage().getItem;
 const setItem = LocalStorage().setItem;

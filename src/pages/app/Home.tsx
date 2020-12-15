@@ -6,7 +6,7 @@ import {
     IonCardContent, IonCol,
     IonContent,
     IonHeader,
-    IonIcon, IonImg, IonItem, IonLabel, IonLoading,
+    IonIcon, IonItem, IonLabel,
     IonPage, IonRow, IonSpinner,
     IonTitle,
     IonToolbar, useIonViewDidEnter
@@ -18,11 +18,12 @@ import {
     cloudy,
     cloudyNight,
     moon,
-    sunny, reorderThree, thunderstorm, snow, rainy,
+    sunny, reorderThree, thunderstorm, snow, rainy, arrowForwardOutline,
 } from "ionicons/icons";
-import {LocalStorage} from "../services/Storage";
+import {Link, Redirect} from "react-router-dom";
+import {LocalStorage} from "../../services/Storage";
 import {Plugins} from "@capacitor/core";
-import API from "../api/Calls";
+import API from "../../api/Calls";
 
 const {Geolocation} = Plugins;
 
@@ -120,6 +121,7 @@ const Home: React.FC = () => {
             setInstructionsChecked(true);
         }
     }, [])
+
     return (
         <IonPage>
             <IonHeader>
@@ -133,20 +135,21 @@ const Home: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent>
-                <IonCard className="sensorCard">
-                    <IonCardContent>
+                <Link to={"/sensors"} replace>
+                <IonCard className="sensorStatusCard">
+                    <IonCardContent className={"sensorCardContent"}>
                         <IonItem lines="none">
-                            <IonAvatar slot="start">
-                                <IonIcon icon={checkmarkCircle} color={'success'}/>
+                            <IonAvatar slot="start" className={"sensorAvatar"}>
+                                <IonIcon className={"sensorsIcon"} icon={checkmarkCircle} color={'success'}/>
                             </IonAvatar>
-                            <IonLabel>Uw sensoren zijn verbonden</IonLabel>
+                            <IonLabel className={"ion-text-wrap"}>Uw sensoren zijn verbonden</IonLabel>
                         </IonItem>
-                            <IonButton color={"warning"} onClick={() => {setInstructionsChecked(false); window.location.href = '/instructions'} } >Show Instructions</IonButton>
+                    </IonCardContent>
+                    <IonCardContent className={"dashboardCardContent"}>
+                        <IonIcon className="dashboardIcon" icon={arrowForwardOutline}/>
                     </IonCardContent>
                 </IonCard>
-                <IonItem>
-                    <IonButton onClick={() => goToInstructions()}>To Instructions</IonButton>
-                </IonItem>
+                </Link>
                 <IonCard className="weatherCard">
                     <IonCardContent>
                         <IonRow hidden={weatherIsLoading}>
@@ -168,6 +171,21 @@ const Home: React.FC = () => {
                         </IonRow>
                     </IonCardContent>
                 </IonCard>
+                <Link to={"/dashboard"} replace>
+                    <IonCard className="dashboardCard">
+                        <IonItem lines="none" className={"dashboardCardHeader"}>
+                        </IonItem>
+                        <IonCardContent className={"dashboardCardContent"}>
+                            <IonIcon className="dashboardIcon" icon={arrowForwardOutline}/>
+                        </IonCardContent>
+                    </IonCard>
+                </Link>
+                <IonItem>
+                    <IonButton onClick={() => {
+                        setInstructionsChecked(false);
+                        window.location.href = '/instructions'
+                    }}>Show Instructions</IonButton>
+                </IonItem>
             </IonContent>
         </IonPage>
     );
