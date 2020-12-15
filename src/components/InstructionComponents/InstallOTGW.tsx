@@ -1,4 +1,13 @@
-import {IonButton, IonCard, IonCardContent, IonLabel, IonAlert, IonItem} from '@ionic/react';
+import {
+    IonButton,
+    IonCard,
+    IonCardContent,
+    IonLabel,
+    IonAlert,
+    IonItem,
+    IonList,
+    useIonViewDidEnter, IonAvatar
+} from '@ionic/react';
 import React, {useEffect, useState} from 'react';
 import './InstallOTGW.scss';
 import {InstructionsInterface} from "../../services/InstructionsInterface";
@@ -9,20 +18,34 @@ const InstallOTGW: React.FC<InstructionsInterface> = ({stepUpFunction, finishFun
 
     const [OTGWStep, setOTGWStep] = useState(0);
     const [scanningBLE, setScanningBLE] = useState(false);
-    const [bleIDArray, setBleIDArray] = useState<string[]>([]);
+    const [bleIDArray, setBleIDArray] = useState<object[]>([]);
     const [showConnectDialog, setConnectDialog] = useState(false);
     const [showSuccessDialog, setSuccessDialog] = useState(false);
     const [showErrorDialog, setErrorDialog] = useState(false);
     const [deviceID, setdeviceID] = useState("");
     const [showLoadingComponent, setShowLoadingComponent] = useState(false);
+    var list: object[] = [];
 
+    useIonViewDidEnter(() => {
+        checkBluetooth();
+    });
+
+    //Enables the bluetooth in Android, will give an alert in iOS if bluetooth is off
+    const checkBluetooth = () =>{
+        BLE.enable();
+        if(!BLE.isEnabled()){
+            alert("Zet uw Bluetooth aan om verbinding te kunnen maken met de apparaten.")
+        }
+    };
     const startScanning = () => {
         setShowLoadingComponent(true);
-        var list: string[] = [];
         //Scans for devices and add them to the list
         BLE.startScan([]).subscribe(device => {
             console.log(JSON.stringify(device));
-            list.push(device.id);
+            list.push({
+                "id": device.id,
+                "name": device.name
+            });
         });
 
         setTimeout(() => {
@@ -36,17 +59,17 @@ const InstallOTGW: React.FC<InstructionsInterface> = ({stepUpFunction, finishFun
     //Connects to the given MAC-adress
     const connect = (id: string) => {
         setShowLoadingComponent(true);
-        BLE.connect(id).subscribe((device) => {
-            console.log('connected');
-            console.log(JSON.stringify(device));
-            setShowLoadingComponent(false);
-            setSuccessDialog(true);
-        }, (device) => {
-            setShowLoadingComponent(false);
-            setErrorDialog(true);
-            console.log('disconnected');
-            console.log(JSON.stringify(device));
-        })
+            BLE.connect(id).subscribe((device) => {
+                console.log('connected');
+                console.log(JSON.stringify(device));
+                setShowLoadingComponent(false);
+                setSuccessDialog(true);
+            }, (device) => {
+                setShowLoadingComponent(false);
+                setErrorDialog(true);
+                console.log('disconnected');
+                console.log(JSON.stringify(device));
+            });
 
         setInterval(() => {
             BLE.isConnected(
@@ -78,13 +101,16 @@ const InstallOTGW: React.FC<InstructionsInterface> = ({stepUpFunction, finishFun
                                onClick={() => finishFunction()}>Afronden</IonButton>
                 )}
                 <IonButton onClick={() => startScanning()}>Op apparaten scannen</IonButton>
-                {bleIDArray.map((id: string) => (
-                    <IonCard class="deviceCard" id={id} onClick={() => openDialog(id)}>
-                        <IonCardContent>
-                            {id}
-                        </IonCardContent>
-                    </IonCard>
-                ))}
+                <IonList className="idList">
+                    {bleIDArray.map((value: any) => (
+                        <IonItem button id={value.id} onClick={() => openDialog(value.id)}>
+                            <IonLabel color={'white'}>
+                                <h2>{value.name}</h2>
+                                <h3>{value.id}</h3>
+                            </IonLabel>
+                        </IonItem>
+                    ))}
+                </IonList>
                 <IonAlert
                     isOpen={showConnectDialog}
                     onDidDismiss={() => setConnectDialog(false)}

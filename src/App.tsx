@@ -8,11 +8,12 @@ import {
     IonTabs
 } from '@ionic/react';
 import {IonReactRouter} from '@ionic/react-router';
-import Home from './pages/Home';
-import Dashboard from './pages/Dashboard';
-import Sensors from './pages/Sensors';
-import Settings from "./pages/Settings";
-import Instructions from "./pages/Instructions";
+import Home from './pages/app/Home';
+import Dashboard from './pages/app/Dashboard';
+import Sensors from './pages/app/Sensors';
+import Settings from "./pages/app/Settings";
+import Instructions from "./pages/app/Instructions";
+import Error from "./pages/Error";
 import {LocalStorage} from "./services/Storage";
 import {Icons} from "./components/Icons";
 import API from "./api/Calls";
@@ -40,9 +41,9 @@ import './theme/main.scss';
 
 import {FirebaseDynamicLinks} from "@ionic-native/firebase-dynamic-links";
 
-var HomeIcon = Icons().HomeIcon();
-var DashboardIcon = Icons().DashboardIcon();
-var SensorIcon = Icons().SensorIcon();
+var dashboardIcon = Icons().DashboardIcon();
+var homeIcon = Icons().HomeIcon();
+var sensorsIcon = Icons().sensorsIcon();
 
 const setItem = LocalStorage().setItem;
 const getItem = LocalStorage().getItem;
@@ -53,18 +54,47 @@ const jwt = require('jsonwebtoken');
 const App: React.FC = () => {
 
     const [tokenChecked, setTokenChecked] = useState(false);
+    const [linkChecked, setLinkChecked] = useState(false);
+    const [firebaseTriggered, setFirebaseTriggered] = useState(false);
+    const [firebaseOutsideTriggered, setFirebaseOutsideTriggered] = useState(false);
 
+    // Gets dynamic link when app is in the background while link is clicked
     FirebaseDynamicLinks.onDynamicLink().subscribe((data: any) => {
+        localStorage.setItem("firebaseTriggered", 'true');
         console.log("dynamic Link triggered");
         console.log("data: " + JSON.stringify(data));
         var url = data.deepLink;
         var id = url.split('https://app.twomes.warmtewachter/')[1];
         console.log("userID: " + id);
         setItem("userID", id);
+        setFirebaseTriggered(true);
     });
 
+    // Gets dynamic link when app is terminated while link is clicked
+    FirebaseDynamicLinks.getDynamicLink().then((data) => {
+        if(data) {
+            localStorage.setItem("firebaseTriggered", 'true');
+            console.log("dynamic Link triggered");
+            console.log("data: " + JSON.stringify(data));
+            var url = data.deepLink;
+            var id = url.split('https://app.twomes.warmtewachter/')[1];
+            console.log("userID: " + id);
+            setItem("userID", id);
+            setFirebaseOutsideTriggered(true);
+        } else {
+            console.log("geen link gevonden");
+        }
+    })
+
     useEffect(() => {
-        if (!tokenChecked) {
+        if (!linkChecked && firebaseTriggered) {
+            window.location.href = '/home';
+            setLinkChecked(true);
+        }
+    }, [firebaseTriggered])
+
+    useEffect(() => {
+        if (!tokenChecked && (firebaseTriggered || firebaseOutsideTriggered)) {
             var senddata = {}
             //Get System UUID for API
             Device.getInfo().then((info: any) => {
@@ -73,6 +103,7 @@ const App: React.FC = () => {
                 }
                 console.log(info.uuid.toString());
             })
+
 
             //Get encrypted key from API
 
@@ -95,7 +126,7 @@ const App: React.FC = () => {
             });
             // }, (err) => {console.log(err)})
         }
-    }, [])
+    }, [firebaseTriggered, firebaseOutsideTriggered])
 
     // Generate JWT token based on secret key
     const generateJWTToken = (secret: string) => {
@@ -126,23 +157,24 @@ const App: React.FC = () => {
                         <Route path="/sensors" component={Sensors}/>
                         <Route path="/settings" component={Settings} exact={true}/>
                         <Route path="/instructions" component={Instructions} exact={true}/>
-                        <Route path="/" render={() => <Redirect to="/home"/>} exact={true}/>
+                        <Route path="/error" component={Error} exact={true}/>
+                        <Route path="/" render={() => <Redirect to="/error"/>} exact={true}/>
                     </IonRouterOutlet>
                     <IonTabBar slot="bottom" id="tabBar">
                         <IonTabButton tab="home" href="/home">
-                            {HomeIcon}
+                            {homeIcon}
                         </IonTabButton>
                         <IonTabButton tab="dashboard" href="/dashboard">
-                            {DashboardIcon}
+                            {dashboardIcon}
                         </IonTabButton>
                         <IonTabButton tab="sensors" href="/sensors">
-                            {SensorIcon}
+                            {sensorsIcon}
                         </IonTabButton>
                     </IonTabBar>
                 </IonTabs>
             </IonReactRouter>
         </IonApp>
     )
-};
+}
 
 export default App;

@@ -3,10 +3,10 @@ import {
     IonAvatar,
     IonButton,
     IonButtons, IonCard,
-    IonCardContent, IonCardHeader, IonCol,
+    IonCardContent, IonCol,
     IonContent,
     IonHeader,
-    IonIcon, IonImg, IonItem, IonLabel, IonLoading,
+    IonIcon, IonItem, IonLabel,
     IonPage, IonRow, IonSpinner,
     IonTitle,
     IonToolbar, useIonViewDidEnter
@@ -21,12 +21,11 @@ import {
     sunny, reorderThree, thunderstorm, snow, rainy, arrowForwardOutline,
 } from "ionicons/icons";
 import {Link, Redirect} from "react-router-dom";
-import {LocalStorage} from "../services/Storage";
+import {LocalStorage} from "../../services/Storage";
 import {Plugins} from "@capacitor/core";
-import API from "../api/Calls";
+import API from "../../api/Calls";
 
 const {Geolocation} = Plugins;
-const Chart = require('chart.js');
 
 const getItem = LocalStorage().getItem;
 const setItem = LocalStorage().setItem;
@@ -37,8 +36,6 @@ const Home: React.FC = () => {
     const [weatherIcon, setWeatherIcon] = useState<any>();
     const [instructionsChecked, setInstructionsChecked] = useState(false);
     const [weatherIsLoading, setWeatherIsLoading] = useState(true);
-    const [chartsSet, setChartsSet] = useState(false);
-    const [tested, setTested] = useState(false);
 
     useIonViewDidEnter(() => {
         getWeatherData();
@@ -125,89 +122,6 @@ const Home: React.FC = () => {
         }
     }, [])
 
-    useEffect(() => {
-        if(!tested) {
-            API.database.createToken("123").then((response) => {
-                console.log("Success");
-                console.log(response.data);
-            }, (err) => {
-                console.log("Failure");
-                console.log(err);
-            })
-            setTested(true);
-        }
-    })
-
-
-    useEffect(() => {
-        if (!chartsSet) {
-            //Chart elements from doc are selected and charts are added to them
-            var chartElement1 = document.getElementById('chart1');
-            var chartElement2 = document.getElementById('chart2');
-            var chartElement3 = document.getElementById('chart3');
-
-            var chart1 = new Chart(chartElement1, {
-                type: 'pie',
-                data: {
-                    datasets: [{
-                        label: 'MockGraph',
-                        data: [20, 30, 40],
-                        backgroundColor: [
-                            'rgba(255, 100, 100)',
-                            'rgba(255, 150, 0)',
-                            'rgba(255, 255, 30)'
-                        ],
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    maintainAspectRatio: true,
-                    responsive: true,
-                    width: '30%'
-                }
-            });
-            var chart2 = new Chart(chartElement2, {
-                type: 'pie',
-                data: {
-                    datasets: [{
-                        label: 'MockGraph2',
-                        data: [50, 10, 5],
-                        backgroundColor: [
-                            'rgba(10, 150, 255)',
-                            'rgba(0, 80, 255)',
-                            'rgba(0, 40, 255)'
-                        ],
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    maintainAspectRatio: true,
-                    responsive: true
-                }
-            })
-            var chart3 = new Chart(chartElement3, {
-                type: 'pie',
-                data: {
-                    datasets: [{
-                        label: 'MockGraph3',
-                        data: [25, 25, 25],
-                        backgroundColor: [
-                            'rgba(0, 200, 0)',
-                            'rgba(0, 150, 0)',
-                            'rgba(0, 255, 0)'
-                        ],
-                        borderWidth: 0
-                    }]
-                },
-                options: {
-                    maintainAspectRatio: true,
-                    responsive: true
-                }
-            })
-            setChartsSet(true);
-        }
-    }, [chartsSet])
-
     return (
         <IonPage>
             <IonHeader>
@@ -221,17 +135,21 @@ const Home: React.FC = () => {
                 </IonToolbar>
             </IonHeader>
             <IonContent>
-                <IonCard className="sensorCard">
-                    <IonCardContent className="sensorCardContent">
+                <Link to={"/sensors"} replace>
+                <IonCard className="sensorStatusCard">
+                    <IonCardContent className={"sensorCardContent"}>
                         <IonItem lines="none">
                             <IonAvatar slot="start" className={"sensorAvatar"}>
-                                <IonIcon className={"sensorIcon"} icon={checkmarkCircle} color={'success'}/>
+                                <IonIcon className={"sensorsIcon"} icon={checkmarkCircle} color={'success'}/>
                             </IonAvatar>
                             <IonLabel className={"ion-text-wrap"}>Uw sensoren zijn verbonden</IonLabel>
-
                         </IonItem>
                     </IonCardContent>
+                    <IonCardContent className={"dashboardCardContent"}>
+                        <IonIcon className="dashboardIcon" icon={arrowForwardOutline}/>
+                    </IonCardContent>
                 </IonCard>
+                </Link>
                 <IonCard className="weatherCard">
                     <IonCardContent>
                         <IonRow hidden={weatherIsLoading}>
@@ -256,15 +174,6 @@ const Home: React.FC = () => {
                 <Link to={"/dashboard"} replace>
                     <IonCard className="dashboardCard">
                         <IonItem lines="none" className={"dashboardCardHeader"}>
-                            <div className="chartContainer">
-                                <canvas className="chart" id="chart1"/>
-                            </div>
-                            <div className="chartContainer">
-                                <canvas className="chart" id="chart2"/>
-                            </div>
-                            <div className="chartContainer">
-                                <canvas className="chart" id="chart3"/>
-                            </div>
                         </IonItem>
                         <IonCardContent className={"dashboardCardContent"}>
                             <IonIcon className="dashboardIcon" icon={arrowForwardOutline}/>
