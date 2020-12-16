@@ -145,7 +145,7 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction, router}
     // Check if Wifi is enabled
     const checkIfWifiEnabled = () => WifiWizard2.isWifiEnabled().then((result) => result).catch((error) => console.log(error));
 
-    // Scan for available networksw
+    // Scan for available networks
     const scanAvailableNetworks = () => {
         WifiWizard2.scan().then(function (results) {
             setScanResults(results);
