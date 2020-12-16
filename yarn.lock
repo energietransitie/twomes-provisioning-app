@@ -1273,6 +1273,13 @@
   dependencies:
     "@types/cordova" latest
 
+"@ionic-native/in-app-browser@^5.30.0":
+  version "5.30.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/in-app-browser/-/in-app-browser-5.30.0.tgz#e812d2a1039f4bd7f798e831aa93b0dcf978d1d6"
+  integrity sha512-61cQmXI0OGUTq1LnZhlnyDntqF0AK3QTK3lpRyA/sWx5UGIMAoIAMoL5JufOTsrowSH6BEguk4AygL+9s1oefQ==
+  dependencies:
+    "@types/cordova" latest
+
 "@ionic-native/wifi-wizard-2@^5.29.0":
   version "5.30.0"
   resolved "https://registry.yarnpkg.com/@ionic-native/wifi-wizard-2/-/wifi-wizard-2-5.30.0.tgz#c06aa1476349f0ebe5113be2e1cdef074a5a8358"
@@ -3601,6 +3608,11 @@ cordova-plugin-firebase-dynamiclinks@^5.0.0:
   version "5.0.0"
   resolved "https://registry.yarnpkg.com/cordova-plugin-firebase-dynamiclinks/-/cordova-plugin-firebase-dynamiclinks-5.0.0.tgz#0b1f7604d700465b5a8500ab9fe103152f8368b2"
   integrity sha512-5qiVO5Sz0cMX3vkUvv55U+dDTPDoTJmE2ntEZUqetEZT80GhQdF67ryjLrD1WpI/WCvS6xmPT+F/8kH8F/LqxQ==
+
+cordova-plugin-inappbrowser@^4.1.0:
+  version "4.1.0"
+  resolved "https://registry.yarnpkg.com/cordova-plugin-inappbrowser/-/cordova-plugin-inappbrowser-4.1.0.tgz#6010809d1cd813c546f65e4e41dc2b9ed97179e4"
+  integrity sha512-jPvcwDx2/L5ZbVG69NT2xmlG1E+MljRxkdsFpgj/5aoaF4oPqxg44J/bYxJNWgQtGnRSRWoqCRmU7FgmmMNMxA==
 
 cordova-plugin-wifiwizard2@^3.1.1:
   version "3.1.1"

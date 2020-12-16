@@ -15,6 +15,10 @@
     <param name="android-package" value="by.chemerisuk.cordova.firebase.FirebaseDynamicLinksPlugin"/>
   </feature>
 
+  <feature name="InAppBrowser">
+    <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser"/>
+  </feature>
+
   <feature name="WifiWizard2">
     <param name="android-package" value="wifiwizard2.WifiWizard2"/>
     <param name="onload" value="true"/>

@@ -6,9 +6,10 @@ import {
     IonPage, IonRadio,
     IonTitle, IonToggle,
     IonToolbar,
-    useIonViewWillEnter, useIonViewWillLeave
+    useIonViewWillEnter, useIonViewWillLeave, IonButton
 } from "@ionic/react"
 import React from 'react';
+import {InAppBrowser} from "@ionic-native/in-app-browser";
 
 
 const Settings: React.FC = () => {
@@ -24,6 +25,11 @@ const Settings: React.FC = () => {
         const tabBar = document.getElementById("tabBar");
         tabBar!.style.display = "flex";
     })
+
+    const configureEnelogic = () => {
+        var site = InAppBrowser.create("https://enelogic.com/oauth/v2/auth?scope=account&redirect_uri=app.twomes.warmtewachter&response_type=code&client_id=9933_7c89q9lw7iscg84o8k0owccss8gc484ckw4g4ooo4kk8cwkck&access_type=offline");
+        site.show();
+    }
 
     return (
         <IonPage>
@@ -66,6 +72,11 @@ const Settings: React.FC = () => {
                     <IonItem>
                         <IonLabel>Checkbox2</IonLabel>
                         <IonCheckbox slot="end" />
+                    </IonItem>
+
+                    <IonItem>
+                        <IonLabel>Start Enelogic Flow</IonLabel>
+                        <IonButton onClick={() => configureEnelogic()}></IonButton>
                     </IonItem>
                 </IonList>
             </IonContent>
