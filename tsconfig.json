@@ -20,7 +20,6 @@
     "jsx": "react"
   },
   "include": [
-    "src",
-    "node_modules/cordova-plugin-wifi-manager/types/index.d.ts"
+    "src"
   ]
 }

@@ -28,13 +28,7 @@ import React, {useEffect, useState} from 'react';
 import './ConfigureWIFI.scss';
 import {InstructionsInterface} from "../../services/InstructionsInterface";
 import {LocalStorage} from "../../services/Storage";
-import InstallOTGW from "./InstallOTGW";
-import InstallP1 from "./InstallP1";
-import InstallSensors from "./InstallSensors";
 import {WifiConfig, WifiWizard2} from "@ionic-native/wifi-wizard-2";
-import LoadingComponent from "../LoadingComponent";
-import AlertBox from "../AlertBox";
-import {Build} from "ionicons/dist/types/stencil-public-runtime";
 import {installationconfig} from '../../../package.json';
 import {Plugins} from '@capacitor/core';
 
@@ -54,13 +48,12 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction, router}
     const [modalHeight, setModalHeight] = useState(0);
     const [devicePlatformm, setDevicePlatform] = useState('');
 
-    // These functions will be executed when the user is about to enter te view
+    // These functions will be executed when the user is about to enter the view
     useIonViewWillEnter(() => {
         startWifiConfig();
 
         // gets the default height of the page
         let pageHeight = (document.getElementsByClassName('ion-page')[0] as HTMLInputElement)?.offsetHeight;
-        console.log('THE HEIGHT IS : ' + pageHeight);
         setModalHeight(pageHeight);
     })
 
@@ -145,7 +138,7 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction, router}
     // Check if Wifi is enabled
     const checkIfWifiEnabled = () => WifiWizard2.isWifiEnabled().then((result) => result).catch((error) => console.log(error));
 
-    // Scan for available networksw
+    // Scan for available networks
     const scanAvailableNetworks = () => {
         WifiWizard2.scan().then(function (results) {
             setScanResults(results);
