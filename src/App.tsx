@@ -47,9 +47,9 @@ var sensorsIcon = Icons().sensorsIcon();
 
 const setItem = LocalStorage().setItem;
 const getItem = LocalStorage().getItem;
-const CryptoJS = require('crypto-js');
-const {Device} = Plugins;
 const jwt = require('jsonwebtoken');
+const fernet = require('fernet');
+const Crypto = require('crypto');
 
 const App: React.FC = () => {
 
@@ -94,36 +94,41 @@ const App: React.FC = () => {
     }, [firebaseTriggered])
 
     useEffect(() => {
-        if (!tokenChecked && (firebaseTriggered || firebaseOutsideTriggered)) {
-            var senddata = {}
-            //Get System UUID for API
-            Device.getInfo().then((info: any) => {
-                senddata = {
-                    houseID: info.uuid.toString()
-                }
+        if (!tokenChecked) {
+
+            // Get encrypted key from API
+            var key = Crypto.randomBytes(32).toString('base64');
+
+            API.database.sendDeviceToken(key).then((response: any) => {
+                console.log(key)
+                var secret = new fernet.Secret(key);
+                var token = new fernet.Token({
+                    secret: secret,
+                    token: response.data,
+                    ttl: 0
+                })
+
+                var secretkey = token.decode();
+
+                // Check if JWTToken exists and is still valid
+
+                getItem("JWTToken").then((oldToken: any) => {
+                    if (oldToken == null || oldToken == "") {
+                        generateJWTToken(secretkey);
+                    } else {
+                        jwt.verify(oldToken, secretkey, (err: any, decoded: any) => {
+                            console.log(decoded);
+                            console.log(err);
+                            if (decoded == undefined) {
+                                generateJWTToken(secretkey);
+                            }
+                        });
+                    }
+                });
+            }, (err) => {
+                console.log(err)
             })
-
-
-            //Get encrypted key from API
-
-            // API.database.sendDeviceToken(senddata).then((response: any) => {
-            // var secret = CryptoJS.AES.decrypt(response.data.key, info.uuid.toString());
-            var secret = "hallo"
-            // Check if JWTToken exists and is still valid
-            getItem("JWTToken").then((oldToken: any) => {
-                if (oldToken == null || oldToken == "") {
-                    generateJWTToken(secret);
-                } else {
-                    jwt.verify(oldToken, secret, (err: any, decoded: any) => {
-                        console.log(decoded);
-                        console.log(err);
-                        if (decoded == undefined) {
-                            generateJWTToken(secret);
-                        }
-                    });
-                }
-            });
-            // }, (err) => {console.log(err)})
+            setTokenChecked(true);
         }
     }, [firebaseTriggered, firebaseOutsideTriggered])
 
@@ -136,7 +141,8 @@ const App: React.FC = () => {
         });
 
         var data = {
-            "houseID": houseID
+            "house_id": 132,
+            "APIkey": "34TF5373W532455OBCMCA67E16S3D"
         }
         var signedToken = jwt.sign(data, secret, {expiresIn: '168h'})
 

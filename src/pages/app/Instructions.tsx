@@ -2,9 +2,9 @@ import {
     IonContent,
     IonPage,
     useIonViewWillEnter,
-    useIonViewWillLeave, IonToolbar, IonTitle, IonHeader
+    useIonViewWillLeave, IonToolbar, IonTitle, IonHeader, IonRouterOutlet, IonApp
 } from "@ionic/react";
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import {LocalStorage} from "../../services/Storage";
 import LoadingComponent from "../../components/LoadingComponent";
 import InstallOTGW from "../../components/InstructionComponents/InstallOTGW";
@@ -12,6 +12,9 @@ import InstallP1 from "../../components/InstructionComponents/InstallP1";
 import InstallSensors from "../../components/InstructionComponents/InstallSensors";
 import ConfigureWIFI from "../../components/InstructionComponents/ConfigureWIFI";
 import './Instructions.scss';
+import {IonReactRouter} from "@ionic/react-router";
+import Home from "./Home";
+import {Route} from "react-router";
 import {installationconfig} from '../../../package.json';
 
 const getItem = LocalStorage().getItem;
@@ -24,6 +27,9 @@ const Instructions: React.FC = () => {
     const [currentStep, setCurrentStep] = useState("1");
     const [currentStepSet, setCurrentStepSet] = useState(false);
     const [stepsArray, setStepsArray] = useState<string[]>([]);
+    const routerRef = useRef<HTMLIonRouterOutletElement | null>(null);
+
+
     // Hide tabbar on entering this page
     useIonViewWillEnter(() => {
         const tabBar = document.getElementById("tabBar");
@@ -50,7 +56,7 @@ const Instructions: React.FC = () => {
 
     // Set all necessary configuration steps based on the user's ID
     useEffect(() => {
-        if(userID && !userIDChecked) {
+        if (userID && !userIDChecked) {
             var firstNumberInID = userID.split("")[0];
             var stepArray: string[] = [];
             switch (firstNumberInID) {
@@ -93,27 +99,30 @@ const Instructions: React.FC = () => {
 
     if (currentStepSet && userIDChecked) {
         return (
-            <IonPage>
-                <IonHeader>
-                    <IonToolbar className="gradientBackgroundColor">
-                        <IonTitle slot="start">Instructies</IonTitle>
-                    </IonToolbar>
-                </IonHeader>
-                <IonContent fullscreen>
-                    {currentStep === installationconfig.OTGWstep && (
-                        <InstallOTGW stepUpFunction={stepUp} finishFunction={completeInstructions} lastStep={userID.split("")[0] === "1"}/>
-                    )}
-                    {currentStep === installationconfig.P1step && (
-                        <InstallP1 stepUpFunction={stepUp}/>
-                    )}
-                    {currentStep === installationconfig.Sensorstep && (
-                        <InstallSensors stepUpFunction={stepUp} finishFunction={completeInstructions} lastStep={userID.split("")[0] !== "1"}/>
-                    )}
-                    {currentStep === installationconfig.WIFIstep && (
-                        <ConfigureWIFI stepUpFunction={stepUp}/>
-                    )}
-                </IonContent>
-            </IonPage>
+
+                <IonPage>
+                    <IonHeader>
+                        <IonToolbar className="gradientBackgroundColor">
+                            <IonTitle slot="start">Instructies</IonTitle>
+                        </IonToolbar>
+                    </IonHeader>
+                    <IonContent fullscreen >
+                        {currentStep === installationconfig.OTGWstep && (
+                            <InstallOTGW router={routerRef.current} stepUpFunction={stepUp} finishFunction={completeInstructions}
+                                         lastStep={userID.split("")[0] === "1"}/>
+                        )}
+                        {currentStep === installationconfig.P1step && (
+                            <InstallP1 router={routerRef.current} stepUpFunction={stepUp}/>
+                        )}
+                        {currentStep === installationconfig.Sensorstep && (
+                            <InstallSensors router={routerRef.current} stepUpFunction={stepUp} finishFunction={completeInstructions}
+                                            lastStep={userID.split("")[0] !== "1"}/>
+                        )}
+                        {currentStep === installationconfig.WIFIstep && (
+                            <ConfigureWIFI router={routerRef.current} stepUpFunction={stepUp}/>
+                        )}
+                    </IonContent>
+                </IonPage>
         )
     } else {
         return (
