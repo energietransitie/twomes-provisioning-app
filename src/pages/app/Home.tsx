@@ -18,24 +18,34 @@ import {
     cloudy,
     cloudyNight,
     moon,
-    sunny, reorderThree, thunderstorm, snow, rainy, arrowForwardOutline,
+    sunny, reorderThree, thunderstorm, snow, rainy, arrowForwardOutline, closeCircle,
 } from "ionicons/icons";
 import {Link, Redirect} from "react-router-dom";
 import {LocalStorage} from "../../services/Storage";
 import {Plugins} from "@capacitor/core";
 import API from "../../api/Calls";
+import LoadingComponent from "../../components/LoadingComponent";
+import moment from 'moment';
 
 const {Geolocation} = Plugins;
 
 const getItem = LocalStorage().getItem;
 const setItem = LocalStorage().setItem;
+const localization = require("moment/locale/nl");
 
 const Home: React.FC = () => {
+
+    //Set the locale for moment to the Netherlands
+    moment.locale("nl", localization);
 
     const [weatherData, setWeatherData] = useState<any>();
     const [weatherIcon, setWeatherIcon] = useState<any>();
     const [instructionsChecked, setInstructionsChecked] = useState(false);
     const [weatherIsLoading, setWeatherIsLoading] = useState(true);
+    const [sensorStatusSet, setSensorStatusSet] = useState(false);
+    const [sensor1Status, setSensor1Status] = useState<undefined | boolean>(undefined);
+    const [sensor2Status, setSensor2Status] = useState<undefined | boolean>(undefined);
+    const [dataUpToDate, setDataUpToDate] = useState<undefined | boolean>(undefined);
 
     useIonViewDidEnter(() => {
         getWeatherData();
@@ -122,73 +132,116 @@ const Home: React.FC = () => {
         }
     }, [])
 
-    return (
-        <IonPage>
-            <IonHeader>
-                <IonToolbar className="gradientBackgroundColor">
-                    <IonTitle slot="start">Home</IonTitle>
-                    <IonButtons slot="end">
-                        <IonButton href="/settings">
-                            <IonIcon icon={settingsSharp} color="dark"/>
-                        </IonButton>
-                    </IonButtons>
-                </IonToolbar>
-            </IonHeader>
-            <IonContent>
-                <Link to={"/sensors"} replace>
-                <IonCard className="sensorStatusCard">
-                    <IonCardContent className={"sensorCardContent"}>
-                        <IonItem lines="none">
-                            <IonAvatar slot="start" className={"sensorAvatar"}>
-                                <IonIcon className={"sensorsIcon"} icon={checkmarkCircle} color={'success'}/>
-                            </IonAvatar>
-                            <IonLabel className={"ion-text-wrap"}>Uw sensoren zijn verbonden</IonLabel>
-                        </IonItem>
-                    </IonCardContent>
-                    <IonCardContent className={"dashboardCardContent"}>
-                        <IonIcon className="dashboardIcon" icon={arrowForwardOutline}/>
-                    </IonCardContent>
-                </IonCard>
-                </Link>
-                <IonCard className="weatherCard">
-                    <IonCardContent>
-                        <IonRow hidden={weatherIsLoading}>
-                            <IonCol>
-                                <IonItem className={'centerWeatherIcon'} lines="none">
-                                    <IonIcon className={'weatherIcon'} icon={weatherIcon}/>
+    useEffect(() => {
+        if (!sensorStatusSet) {
+            getItem("JWTToken").then((token) => {
+                if (token !== null && token !== undefined) {
+                    API.database.getHouseData(token).then((response) => {
+                        var data = response.data;
+                        var record = data[0];
+                        console.log(record);
+                        var temp1Up = record.pipe_temp1 !== null;
+                        var temp2Up = record.pipe_temp2 !== null;
+                        var upToDate = moment(record.time).add(1, 'days').format("DD MMMM YYYY hh:mm:ss") >= moment().format("DD MMMM YYYY hh:mm:ss");
+                        setSensor1Status(temp1Up);
+                        setSensor2Status(temp2Up);
+                        setDataUpToDate(upToDate);
+                    })
+                }
+                setSensorStatusSet(true);
+            })
+        }
+    })
+
+    if (sensorStatusSet) {
+        return (
+            <IonPage>
+                <IonHeader>
+                    <IonToolbar className="gradientBackgroundColor">
+                        <IonTitle slot="start">Home</IonTitle>
+                        <IonButtons slot="end">
+                            <IonButton href="/settings">
+                                <IonIcon icon={settingsSharp} color="dark"/>
+                            </IonButton>
+                        </IonButtons>
+                    </IonToolbar>
+                </IonHeader>
+                <IonContent>
+                    {sensor1Status !== undefined && sensor2Status !== undefined && dataUpToDate !== undefined && (
+                        <Link to={"/sensors"} replace>
+                            <IonCard className="sensorStatusCard">
+                                <IonCardContent className={"sensorCardContent"}>
+                                    <IonItem lines="none">
+                                        <IonAvatar slot="start" className={"sensorAvatar"}>
+                                            <IonIcon className={"sensorsIcon"}
+                                                     icon={sensor1Status && sensor2Status && dataUpToDate ? checkmarkCircle : closeCircle}
+                                                     color={sensor1Status && sensor2Status && dataUpToDate ? 'success' : 'danger'}/>
+                                        </IonAvatar>
+                                        {sensor1Status && sensor2Status && dataUpToDate && (
+                                            <IonLabel className={"ion-text-wrap"}>Uw sensoren zijn verbonden</IonLabel>
+                                        )}
+                                        {!dataUpToDate && (
+                                            <IonLabel className={"ion-text-wrap"}>De apparatuur heeft de laatste 24 uur
+                                                geen nieuwe data verstuurd</IonLabel>
+                                        )}
+                                        {dataUpToDate && (!sensor1Status || !sensor2Status) && (
+                                            <IonLabel className={"ion-text-wrap"}>Eén of meerdere sensoren zijn niet
+                                                (meer) verbonden</IonLabel>
+                                        )}
+                                    </IonItem>
+                                </IonCardContent>
+                                <IonCardContent className={"dashboardCardContent"}>
+                                    <IonIcon className="dashboardIcon" icon={arrowForwardOutline}/>
+                                </IonCardContent>
+                            </IonCard>
+                        </Link>
+                    )}
+                    <IonCard className="weatherCard">
+                        <IonCardContent>
+                            <IonRow hidden={weatherIsLoading}>
+                                <IonCol>
+                                    <IonItem className={'centerWeatherIcon'} lines="none">
+                                        <IonIcon className={'weatherIcon'} icon={weatherIcon}/>
+                                    </IonItem>
+                                </IonCol>
+                                <IonCol>
+                                    <h3 className={'weatherCityName'}>{weatherData != undefined ? weatherData?.name.charAt(0).toUpperCase() + weatherData?.name.slice(1) : ''}</h3>
+                                    <h3 className={'weatherDescription'}>{weatherData != undefined ? weatherData?.weather[0].description.charAt(0).toUpperCase() + weatherData?.weather[0].description.slice(1) : ''}</h3>
+                                    <h1 className={'temperatureHeader'}>{weatherData != undefined ? weatherData?.main?.temp.toFixed(1) + '°' : ''}</h1>
+                                </IonCol>
+                            </IonRow>
+                            <IonRow hidden={!weatherIsLoading}>
+                                <IonItem className={'centerWeatherSpinner'} lines="none">
+                                    <IonSpinner className={'weatherSpinner'}></IonSpinner>
                                 </IonItem>
-                            </IonCol>
-                            <IonCol>
-                                <h3 className={'weatherCityName'}>{weatherData != undefined ? weatherData?.name.charAt(0).toUpperCase() + weatherData?.name.slice(1) : ''}</h3>
-                                <h3 className={'weatherDescription'}>{weatherData != undefined ? weatherData?.weather[0].description.charAt(0).toUpperCase() + weatherData?.weather[0].description.slice(1) : ''}</h3>
-                                <h1 className={'temperatureHeader'}>{weatherData != undefined ? weatherData?.main?.temp.toFixed(1) + '°' : ''}</h1>
-                            </IonCol>
-                        </IonRow>
-                        <IonRow hidden={!weatherIsLoading}>
-                            <IonItem className={'centerWeatherSpinner'} lines="none">
-                                <IonSpinner className={'weatherSpinner'}></IonSpinner>
-                            </IonItem>
-                        </IonRow>
-                    </IonCardContent>
-                </IonCard>
-                <Link to={"/dashboard"} replace>
-                    <IonCard className="dashboardCard">
-                        <IonItem lines="none" className={"dashboardCardHeader"}>
-                        </IonItem>
-                        <IonCardContent className={"dashboardCardContent"}>
-                            <IonIcon className="dashboardIcon" icon={arrowForwardOutline}/>
+                            </IonRow>
                         </IonCardContent>
                     </IonCard>
-                </Link>
-                <IonItem>
-                    <IonButton onClick={() => {
-                        setInstructionsChecked(false);
-                        window.location.href = '/instructions'
-                    }}>Show Instructions</IonButton>
-                </IonItem>
-            </IonContent>
-        </IonPage>
-    );
+                    <Link to={"/dashboard"} replace>
+                        <IonCard className="dashboardCard">
+                            <IonItem lines="none" className={"dashboardCardHeader"}>
+                            </IonItem>
+                            <IonCardContent className={"dashboardCardContent"}>
+                                <IonIcon className="dashboardIcon" icon={arrowForwardOutline}/>
+                            </IonCardContent>
+                        </IonCard>
+                    </Link>
+                    <IonItem>
+                        <IonButton onClick={() => {
+                            setInstructionsChecked(false);
+                            window.location.href = '/instructions'
+                        }}>Show Instructions</IonButton>
+                    </IonItem>
+                </IonContent>
+            </IonPage>
+        );
+    } else {
+        return (
+            <IonPage>
+                <LoadingComponent showLoading={true}/>
+            </IonPage>
+        )
+    }
 };
 
 export default Home;
