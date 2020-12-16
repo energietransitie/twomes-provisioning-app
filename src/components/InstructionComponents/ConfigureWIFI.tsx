@@ -28,13 +28,7 @@ import React, {useEffect, useState} from 'react';
 import './ConfigureWIFI.scss';
 import {InstructionsInterface} from "../../services/InstructionsInterface";
 import {LocalStorage} from "../../services/Storage";
-import InstallOTGW from "./InstallOTGW";
-import InstallP1 from "./InstallP1";
-import InstallSensors from "./InstallSensors";
 import {WifiConfig, WifiWizard2} from "@ionic-native/wifi-wizard-2";
-import LoadingComponent from "../LoadingComponent";
-import AlertBox from "../AlertBox";
-import {Build} from "ionicons/dist/types/stencil-public-runtime";
 import {installationconfig} from '../../../package.json';
 import {Plugins} from '@capacitor/core';
 
@@ -60,7 +54,6 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction, router}
 
         // gets the default height of the page
         let pageHeight = (document.getElementsByClassName('ion-page')[0] as HTMLInputElement)?.offsetHeight;
-        console.log('THE HEIGHT IS : ' + pageHeight);
         setModalHeight(pageHeight);
     })
 
