@@ -54,7 +54,7 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction, router}
     const [modalHeight, setModalHeight] = useState(0);
     const [devicePlatformm, setDevicePlatform] = useState('');
 
-    // These functions will be executed when the user is about to enter te view
+    // These functions will be executed when the user is about to enter the view
     useIonViewWillEnter(() => {
         startWifiConfig();
 
