@@ -1,4 +1,8 @@
 .tab-selected {
+  #svgGradient {
+    --color-stop-1: #45B97C;
+    --color-stop-2: #B1D249;
+  }
   #svgGradientHome {
     --color-stop-1: #45B97C;
     --color-stop-2: #B1D249;
@@ -83,70 +87,77 @@
 
 // Styling Instructionspage
 
-.subTitleStep {
+.subTitleStep{
   color: white;
   font-weight: normal;
-  text-transform: unset !important;
+  text-transform: unset!important;
 }
 
-.instructionImage {
+.instructionImage{
   padding: 16px;
 }
 
-.instructionsContent {
-  color: white !important;
+.instructionsContent{
+  color: white!important;
   font-size: 16px;
 }
 
-.instructionsList IonItem {
-  font-size: 16px !important;
+.instructionsList IonItem{
+  font-size: 16px!important;
 }
 
-.stepCountBadge {
-  background-color: #45B97C !important;
-  color: white;
+.stepCountBadge{
+  background-color: #45B97C!important;
+  color:white;
   font-size: 16px;
   font-weight: normal;
   padding: 3px 8px;
 }
 
-.stepBadge {
-  background-color: #45B97C !important;
+.stepBadge{
+  background-color: #45B97C!important;
 }
 
-.ionNoteSteps {
-  margin: 0px !important;
-  padding-right: 16px !important;
+.ionNoteSteps{
+  margin:0px!important;
+  padding-right: 16px!important;
 }
 
-.instructionsNextButton {
+.instructionsNextButton{
   border-radius: 10px;
-  color: white !important;
+  color: white!important;
 }
 
-.button-inner {
-  color: white !important;
+.button-inner{
+  color: white!important;
 }
 
-.networkList {
-  padding: 0px !important;
-  background-color: #4d4d4d !important;
+.networkList{
+  padding:0px!important;
+  background-color: #4d4d4d!important;
 }
 
-.scrollList {
-  padding-top: 100px !important;
-  --background: #4d4d4d !important;
+.scrollList{
+  padding-top: 100px!important;
+  --background: #4d4d4d!important;
 }
 
-.scrollListLoading {
-  padding-top: 100px !important;
-  background-color: #4d4d4d !important;
-  --overflow: hidden !important;
+.scrollListLoading{
+  padding-top: 100px!important;
+  background-color: #4d4d4d!important;
+  --overflow:hidden!important;
 }
 
-.cardContent {
-  background-color: #4d4d4d !important;
-  padding: 0px !important;
+.cardContent{
+  background-color: #4d4d4d!important;
+  padding: 0px!important;
+}
+
+.centerContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding:0px;
 }
 
 .cardContentLoading {
@@ -156,4 +167,119 @@
 
 .searchWifiNetworksButton {
   margin-left: 16px;
+}
+.modalBackground{
+  --background: #222222!important;
+}
+
+.modalCardAndroidBig .modal-wrapper {
+  top: 25%;
+  bottom: 25%;
+  height: 50%;
+  left: 8%;
+  right: 8%;
+  width: 84%;
+  position: absolute;
+  display: block;
+  --backdrop-opacity: var(--ion-backdrop-opacity, 0)!important;
+  border-radius: 10px 10px ;
+}
+
+.modalCardAndroidSmall .modal-wrapper {
+  top: 30%;
+  bottom: 30%;
+  height: 40%;
+  left: 8%;
+  right: 8%;
+  width: 84%;
+  position: absolute;
+  display: block;
+  --backdrop-opacity: var(--ion-backdrop-opacity, 0)!important;
+  border-radius: 10px 10px ;
+}
+
+.modalCardIos .modal-wrapper {
+  top: 23%;
+  bottom: 23%;
+  height: 54%;
+  left: 8%;
+  right: 8%;
+  width: 84%;
+  position: absolute;
+  display: block;
+  --backdrop-opacity: var(--ion-backdrop-opacity, 0)!important;
+  border-radius: 10px ;
+}
+
+.passwordContentAndroid IonInput{
+  font-size: 19px;
+}
+
+.passwordContentIos ion-item ion-input{
+  font-size: 19px;
+}
+
+.card-content-ios{
+  padding:0px!important;
+}
+
+.modalButton1{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-size: 12px ;
+  margin-right: 5%;
+  margin-bottom: 5%;
+}
+
+.modalButton2{
+  font-size: 12px;
+  position: absolute;
+  bottom: 0;
+  left:0;
+  margin-left:5%;
+  margin-bottom: 5%;
+}
+
+.centerContentModal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding:0px;
+}
+
+.infoIconModal{
+  height: 50px!important;
+  width: 50px!important;
+}
+
+.modalSubtitle{
+  color: white;
+  font-weight: normal;
+  text-transform: unset !important;
+}
+
+.modalHeader{
+  padding-left:7%!important;
+  padding-right:7%!important;
+}
+
+.modalHeader h3{
+  margin:0 0 8px 0;
+}
+
+.modalContent{
+  padding:0 7% 0 7% !important;
+}
+
+.headingIos {
+  font-size: 10px!important;
+}
+
+.sc-ion-input-ios-s{
+  font-size: 14px!important;
+}
+
+.showPasswordLabel{
+  font-size: 14px!important;
 }
