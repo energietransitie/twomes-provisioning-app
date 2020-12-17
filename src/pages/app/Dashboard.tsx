@@ -55,13 +55,13 @@ const Dashboard: React.FC = () => {
                     var data1: string[] = [];
                     var data2: string[] = [];
                     var labels: string[] = [];
-                    tempdata.forEach((dataitem: any) => {
-                        data1.push(dataitem['electricity_delivered']);
-                        data2.push(dataitem['electricity_received']);
-                        var recorddate = moment(dataitem['time']).format('DD MMM');
-                        labels.push(recorddate)
-                    })
                     console.log(tempdata);
+                    // tempdata.forEach((dataitem: any) => {
+                    //     data1.push(dataitem['electricity_delivered']);
+                    //     data2.push(dataitem['electricity_received']);
+                    //     var recorddate = moment(dataitem['time']).format('DD MMM');
+                    //     labels.push(recorddate)
+                    // })
                     dataset1.data = data1;
                     dataset1.labels = labels;
                     dataset2.data = data2;
@@ -226,7 +226,7 @@ const Dashboard: React.FC = () => {
                     </IonRefresher>
                     {error ? (
                         <IonCard className="cardContent">
-                            <IonCardHeader>Kon geen data vinden</IonCardHeader>
+                            <IonCardHeader>Er is voor uw huishouden nog geen data bekend</IonCardHeader>
                         </IonCard>
                     ) : (
                         <div>

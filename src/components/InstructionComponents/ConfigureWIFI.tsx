@@ -34,7 +34,7 @@ import {Plugins} from '@capacitor/core';
 
 const {Device} = Plugins;
 
-const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction, router}) => {
+const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction, router, wifiFunction}) => {
     const [currentStep, setCurrentStep] = useState('');
     const [currentStepSet, setCurrentStepSet] = useState(false);
     const [currentNetwork, setCurrentNetwork] = useState('');
@@ -125,6 +125,7 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction, router}
 
     // shows an alert where the user can fill in the password of the network
     const showPasswordAlert = (networkSSID: string) => {
+        setCurrentNetwork(networkSSID);
         setModalData({
             header: "Wachtwoord voor " + networkSSID,
             message: `Vul het wachtwoord van netwerk ${networkSSID} in.`,
@@ -163,10 +164,10 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction, router}
     }
 
     return (
-        <IonCard className="instructionsCard">
+        <div>
             <IonModal
                 isOpen={showModal}
-                cssClass={devicePlatformm === 'iOs' ? "modalCardIos" : (modalData?.isBigModal ? "modalCardAndroidBig" : "modalCardAndroidSmall")}
+                cssClass={devicePlatformm === 'iOS' ? "modalCardIos" : (modalData?.isBigModal ? "modalCardAndroidBig" : "modalCardAndroidSmall")}
                 swipeToClose={true}
                 presentingElement={router || undefined}
                 onDidDismiss={() => setShowModal(false)}
@@ -189,7 +190,7 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction, router}
                                       placeholder="Wachtwoord"
                                       onIonChange={(e) => {
                                           setPasswordInput(e.detail.value!);
-                                          console.log(passwordInput)
+                                          wifiFunction(currentNetwork, passwordInput);
                                       }}>
                             </IonInput>
                         </IonItem>
@@ -237,7 +238,7 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction, router}
                     <IonCardContent className={isSearching ? "cardContentLoading" : "cardContent"}>
                         <IonRow hidden={!isSearching}>
                             <IonItem className={'centerWeatherSpinner'} lines="none">
-                                <IonSpinner className={'weatherSpinner'}></IonSpinner>
+                                <IonSpinner className={'weatherSpinner'}/>
                             </IonItem>
                         </IonRow>
                         <IonRow hidden={!isSearching}>
@@ -253,7 +254,7 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction, router}
                                              }>
                                         <IonAvatar className={"centerContent"} slot="start">
                                             <IonImg className={"wifiSignalIcon"}
-                                                    src={"/assets/Instructions/" + getSignalIcon(network["level"]) + ".png"}></IonImg>
+                                                    src={"/assets/Instructions/" + getSignalIcon(network["level"]) + ".png"}/>
                                         </IonAvatar>
                                         <IonLabel color={'white'}>
                                             <h2>{network['SSID']}</h2>
@@ -268,7 +269,7 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction, router}
             </IonCardContent>
             <IonButton color={'warning'} className="instructionsNextButton"
                        onClick={() => stepUpFunction()}>Volgende</IonButton>
-        </IonCard>
+        </div>
     )
 }
 

@@ -14,6 +14,10 @@ export default {
         getHouseData: function(token: string) {
             var url = `/get/house/data?token=${token}`
             return DatabaseAPI.get(url);
+        },
+        sendHardwareID: function(token: string, id: string) {
+            var url = '/';
+            return DatabaseAPI.get(url);
         }
     },
     weather: {

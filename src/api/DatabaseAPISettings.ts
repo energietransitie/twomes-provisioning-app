@@ -3,7 +3,7 @@ import axios from 'axios';
 let lodash = require('lodash');
 
 let appKey = "TwomesApplicatie"
-let databaseApiUrl = "http://energietransitiewindesheim.nl:4444";
+let databaseApiUrl = "https://energietransitiewindesheim.nl:4444";
 
 
 

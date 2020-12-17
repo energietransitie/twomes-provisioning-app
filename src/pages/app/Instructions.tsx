@@ -2,7 +2,7 @@ import {
     IonContent,
     IonPage,
     useIonViewWillEnter,
-    useIonViewWillLeave, IonToolbar, IonTitle, IonHeader, IonRouterOutlet, IonApp
+    useIonViewWillLeave, IonToolbar, IonTitle, IonHeader, IonRouterOutlet, IonApp, IonCard
 } from "@ionic/react";
 import React, {useEffect, useRef, useState} from 'react';
 import {LocalStorage} from "../../services/Storage";
@@ -22,11 +22,13 @@ const setItem = LocalStorage().setItem;
 
 const Instructions: React.FC = () => {
 
-    const [userID] = useState("1111");
+    const [userID] = useState("3333");
     const [userIDChecked, setUserIDChecked] = useState(false);
     const [currentStep, setCurrentStep] = useState("1");
     const [currentStepSet, setCurrentStepSet] = useState(false);
     const [stepsArray, setStepsArray] = useState<string[]>([]);
+    const [wifiSSID, setWifiSSID] = useState<string>("");
+    const [wifiPassword, setWifiPassword] = useState<string>("");
     const routerRef = useRef<HTMLIonRouterOutletElement | null>(null);
 
 
@@ -91,38 +93,54 @@ const Instructions: React.FC = () => {
         setItem('instructionStep', nextStep);
     }
 
+    // Go to the previous instruction step
+    const stepBack = () => {
+        var previousStep = stepsArray[stepsArray.indexOf(currentStep) -1];
+        setCurrentStep(previousStep);
+        setItem('instructionStep', previousStep);
+    }
+
     // Set the instructions to completed
     const completeInstructions = () => {
         setItem('instructionsCompleted', 'true');
         window.location.href = '/home';
     }
 
+    const setWifiCredentials = (ssid: string, pass: string) => {
+        setWifiSSID(ssid);
+        setWifiPassword(pass);
+    }
+
     if (currentStepSet && userIDChecked) {
         return (
 
-                <IonPage>
-                    <IonHeader>
-                        <IonToolbar className="gradientBackgroundColor">
-                            <IonTitle slot="start">Instructies</IonTitle>
-                        </IonToolbar>
-                    </IonHeader>
-                    <IonContent fullscreen >
+            <IonPage>
+                <IonHeader>
+                    <IonToolbar className="gradientBackgroundColor">
+                        <IonTitle slot="start">Instructies</IonTitle>
+                    </IonToolbar>
+                </IonHeader>
+                <IonContent fullscreen>
+                    <IonCard className="instructionsCard">
                         {currentStep === installationconfig.OTGWstep && (
-                            <InstallOTGW router={routerRef.current} stepUpFunction={stepUp} finishFunction={completeInstructions}
+                            <InstallOTGW router={routerRef.current} stepUpFunction={stepUp}
+                                         finishFunction={completeInstructions} wifiSSID={wifiSSID} wifiPassword={wifiPassword}
                                          lastStep={userID.split("")[0] === "1"}/>
                         )}
                         {currentStep === installationconfig.P1step && (
-                            <InstallP1 router={routerRef.current} stepUpFunction={stepUp}/>
+                            <InstallP1 router={routerRef.current} stepUpFunction={stepUp} wifiSSID={wifiSSID} wifiPassword={wifiPassword}/>
                         )}
                         {currentStep === installationconfig.Sensorstep && (
-                            <InstallSensors router={routerRef.current} stepUpFunction={stepUp} finishFunction={completeInstructions}
+                            <InstallSensors router={routerRef.current} stepUpFunction={stepUp}
+                                            finishFunction={completeInstructions}
                                             lastStep={userID.split("")[0] !== "1"}/>
                         )}
                         {currentStep === installationconfig.WIFIstep && (
-                            <ConfigureWIFI router={routerRef.current} stepUpFunction={stepUp}/>
+                            <ConfigureWIFI router={routerRef.current} stepUpFunction={stepUp} wifiFunction={setWifiCredentials}/>
                         )}
-                    </IonContent>
-                </IonPage>
+                    </IonCard>
+                </IonContent>
+            </IonPage>
         )
     } else {
         return (

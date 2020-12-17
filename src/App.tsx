@@ -96,9 +96,10 @@ const App: React.FC = () => {
     useEffect(() => {
         if (!tokenChecked) {
 
-            // Get encrypted key from API
+            // Generate random 32 bits key to encrypt secret key in API
             var key = Crypto.randomBytes(32).toString('base64');
 
+            // Get encrypted key from API
             API.database.sendDeviceToken(key).then((response: any) => {
                 console.log(key)
                 var secret = new fernet.Secret(key);

@@ -105,7 +105,7 @@ const InstallOTGW: React.FC<InstructionsInterface> = ({stepUpFunction, finishFun
         setdeviceID(id);
     };
     return (
-        <IonCard className="instructionsCard">
+        <div>
             <LoadingComponent showLoading={showLoadingComponent}/>
             <IonCardContent className="instructionsCardContent">
                 <IonLabel>Instructie OTGW</IonLabel>
@@ -179,7 +179,7 @@ const InstallOTGW: React.FC<InstructionsInterface> = ({stepUpFunction, finishFun
                     ]}
                 />
             </IonCardContent>
-        </IonCard>
+        </div>
     )
 };
 
