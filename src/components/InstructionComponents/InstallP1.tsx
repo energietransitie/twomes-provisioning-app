@@ -155,14 +155,12 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
             <AlertBox {...alert}/>
             <LoadingComponent showLoading={showLoading}/>
             <IonCardContent className="instructionsCardContent">
-                <p>
-                    Stap 1: Zet uw BlueTooth aan.
-                    Stap 2: Druk op de knop op de P1-stick. Er begint nu een lampje te knipperen in 'een patroon'.
-                    Stap 3: Druk op de knop 'Verbind' hieronder.
-                </p>
-                <IonButton onClick={() => connectToP1()}>Verbind</IonButton>
+                <p className={"stepText"}><strong>Stap 1:</strong> Zet uw BlueTooth aan.</p>
+                <p className={"stepText"}><strong>Stap 2:</strong> Druk op de knop op de P1-stick. Er begint nu een lampje te knipperen in 'een patroon'.</p>
+                <p className={"stepText"}><strong>Stap 3:</strong> Druk op de knop 'Verbind' hieronder.</p>
+                <IonButton color={"warning"} className={"connectButton"} onClick={() => connectToP1()}>Verbind</IonButton>
             </IonCardContent>
-            <IonButton className="instructionsNextButton" onClick={() => stepUpFunction()}>Volgende</IonButton>
+            <IonButton color={"warning"} className="instructionsNextButton" onClick={() => stepUpFunction()}>Volgende</IonButton>
         </div>
     )
 }
