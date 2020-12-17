@@ -82,10 +82,10 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction, router,
                 getConnectedSSID();
                 scanAvailableNetworks();
             } else {
-                // showEnableWifiAlert();
-                // setTimeout(() => {
-                //     startWifiConfig();
-                // }, 500);
+                showEnableWifiAlert();
+                setTimeout(() => {
+                    startWifiConfig();
+                }, 500);
             }
         });
     }
