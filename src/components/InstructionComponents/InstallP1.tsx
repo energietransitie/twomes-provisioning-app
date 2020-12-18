@@ -24,6 +24,7 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
     const [token, setToken] = useState<any>();
     const [tokenLoaded, setTokenLoaded] = useState(false);
     const [peripheralID, setPeripheralID] = useState("");
+    const [peripheralRSSI, setPeripheralRSSI] = useState("");
     const [gatewayID, setGatewayID] = useState("");
     const [boilerID, setBoilerID] = useState("");
     const [roomID, setRoomID] = useState("");
@@ -46,6 +47,7 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
         resetBox();
         connectToPeripheral().then((devicedata: any) => {
             setPeripheralID(devicedata.data.id);
+            setPeripheralRSSI(devicedata.data.rssi);
             console.log(devicedata.message);
             // if(checkHardwareID) {
             //     readHardwareID(devicedata.data.id).then((data: any) => {
@@ -230,6 +232,8 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
                 <p className={"stepText"}><strong>Stap 3:</strong> Druk op de knop 'Verbind' hieronder.</p>
                 <IonButton color={"warning"} className={"connectButton"} onClick={() => connectToP1()}>Verbind</IonButton>
                 <IonButton color={"warning"} className={"connectButton"} onClick={() => retrieveIDS()}>Haal ID's op</IonButton>
+                <p className={"stepText"}>Current connected Peripheral ID: {peripheralID}</p>
+                <p className={"stepText"}>Current connected Peripheral RSSI: {peripheralRSSI}</p>
             </IonCardContent>
             <IonButton color={"warning"} className="instructionsNextButton" onClick={() => stepUpFunction()}>Volgende</IonButton>
         </div>

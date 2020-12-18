@@ -50,11 +50,11 @@ export function BLEService() {
                                     let bRSSI = b.rssi * -1;
                                     return aRSSI - bRSSI;
                                 })
-                                if (potentialPeripherals[0].rssi >= -60) {
-                                    resolve({message: "success", data: potentialPeripherals[0]});
-                                } else {
-                                    reject({message: false})
-                                }
+                                // if (potentialPeripherals[0].rssi >= -60) {
+                                resolve({message: "success", data: potentialPeripherals[0]});
+                                // } else {
+                                //     reject({message: false})
+                                // }
                             } else {
                                 reject({message: false})
                             }
