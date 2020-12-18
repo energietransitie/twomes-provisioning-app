@@ -71,7 +71,7 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
             // }
             if(wifiSSID !== undefined && wifiPassword !== undefined) {
                 console.log("start writing wifi credentials");
-                console.log(devicedata);
+                console.log(devicedata.data.id);
                 writeWifiCredentials(devicedata.data.id, wifiSSID, wifiPassword).then((data:any) => {
                     console.log("Wifi SSID: " + data.ssid.message);
                     console.log("Wifi Password: " + data.password.message);

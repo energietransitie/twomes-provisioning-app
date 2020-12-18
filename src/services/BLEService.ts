@@ -101,6 +101,7 @@ export function BLEService() {
 
     const writeWifiSSID = (id: string, wifiSSID: string) => {
         let promiseFunction = ((resolve: any, reject: any) => {
+            console.log("device id: " + id);
             BLE.isConnected(id).then(() => {
                     var array = new Uint8Array(wifiSSID.length);
                     for (var i = 0, l = wifiSSID.length; i < l; i++) {
