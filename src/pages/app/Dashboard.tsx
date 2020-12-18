@@ -226,13 +226,13 @@ const Dashboard: React.FC = () => {
                     </IonRefresher>
                     {error ? (
                         <IonCard className="cardContent">
-                            <IonCardHeader>Er is voor uw huishouden nog geen data bekend</IonCardHeader>
+                            <IonCardHeader>Er is voor uw huishouden nog geen data bekend.</IonCardHeader>
                         </IonCard>
                     ) : (
                         <div>
                             {oldData && (
                                 <IonCard className="cardContent">
-                                    <IonCardHeader>Dit is eerder opgehaalde data van {oldDataDate}</IonCardHeader>
+                                    <IonCardHeader>Dit is eerder opgehaalde data van {oldDataDate}.</IonCardHeader>
                                 </IonCard>
 
                             )}
