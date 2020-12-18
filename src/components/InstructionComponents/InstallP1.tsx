@@ -167,17 +167,30 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
         resetBox();
         setShowLoading(true);
         readGatewayID(peripheralID).then((data: any) => {
+            let gatewaystring = "";
+            for (var i = 0; i < data.data.byteLength; i++) {
+                gatewaystring += String.fromCharCode(data.data[i]);
+            }
             console.log("gateway ID: " + data.data);
-            console.log("gateway ID string: " + data.data.toString());
-            setGatewayID(data.data);
+            console.log("gateway ID string: " + gatewaystring);
+            setGatewayID(gatewaystring);
             readBoilerID(peripheralID).then((data: any) => {
+                let boilerstring = "";
+                for (var i = 0; i < data.data.byteLength; i++) {
+                    boilerstring += String.fromCharCode(data.data[i]);
+                }
                 console.log("boiler ID: " + data.data);
-                console.log("boiler ID string: " + data.data.toString());
-                setBoilerID(data.data);
+                console.log("boiler ID string: " + boilerstring);
+
+                setBoilerID(boilerstring);
                 readRoomID(peripheralID).then((data: any) => {
+                    let roomstring = "";
+                    for (var i = 0; i < data.data.byteLength; i++) {
+                        roomstring += String.fromCharCode(data.data[i]);
+                    }
+                    setRoomID(roomstring);
                     console.log("room ID: " + data.data);
-                    console.log("room ID string: " + data.data.toString());
-                    setRoomID(data.data);
+                    console.log("room ID string: " + roomstring);
                     let successalert = {
                         showBox: true,
                         header: "Gelukt",
