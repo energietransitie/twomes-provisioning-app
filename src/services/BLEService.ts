@@ -196,7 +196,7 @@ export function BLEService() {
     // Returns promise to read Hardware ID from Peripheral. Resolves when reading is successful, rejects when the read fails
     // or connection with the Peripheral is lost.
 
-    const readHardwareID = (id: string) => {
+    const readGatewayID = (id: string) => {
         let promiseFunction = ((resolve: any, reject: any) => {
             BLE.isConnected(id).then(() => {
                     BLE.read(id, "f03f6352-3b97-11eb-adc1-0242ac120002", "aea448d8-3b9a-11eb-adc1-0242ac120002").then((success) => {
@@ -206,7 +206,49 @@ export function BLEService() {
                     }, (err) => {
                         console.log("FAILURE")
                         console.log(err);
-                        reject({message: "error reading hardware id", data: err})
+                        reject({message: "error reading gateway id", data: err})
+                    })
+                }, () => {
+                    console.log("Peripheral is *not* connected");
+                    reject({message: "This ID has no current connection."})
+                }
+            );
+        })
+        return new Promise(promiseFunction);
+    }
+
+    const readBoilerID = (id: string) => {
+        let promiseFunction = ((resolve: any, reject: any) => {
+            BLE.isConnected(id).then(() => {
+                    BLE.read(id, "f03f6352-3b97-11eb-adc1-0242ac120002", "5e8a7c74-412a-11eb-b378-0242ac130002").then((success) => {
+                        console.log("SUCCESS")
+                        console.log(success);
+                        resolve({message: "success", data: success})
+                    }, (err) => {
+                        console.log("FAILURE")
+                        console.log(err);
+                        reject({message: "error reading boiler id", data: err})
+                    })
+                }, () => {
+                    console.log("Peripheral is *not* connected");
+                    reject({message: "This ID has no current connection."})
+                }
+            );
+        })
+        return new Promise(promiseFunction);
+    }
+
+    const readRoomID = (id: string) => {
+        let promiseFunction = ((resolve: any, reject: any) => {
+            BLE.isConnected(id).then(() => {
+                    BLE.read(id, "f03f6352-3b97-11eb-adc1-0242ac120002", "5e8a7f12-412a-11eb-b378-0242ac130002").then((success) => {
+                        console.log("SUCCESS")
+                        console.log(success);
+                        resolve({message: "success", data: success})
+                    }, (err) => {
+                        console.log("FAILURE")
+                        console.log(err);
+                        reject({message: "error reading room id", data: err})
                     })
                 }, () => {
                     console.log("Peripheral is *not* connected");
@@ -221,6 +263,8 @@ export function BLEService() {
         connectToPeripheral: connectToPeripheral,
         writeWifiCredentials: writeWifiCredentials,
         readWifiState: readWifiState,
-        readHardwareID: readHardwareID,
+        readGatewayID: readGatewayID,
+        readBoilerID: readBoilerID,
+        readRoomID: readRoomID,
     }
 }
