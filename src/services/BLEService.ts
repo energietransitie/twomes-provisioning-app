@@ -78,7 +78,7 @@ export function BLEService() {
                 BLE.connect(data.data.id).subscribe((device) => {
                     console.log('connected');
                     console.log(JSON.stringify(device));
-                    resolve({message: "connected", data: data.data.id});
+                    resolve({message: "connected", data: data.data});
                 }, (device) => {
                     console.log('disconnected');
                     console.log(JSON.stringify(device));
