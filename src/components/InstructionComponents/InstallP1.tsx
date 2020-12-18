@@ -184,10 +184,12 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
 
                 setBoilerID(boilerstring);
                 readRoomID(peripheralID).then((data: any) => {
-                    let roomstring = "";
-                    for (var i = 0; i < data.data.byteLength; i++) {
-                        roomstring += String.fromCharCode(data.data[i]);
+                    var chars = [];
+                    let roomstring = ""
+                    for(var i = 0, n = data.data.length; i < n;) {
+                        chars.push(((data.data[i++] & 0xff) << 8) | (data.data[i++] & 0xff));
                     }
+                    roomstring = String.fromCharCode.apply(null, chars);
                     setRoomID(roomstring);
                     console.log("room ID: " + data.data);
                     console.log("room ID string: " + roomstring);
