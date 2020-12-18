@@ -9,7 +9,7 @@ export function BLEService() {
         let promiseFunction = ((resolve: any, reject: any) => {
             BLE.enable();
             if (!BLE.isEnabled()) {
-                reject({message: "Zet uw Bluetooth aan om verbinding te kunnen maken met de apparaten. Druk daarna op"})
+                reject({message: "Zet uw Bluetooth aan om verbinding te kunnen maken met de apparaten. Druk daarna op de knop op de gateway en op 'verbind' hieronder."})
             } else {
                 resolve();
                 console.log("BLE On");
@@ -85,7 +85,7 @@ export function BLEService() {
                     reject({message: 'Connection failed'});
                 });
             }, (errdata) => {
-                if (errdata.message == "Zet uw Bluetooth aan om verbinding te kunnen maken met de apparaten. Druk daarna op") {
+                if (errdata.message == "Zet uw Bluetooth aan om verbinding te kunnen maken met de apparaten. Druk daarna op de knop op de gateway en op 'verbind' hieronder.") {
                     reject({message: errdata.message})
                 }
                 if (errdata.message === false) {
