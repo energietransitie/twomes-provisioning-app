@@ -116,6 +116,7 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
         let interval = setInterval(() => {
             readWifiState(id).then((data: any) => {
                 console.log('wifi state: ' + data.data);
+                console.log('wifi state string: ' + data.data.toString())
                 if(data.data) {
                     wifiState = true;
                 }
@@ -165,12 +166,15 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
         setShowLoading(true);
         readGatewayID(peripheralID).then((data: any) => {
             console.log("gateway ID: " + data.data);
+            console.log("gateway ID string: " + data.data.toString());
             setGatewayID(data.data);
             readBoilerID(peripheralID).then((data: any) => {
                 console.log("boiler ID: " + data.data);
+                console.log("boiler ID string: " + data.data.toString());
                 setBoilerID(data.data);
                 readRoomID(peripheralID).then((data: any) => {
                     console.log("room ID: " + data.data);
+                    console.log("room ID string: " + data.data.toString());
                     setRoomID(data.data);
                     let successalert = {
                         showBox: true,
