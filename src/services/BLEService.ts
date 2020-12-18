@@ -44,7 +44,7 @@ export function BLEService() {
                                     potentialPeripherals.push(peripheral);
                                 }
                             })
-                            if(potentialPeripherals.length > 0) {
+                            if (potentialPeripherals.length > 0) {
                                 potentialPeripherals.sort((a: any, b: any) => {
                                     let aRSSI = a.rssi * -1;
                                     let bRSSI = b.rssi * -1;
@@ -75,15 +75,18 @@ export function BLEService() {
     const connectToPeripheral = () => {
         var promiseFunction = ((resolve: any, reject: any) => {
             getTwomesPeripheral().then((data: any) => {
-                BLE.connect(data.data.id).subscribe((device) => {
-                    console.log('connected');
-                    console.log(JSON.stringify(device));
-                    resolve({message: "connected", data: data.data});
-                }, (device) => {
-                    console.log('disconnected');
-                    console.log(JSON.stringify(device));
-                    reject({message: 'Connection failed'});
-                });
+                BLE.disconnect(data.data.id).then(() => {
+                    console.log("Premature disconnect")
+                    BLE.connect(data.data.id).subscribe((device) => {
+                        console.log('connected');
+                        console.log(JSON.stringify(device));
+                        resolve({message: "connected", data: data.data});
+                    }, (device) => {
+                        console.log('disconnected');
+                        console.log(JSON.stringify(device));
+                        reject({message: 'Connection failed'});
+                    });
+                })
             }, (errdata) => {
                 if (errdata.message == "Zet uw Bluetooth aan om verbinding te kunnen maken met de apparaten. Druk daarna op de knop op de gateway en op 'verbind' hieronder.") {
                     reject({message: errdata.message})

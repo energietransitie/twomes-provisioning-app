@@ -75,7 +75,7 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
                 writeWifiCredentials(devicedata.data.id, wifiSSID, wifiPassword).then((data:any) => {
                     console.log("Wifi SSID: " + data.ssid.message);
                     console.log("Wifi Password: " + data.password.message);
-                    checkWifiState(data.data.id);
+                    checkWifiState(devicedata.data.id);
                 }, (errdata: any) => {
                     console.log("Wifi SSID: " + errdata.ssid.message);
                     console.log("Wifi Password: " + errdata.password.message);
@@ -241,6 +241,7 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
                 <p className={"stepText"}>Current connected Peripheral ID: {peripheralID}</p>
                 <p className={"stepText"}>Current connected Peripheral RSSI: {peripheralRSSI}</p>
             </IonCardContent>
+            <IonButton color={"warning"} onClick={() => stepBackFunction()}>Terug</IonButton>
             <IonButton color={"warning"} className="instructionsNextButton" onClick={() => stepUpFunction()}>Volgende</IonButton>
         </div>
     )
