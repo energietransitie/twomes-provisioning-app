@@ -42,6 +42,47 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
         setAlert({showBox: false})
     }
 
+    const uint8ToString = (array:any) => {
+        var out, i, len, c;
+        var char2, char3;
+
+        out = "";
+        len = array.length;
+        i = 0;
+        while (i < len) {
+            c = array[i++];
+            switch (c >> 4) {
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                    // 0xxxxxxx
+                    out += String.fromCharCode(c);
+                    break;
+                case 12:
+                case 13:
+                    // 110x xxxx   10xx xxxx
+                    char2 = array[i++];
+                    out += String.fromCharCode(((c & 0x1F) << 6) | (char2 & 0x3F));
+                    break;
+                case 14:
+                    // 1110 xxxx  10xx xxxx  10xx xxxx
+                    char2 = array[i++];
+                    char3 = array[i++];
+                    out += String.fromCharCode(((c & 0x0F) << 12) |
+                        ((char2 & 0x3F) << 6) |
+                        ((char3 & 0x3F) << 0));
+                    break;
+            }
+        }
+
+        return out;
+    }
+
     const connectToP1 = () => {
         setShowLoading(true);
         resetBox();
@@ -70,15 +111,9 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
             //     })
             // }
             if(wifiSSID !== undefined && wifiPassword !== undefined) {
-                console.log("start writing wifi credentials");
-                console.log(devicedata.data.id);
                 writeWifiCredentials(devicedata.data.id, wifiSSID, wifiPassword).then((data:any) => {
-                    console.log("Wifi SSID: " + data.ssid.message);
-                    console.log("Wifi Password: " + data.password.message);
                     checkWifiState(devicedata.data.id);
                 }, (errdata: any) => {
-                    console.log("Wifi SSID: " + errdata.ssid.message);
-                    console.log("Wifi Password: " + errdata.password.message);
                     if(errdata.ssid.message == "This ID has no current connection." || errdata.ssid.message == "This ID has no current connection.") {
                         var alertdata = {
                             showBox: true,
@@ -117,9 +152,8 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
         let wifiState = false;
         let interval = setInterval(() => {
             readWifiState(id).then((data: any) => {
-                console.log('wifi state: ' + data.data);
-                console.log('wifi state string: ' + data.data.toString())
-                if(data.data) {
+                var stateRead = uint8ToString(data.data);
+                if(stateRead == 'true') {
                     wifiState = true;
                 }
             })
@@ -167,32 +201,14 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
         resetBox();
         setShowLoading(true);
         readGatewayID(peripheralID).then((data: any) => {
-            let gatewaystring = "";
-            for (var i = 0; i < data.data.byteLength; i++) {
-                gatewaystring += String.fromCharCode(data.data[i]);
-            }
-            console.log("gateway ID: " + data.data);
-            console.log("gateway ID string: " + gatewaystring);
+            let gatewaystring = uint8ToString(data.data);
             setGatewayID(gatewaystring);
             readBoilerID(peripheralID).then((data: any) => {
-                let boilerstring = "";
-                for (var i = 0; i < data.data.byteLength; i++) {
-                    boilerstring += String.fromCharCode(data.data[i]);
-                }
-                console.log("boiler ID: " + data.data);
-                console.log("boiler ID string: " + boilerstring);
-
+                let boilerstring = uint8ToString(data.data);
                 setBoilerID(boilerstring);
                 readRoomID(peripheralID).then((data: any) => {
-                    var chars = [];
-                    let roomstring = ""
-                    for(var i = 0, n = data.data.length; i < n;) {
-                        chars.push(((data.data[i++] & 0xff) << 8) | (data.data[i++] & 0xff));
-                    }
-                    roomstring = String.fromCharCode.apply(null, chars);
+                    let roomstring = uint8ToString(data.data);
                     setRoomID(roomstring);
-                    console.log("room ID: " + data.data);
-                    console.log("room ID string: " + roomstring);
                     let successalert = {
                         showBox: true,
                         header: "Gelukt",
