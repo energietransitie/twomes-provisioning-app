@@ -18,6 +18,10 @@ export default {
         sendHardwareID: function(token: string, id: string) {
             var url = '/';
             return DatabaseAPI.get(url);
+        },
+        checkUserID: function(token: string) {
+            var url = `/get/house/registration?token=${token}`
+            return DatabaseAPI.get(url);
         }
     },
     weather: {
