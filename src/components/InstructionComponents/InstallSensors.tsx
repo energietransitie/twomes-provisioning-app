@@ -1,21 +1,15 @@
 import {
     IonButton,
-    IonCard,
     IonCardContent,
     IonLabel,
-    IonAlert,
     IonCardSubtitle,
     IonCardHeader,
     IonCardTitle,
-    IonImg,
-    IonThumbnail,
-    IonList,
     IonItem,
     IonBadge,
     IonNote,
     IonRow,
     IonCol,
-    IonAvatar,
     IonGrid,
     IonIcon,
     IonSpinner
@@ -30,10 +24,8 @@ import {installationconfig} from '../../../package.json';
 
 const InstallSensors: React.FC<InstructionsInterface> = ({stepUpFunction, finishFunction, lastStep}) => {
 
-    const [OTGWStep, setOTGWStep] = useState(0);
     const [sensorIsLoading, setSensorIsLoading] = useState(false);
 
-    // @ts-ignore
     return (
         <div>
             <IonCardHeader>
@@ -83,7 +75,6 @@ const InstallSensors: React.FC<InstructionsInterface> = ({stepUpFunction, finish
                     </IonCol>
                 </IonRow>
             </IonGrid>
-            {/*<IonImg className={'instructionImage'} src="/assets/Instructions/OpenThermLogo.jpg"/>*/}
             <IonCardContent className={'instructionsContent'}>
                 Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
                 <IonItem lines="none">

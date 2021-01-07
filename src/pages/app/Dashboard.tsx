@@ -55,13 +55,12 @@ const Dashboard: React.FC = () => {
                     var data1: string[] = [];
                     var data2: string[] = [];
                     var labels: string[] = [];
-                    console.log(tempdata);
-                    // tempdata.forEach((dataitem: any) => {
-                    //     data1.push(dataitem['electricity_delivered']);
-                    //     data2.push(dataitem['electricity_received']);
-                    //     var recorddate = moment(dataitem['time']).format('DD MMM');
-                    //     labels.push(recorddate)
-                    // })
+                    tempdata.forEach((dataitem: any) => {
+                        data1.push(dataitem['electricity_delivered']);
+                        data2.push(dataitem['electricity_received']);
+                        var recorddate = moment(dataitem['time']).format('DD MMM');
+                        labels.push(recorddate)
+                    })
                     dataset1.data = data1;
                     dataset1.labels = labels;
                     dataset2.data = data2;
@@ -72,7 +71,6 @@ const Dashboard: React.FC = () => {
                     setItem("HouseData", JSON.stringify(tempdata));
                 }, (err) => {
                     // If no data is retrieved, use data from last save
-                    console.log(err.message);
                     getItem("HouseData").then((data) => {
                         if(data !== null && data !== undefined) {
                             tempdata = JSON.parse(data);
@@ -87,7 +85,6 @@ const Dashboard: React.FC = () => {
                                 var recorddate = moment(dataitem['time']).format('DD MMM');
                                 labels.push(recorddate)
                             })
-                            console.log(labels);
                             dataset1.data = data1;
                             dataset1.labels = labels;
                             dataset2.data = data2;

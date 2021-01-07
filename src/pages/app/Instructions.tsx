@@ -75,8 +75,10 @@ const Instructions: React.FC = () => {
                     stepArray.push(installationconfig.Sensorstep);
                     break;
             }
+
             // WiFi configuration should always be done
             // Array is sorted after, based on the configuration in the package.json
+
             stepArray.push(installationconfig.WIFIstep);
             stepArray.sort();
             setCurrentStep(stepArray[0]);

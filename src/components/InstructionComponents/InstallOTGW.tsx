@@ -38,7 +38,6 @@ const InstallOTGW: React.FC<InstructionsInterface> = ({stepUpFunction, finishFun
         setShowLoadingComponent(true);
         //Scans for devices and add them to the list
         BLE.startScan([]).subscribe(device => {
-            console.log(JSON.stringify(device));
             list.push({
                 "id": device.id,
                 "name": device.name
@@ -57,42 +56,32 @@ const InstallOTGW: React.FC<InstructionsInterface> = ({stepUpFunction, finishFun
     const connect = (id: string) => {
         setShowLoadingComponent(true);
         BLE.connect(id).subscribe((device) => {
-            console.log('connected');
-            console.log(JSON.stringify(device));
             setShowLoadingComponent(false);
             setSuccessDialog(true);
         }, (device) => {
             setShowLoadingComponent(false);
             setErrorDialog(true);
-            console.log('disconnected');
-            console.log(JSON.stringify(device));
         });
 
         setInterval(() => {
             BLE.isConnected(
                 id).then(() => {
-                    console.log("Peripheral is connected");
-                    var string = "Hallo!"
+                    var string = "test"
                     var array = new Uint8Array(string.length);
                     for (var i = 0, l = string.length; i < l; i++) {
                         array[i] = string.charCodeAt(i);
                     }
                     BLE.write(id, "4fafc201-1fb5-459e-8fcc-c5c9c331914b", "beb5483e-36e1-4688-b7f5-ea07361b26a8", array.buffer).then((success) => {
-                        console.log("SUCCESS")
                         console.log(success);
                     }, (err) => {
-                        console.log("FAILURE")
                         console.log(err);
                     })
                     BLE.read(id, "4fafc201-1fb5-459e-8fcc-c5c9c331914b", "beb5483e-36e1-4688-b7f5-ea07361b26a8").then((success) => {
-                        console.log("Read something");
                         console.log(success);
                     }, (err) => {
-                        console.log("Could not read something")
                         console.log(err);
                     })
                 }, () => {
-                    console.log("Peripheral is *not* connected");
                 }
             );
         }, 10000)

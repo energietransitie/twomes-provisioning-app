@@ -137,15 +137,14 @@ const Home: React.FC = () => {
             getItem("JWTToken").then((token) => {
                 if (token !== null && token !== undefined) {
                     API.database.getHouseData(token).then((response) => {
-                        // var data = response.data;
-                        // var record = data[0];
-                        // console.log(record);
-                        // var temp1Up = record.pipe_temp1 !== null;
-                        // var temp2Up = record.pipe_temp2 !== null;
-                        // var upToDate = moment(record.time).add(1, 'days').format("DD MMMM YYYY hh:mm:ss") >= moment().format("DD MMMM YYYY hh:mm:ss");
-                        // setSensor1Status(temp1Up);
-                        // setSensor2Status(temp2Up);
-                        // setDataUpToDate(upToDate);
+                        var data = response.data;
+                        var record = data[0];
+                        var temp1Up = record.pipe_temp1 !== null;
+                        var temp2Up = record.pipe_temp2 !== null;
+                        var upToDate = moment(record.time).add(1, 'days').format("DD MMMM YYYY hh:mm:ss") >= moment().format("DD MMMM YYYY hh:mm:ss");
+                        setSensor1Status(temp1Up);
+                        setSensor2Status(temp2Up);
+                        setDataUpToDate(upToDate);
                     })
                 }
                 setSensorStatusSet(true);

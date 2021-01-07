@@ -12,7 +12,6 @@ export function BLEService() {
                 reject({message: "Zet uw Bluetooth aan om verbinding te kunnen maken met de apparaten. Druk daarna op de knop op de gateway en op 'verbind' hieronder."})
             } else {
                 resolve();
-                console.log("BLE On");
             }
         })
         return new Promise(promiseFunction);
@@ -32,7 +31,6 @@ export function BLEService() {
                 //Scans for devices and add them to the list
                 let list: any = [];
                 BLE.startScan([]).subscribe(device => {
-                    console.log(JSON.stringify(device));
                     list.push(device);
                 });
                 setTimeout(() => {
@@ -62,7 +60,6 @@ export function BLEService() {
                     });
                 }, 2500);
             }, (errdata: any) => {
-                console.log(errdata.message);
                 reject({message: errdata.message});
             });
         })
@@ -76,14 +73,9 @@ export function BLEService() {
         var promiseFunction = ((resolve: any, reject: any) => {
             getTwomesPeripheral().then((data: any) => {
                 BLE.disconnect(data.data.id).then(() => {
-                    console.log("Premature disconnect")
                     BLE.connect(data.data.id).subscribe((device) => {
-                        console.log('connected');
-                        console.log(JSON.stringify(device));
                         resolve({message: "connected", data: data.data});
                     }, (device) => {
-                        console.log('disconnected');
-                        console.log(JSON.stringify(device));
                         reject({message: 'Connection failed'});
                     });
                 })
@@ -104,22 +96,17 @@ export function BLEService() {
 
     const writeWifiSSID = (id: string, wifiSSID: string) => {
         let promiseFunction = ((resolve: any, reject: any) => {
-            console.log("device id: " + id);
             BLE.isConnected(id).then(() => {
                     var array = new Uint8Array(wifiSSID.length);
                     for (var i = 0, l = wifiSSID.length; i < l; i++) {
                         array[i] = wifiSSID.charCodeAt(i);
                     }
                     BLE.write(id, "f03f5d3a-3b97-11eb-adc1-0242ac120002", "f03f5f56-3b97-11eb-adc1-0242ac120002", array.buffer).then((success) => {
-                        console.log("SUCCESS")
                         resolve({message: "success", data: success});
                     }, (err) => {
-                        console.log("FAILURE")
-                        console.log(err);
                         reject({message: "error writing ssid", data: err});
                     })
                 }, () => {
-                    console.log("Peripheral is *not* connected");
                     reject({message: "This ID has no current connection."})
                 }
             );
@@ -138,16 +125,11 @@ export function BLEService() {
                         array[i] = wifiPassword.charCodeAt(i);
                     }
                     BLE.write(id, "f03f5d3a-3b97-11eb-adc1-0242ac120002", "f03f626c-3b97-11eb-adc1-0242ac120002", array.buffer).then((success) => {
-                        console.log("SUCCESS")
-                        console.log(success);
                         resolve({message: "success", data: success})
                     }, (err) => {
-                        console.log("FAILURE")
-                        console.log(err);
                         reject({message: "error writing password", data: err});
                     })
                 }, () => {
-                    console.log("Peripheral is *not* connected");
                     reject({message: "This ID has no current connection."})
                 }
             );
@@ -180,16 +162,11 @@ export function BLEService() {
         let promiseFunction = ((resolve: any, reject: any) => {
             BLE.isConnected(id).then(() => {
                     BLE.read(id, "f03f5d3a-3b97-11eb-adc1-0242ac120002", "cc67f2ac-3b9a-11eb-adc1-0242ac120002").then((success) => {
-                        console.log("SUCCESS")
-                        console.log(success);
                         resolve({message: "success", data: success});
                     }, (err) => {
-                        console.log("FAILURE")
-                        console.log(err);
                         reject({message: "error reading wifi state", data: err})
                     })
                 }, () => {
-                    console.log("Peripheral is *not* connected");
                     reject({message: "This ID has no current connection."})
                 }
             );
@@ -204,16 +181,11 @@ export function BLEService() {
         let promiseFunction = ((resolve: any, reject: any) => {
             BLE.isConnected(id).then(() => {
                     BLE.read(id, "f03f6352-3b97-11eb-adc1-0242ac120002", "aea448d8-3b9a-11eb-adc1-0242ac120002").then((success) => {
-                        console.log("SUCCESS")
-                        console.log(success);
                         resolve({message: "success", data: success})
                     }, (err) => {
-                        console.log("FAILURE")
-                        console.log(err);
                         reject({message: "error reading gateway id", data: err})
                     })
                 }, () => {
-                    console.log("Peripheral is *not* connected");
                     reject({message: "This ID has no current connection."})
                 }
             );
@@ -225,16 +197,11 @@ export function BLEService() {
         let promiseFunction = ((resolve: any, reject: any) => {
             BLE.isConnected(id).then(() => {
                     BLE.read(id, "f03f6352-3b97-11eb-adc1-0242ac120002", "5e8a7c74-412a-11eb-b378-0242ac130002").then((success) => {
-                        console.log("SUCCESS")
-                        console.log(success);
                         resolve({message: "success", data: success})
                     }, (err) => {
-                        console.log("FAILURE")
-                        console.log(err);
                         reject({message: "error reading boiler id", data: err})
                     })
                 }, () => {
-                    console.log("Peripheral is *not* connected");
                     reject({message: "This ID has no current connection."})
                 }
             );
@@ -246,16 +213,11 @@ export function BLEService() {
         let promiseFunction = ((resolve: any, reject: any) => {
             BLE.isConnected(id).then(() => {
                     BLE.read(id, "f03f6352-3b97-11eb-adc1-0242ac120002", "5e8a7f12-412a-11eb-b378-0242ac130002").then((success) => {
-                        console.log("SUCCESS")
-                        console.log(success);
                         resolve({message: "success", data: success})
                     }, (err) => {
-                        console.log("FAILURE")
-                        console.log(err);
                         reject({message: "error reading room id", data: err})
                     })
                 }, () => {
-                    console.log("Peripheral is *not* connected");
                     reject({message: "This ID has no current connection."})
                 }
             );

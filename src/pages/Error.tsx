@@ -7,20 +7,14 @@ import {
     IonCard,
     IonCardContent,
     IonCardHeader,
-    IonButton, useIonViewWillEnter, useIonViewWillLeave
+    useIonViewWillEnter, useIonViewWillLeave
 } from '@ionic/react';
 import React, {useEffect, useState} from 'react';
 import LoadingComponent from "../components/LoadingComponent";
-import {LocalStorage} from "../services/Storage";
-import {GenerateJWTToken} from "../services/GenerateJWTToken";
-
-const setItem = LocalStorage().setItem;
-const generateJWTToken = GenerateJWTToken().generateJWTToken;
 
 const Error: React.FC = () => {
 
     const [linkChecked, setLinkChecked] = useState(false);
-    const [link, setLink] = useState<any>(25);
     const [checkInterval, setCheckInterval] = useState<any>();
     const [intervalSet, setIntervalSet] = useState(false);
     const [timeoutSet, setTimeoutSet] = useState(false);
@@ -38,14 +32,6 @@ const Error: React.FC = () => {
         tabBar!.style.display = "flex";
     })
 
-    const forceThrough = () => {
-        setItem('userID', '132312').then(() => {
-            generateJWTToken().then(() => {
-                window.location.href = '/home';
-            });
-        });
-    }
-
     // Set interval for checking the firebase link
     useEffect(() => {
         if (!intervalSet) {
@@ -54,7 +40,6 @@ const Error: React.FC = () => {
                 if (linkUsed == 'true') {
                     window.location.href = '/home';
                     setLinkChecked(true);
-                    setLink(linkUsed);
                     clearInterval(checkInterval);
                 }
             }, 100));
@@ -90,12 +75,6 @@ const Error: React.FC = () => {
                             organisatoren. Als u als testgebruiker bent aangewezen voor de WarmteWachter app, gebruik
                             dan de
                             link die u heeft gekregen via de e-mail.</IonCardContent>
-                    </IonCard>
-                    <IonButton onClick={() => forceThrough()}>Ik ben developer!</IonButton>
-                    <IonCard className={"cardContent"}>
-                        <IonCardContent className="errorCardContent">
-                            link used: {link}
-                        </IonCardContent>
                     </IonCard>
                 </IonContent>
             </IonPage>

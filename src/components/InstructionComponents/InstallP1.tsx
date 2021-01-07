@@ -89,27 +89,6 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
         connectToPeripheral().then((devicedata: any) => {
             setPeripheralID(devicedata.data.id);
             setPeripheralRSSI(devicedata.data.rssi);
-            console.log(devicedata.message);
-            // if(checkHardwareID) {
-            //     readHardwareID(devicedata.data.id).then((data: any) => {
-            //         API.database.sendHardwareID(token, data.data).then((response) => {
-            //             console.log("Hardware ID saved");
-            //         }, (err) => {
-            //             console.log(err);
-            //         })
-            //     }, (errdata: any) => {
-            //         if(errdata.message == "This ID has no current connection.") {
-            //             var alertdata = {
-            //                 showBox: true,
-            //                 header: "Fout",
-            //                 message: "De verbinding met het apparaat is verbroken. Probeer het opnieuw."
-            //             }
-            //             setShowLoading(false);
-            //             setAlert(alertdata);
-            //             return false;
-            //         }
-            //     })
-            // }
             if(wifiSSID !== undefined && wifiPassword !== undefined) {
                 writeWifiCredentials(devicedata.data.id, wifiSSID, wifiPassword).then((data:any) => {
                     checkWifiState(devicedata.data.id);
@@ -127,7 +106,6 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
                 });
             }
         }).catch((errdata: any) => {
-            console.log(errdata.message);
             if(errdata.message == 'No Twomes device found') {
                 var alertdata = {
                     showBox: true,
@@ -226,7 +204,6 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
                         setShowLoading(false);
                         setAlert(alertdata);
                     }
-                    console.log(errdata);
                 })
             }, (errdata: any) => {
                 if(errdata.message == "This ID has no current connection.") {
@@ -238,13 +215,11 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
                     setShowLoading(false);
                     setAlert(alertdata);
                 }
-                console.log(errdata);
             })
-            // API.database.sendHardwareID(token, data.data).then((response) => {
-            //     console.log("Hardware ID saved");
-            // }, (err) => {
-            //     console.log(err);
-            // })
+            API.database.sendHardwareID(token, data.data).then((response) => {
+            }, (err) => {
+                console.log(err);
+            })
         }, (errdata: any) => {
             if(errdata.message == "This ID has no current connection.") {
                 var alertdata = {
@@ -255,7 +230,6 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
                 setShowLoading(false);
                 setAlert(alertdata);
             }
-            console.log(errdata);
         })
     }
 

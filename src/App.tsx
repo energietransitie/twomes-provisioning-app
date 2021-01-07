@@ -18,7 +18,6 @@ import {LocalStorage} from "./services/Storage";
 import {GenerateJWTToken} from "./services/GenerateJWTToken";
 import {Icons} from "./components/Icons";
 import API from "./api/Calls";
-import {Plugins} from "@capacitor/core";
 
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
@@ -50,14 +49,9 @@ var sensorsIcon = Icons().sensorsIcon();
 
 const generateJWTToken = GenerateJWTToken().generateJWTToken;
 const setItem = LocalStorage().setItem;
-const getItem = LocalStorage().getItem;
-const jwt = require('jsonwebtoken');
-const fernet = require('fernet');
-const Crypto = require('crypto');
 
 const App: React.FC = () => {
 
-    const [tokenChecked, setTokenChecked] = useState(false);
     const [linkChecked, setLinkChecked] = useState(false);
     const [firebaseTriggered, setFirebaseTriggered] = useState(false);
     const [firebaseOutsideTriggered, setFirebaseOutsideTriggered] = useState(false);
@@ -68,8 +62,6 @@ const App: React.FC = () => {
     // Gets dynamic link when app is in the background while link is clicked
     FirebaseDynamicLinks.onDynamicLink().subscribe((data: any) => {
         localStorage.setItem("firebaseTriggered", 'true');
-        console.log("dynamic Link triggered");
-        console.log("data: " + JSON.stringify(data));
         var url = data.deepLink;
         var id = url.split('https://app.twomes.warmtewachter/')[1];
         console.log("userID: " + id);
