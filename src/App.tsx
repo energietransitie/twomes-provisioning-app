@@ -15,6 +15,7 @@ import Settings from "./pages/app/Settings";
 import Instructions from "./pages/app/Instructions";
 import Error from "./pages/Error";
 import {LocalStorage} from "./services/Storage";
+import {GenerateJWTToken} from "./services/GenerateJWTToken";
 import {Icons} from "./components/Icons";
 import API from "./api/Calls";
 import {Plugins} from "@capacitor/core";
@@ -40,11 +41,14 @@ import './theme/variables.scss';
 import './theme/main.scss';
 
 import {FirebaseDynamicLinks} from "@ionic-native/firebase-dynamic-links";
+import LoadingComponent from "./components/LoadingComponent";
+import AlertBox from "./components/AlertBox";
 
 var dashboardIcon = Icons().DashboardIcon();
 var homeIcon = Icons().HomeIcon();
 var sensorsIcon = Icons().sensorsIcon();
 
+const generateJWTToken = GenerateJWTToken().generateJWTToken;
 const setItem = LocalStorage().setItem;
 const getItem = LocalStorage().getItem;
 const jwt = require('jsonwebtoken');
@@ -58,6 +62,9 @@ const App: React.FC = () => {
     const [firebaseTriggered, setFirebaseTriggered] = useState(false);
     const [firebaseOutsideTriggered, setFirebaseOutsideTriggered] = useState(false);
 
+    const [showLoading, setShowLoading] = useState(false);
+    const [alert, setAlert] = useState<any>({showBox: false});
+
     // Gets dynamic link when app is in the background while link is clicked
     FirebaseDynamicLinks.onDynamicLink().subscribe((data: any) => {
         localStorage.setItem("firebaseTriggered", 'true');
@@ -66,8 +73,32 @@ const App: React.FC = () => {
         var url = data.deepLink;
         var id = url.split('https://app.twomes.warmtewachter/')[1];
         console.log("userID: " + id);
-        setItem("userID", id);
-        setFirebaseTriggered(true);
+        API.database.checkUserID(id).then((response) => {
+            console.log(response.data);
+            if(response.data === 0) {
+                setItem("userID", id).then(() => {
+                    generateJWTToken().then(() => {
+                        setFirebaseOutsideTriggered(true);
+                    });
+                });
+            } else {
+                var alertdata = {
+                    showBox: true,
+                    header: "Fout",
+                    message: "Het ID gekoppeld aan uw link is al in gebruik. Als dit niet klopt, of u heeft eerder een mobiel toestel geregistreerd en wilt deze veranderen, neem dan contact op met de afzender van uw ontvangen e-mail."
+                }
+                setAlert(alertdata);
+            }
+        }, (err) => {
+            console.log(err.response);
+            var erroralertdata = {
+                showBox: true,
+                header: "Fout",
+                message: err.response
+            }
+            setAlert(erroralertdata);
+        })
+
     });
 
     // Gets dynamic link when app is terminated while link is clicked
@@ -79,8 +110,31 @@ const App: React.FC = () => {
             var url = data.deepLink;
             var id = url.split('https://app.twomes.warmtewachter/')[1];
             console.log("userID: " + id);
-            setItem("userID", id);
-            setFirebaseOutsideTriggered(true);
+            API.database.checkUserID(id).then((response) => {
+                console.log(response.data);
+                if(response.data === 0) {
+                    setItem("userID", id).then(() => {
+                        generateJWTToken().then(() => {
+                            setFirebaseTriggered(true);
+                        });
+                    });
+                } else {
+                    var alertdata = {
+                        showBox: true,
+                        header: "Fout",
+                        message: "Het ID gekoppeld aan uw link is al in gebruik. Als dit niet klopt, of u heeft eerder een mobiel toestel geregistreerd en wilt deze veranderen, neem dan contact op met de afzender van uw ontvangen e-mail."
+                    }
+                    setAlert(alertdata);
+                }
+            }, (err) => {
+                console.log(err.response);
+                var erroralertdata = {
+                    showBox: true,
+                    header: "Fout",
+                    message: err.response
+                }
+                setAlert(erroralertdata);
+            })
         } else {
             console.log("geen link gevonden");
         }
@@ -93,68 +147,10 @@ const App: React.FC = () => {
         }
     }, [firebaseTriggered])
 
-    useEffect(() => {
-        if (!tokenChecked) {
-
-            // Generate random 32 bits key to encrypt secret key in API
-            var key = Crypto.randomBytes(32).toString('base64');
-
-            // Get encrypted key from API
-            API.database.sendDeviceToken(key).then((response: any) => {
-                console.log(key)
-                var secret = new fernet.Secret(key);
-                var token = new fernet.Token({
-                    secret: secret,
-                    token: response.data,
-                    ttl: 0
-                })
-
-                var secretkey = token.decode();
-
-                // Check if JWTToken exists and is still valid
-
-                getItem("JWTToken").then((oldToken: any) => {
-                    if (oldToken == null || oldToken == "") {
-                        generateJWTToken(secretkey);
-                    } else {
-                        jwt.verify(oldToken, secretkey, (err: any, decoded: any) => {
-                            console.log(decoded);
-                            console.log(err);
-                            if (decoded == undefined) {
-                                generateJWTToken(secretkey);
-                            }
-                        });
-                    }
-                });
-            }, (err) => {
-                console.log(err)
-            })
-            setTokenChecked(true);
-        }
-    }, [firebaseTriggered, firebaseOutsideTriggered])
-
-    // Generate JWT token based on secret key
-    const generateJWTToken = (secret: string) => {
-        var houseID = "";
-
-        getItem("userID").then((userID: any) => {
-            houseID = userID
-        });
-
-        var data = {
-            "house_id": 132,
-            "APIkey": "34TF5373W532455OBCMCA67E16S3D"
-        }
-        var signedToken = jwt.sign(data, secret, {expiresIn: '168h'})
-
-        console.log(signedToken);
-
-        setItem("JWTToken", signedToken);
-        setTokenChecked(true);
-    }
-
     return (
         <IonApp>
+            <LoadingComponent showLoading={showLoading}/>
+            <AlertBox {...alert}/>
             <IonReactRouter>
                 <IonTabs>
                     <IonRouterOutlet>
