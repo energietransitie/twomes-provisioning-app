@@ -19,8 +19,8 @@ export default {
             var url = '/';
             return DatabaseAPI.get(url);
         },
-        checkUserID: function(token: string) {
-            var url = `/get/house/registration?token=${token}`
+        checkUserID: function(id: string) {
+            var url = `/get/house/registration?id=${id}`
             return DatabaseAPI.get(url);
         }
     },

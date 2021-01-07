@@ -11,6 +11,11 @@ import {
 } from '@ionic/react';
 import React, {useEffect, useState} from 'react';
 import LoadingComponent from "../components/LoadingComponent";
+import {LocalStorage} from "../services/Storage";
+import {GenerateJWTToken} from "../services/GenerateJWTToken";
+
+const setItem = LocalStorage().setItem;
+const generateJWTToken = GenerateJWTToken().generateJWTToken;
 
 const Error: React.FC = () => {
 
@@ -34,11 +39,14 @@ const Error: React.FC = () => {
     })
 
     const forceThrough = () => {
-        localStorage.setItem("firebaseTriggered", 'true');
-        window.location.href = '/home';
+        setItem('userID', '132312').then(() => {
+            generateJWTToken().then(() => {
+                window.location.href = '/home';
+            });
+        });
     }
 
-    // Set interval for checking the firsebase link
+    // Set interval for checking the firebase link
     useEffect(() => {
         if (!intervalSet) {
             setCheckInterval(setInterval(() => {

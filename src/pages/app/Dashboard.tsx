@@ -46,7 +46,7 @@ const Dashboard: React.FC = () => {
             var tempdata:any = [];
             getItem('JWTToken').then((token) => {
 
-                // Retreive housedata
+                // Retrieve housedata
 
                 API.database.getHouseData(token!).then((response) => {
                     tempdata = response.data;
