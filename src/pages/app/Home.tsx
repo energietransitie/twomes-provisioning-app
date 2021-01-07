@@ -20,7 +20,7 @@ import {
     moon,
     sunny, reorderThree, thunderstorm, snow, rainy, arrowForwardOutline, closeCircle,
 } from "ionicons/icons";
-import {Link, Redirect} from "react-router-dom";
+import {Link} from "react-router-dom";
 import {LocalStorage} from "../../services/Storage";
 import {Plugins} from "@capacitor/core";
 import API from "../../api/Calls";

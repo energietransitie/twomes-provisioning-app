@@ -11,7 +11,9 @@ import API from "../../api/Calls";
 const connectToPeripheral = BLEService().connectToPeripheral;
 const writeWifiCredentials = BLEService().writeWifiCredentials;
 const readWifiState = BLEService().readWifiState;
-const readHardwareID = BLEService().readHardwareID;
+const readGatewayID = BLEService().readGatewayID;
+const readBoilerID = BLEService().readBoilerID;
+const readRoomID = BLEService().readRoomID;
 
 const getItem = LocalStorage().getItem;
 
@@ -21,6 +23,11 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
     const [alert, setAlert] = useState({showBox: false})
     const [token, setToken] = useState<any>();
     const [tokenLoaded, setTokenLoaded] = useState(false);
+    const [peripheralID, setPeripheralID] = useState("");
+    const [peripheralRSSI, setPeripheralRSSI] = useState("");
+    const [gatewayID, setGatewayID] = useState("");
+    const [boilerID, setBoilerID] = useState("");
+    const [roomID, setRoomID] = useState("");
 
     useEffect(() => {
         if(!tokenLoaded) {
@@ -35,39 +42,78 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
         setAlert({showBox: false})
     }
 
+    const uint8ToString = (array:any) => {
+        var out, i, len, c;
+        var char2, char3;
+
+        out = "";
+        len = array.length;
+        i = 0;
+        while (i < len) {
+            c = array[i++];
+            switch (c >> 4) {
+                case 0:
+                case 1:
+                case 2:
+                case 3:
+                case 4:
+                case 5:
+                case 6:
+                case 7:
+                    // 0xxxxxxx
+                    out += String.fromCharCode(c);
+                    break;
+                case 12:
+                case 13:
+                    // 110x xxxx   10xx xxxx
+                    char2 = array[i++];
+                    out += String.fromCharCode(((c & 0x1F) << 6) | (char2 & 0x3F));
+                    break;
+                case 14:
+                    // 1110 xxxx  10xx xxxx  10xx xxxx
+                    char2 = array[i++];
+                    char3 = array[i++];
+                    out += String.fromCharCode(((c & 0x0F) << 12) |
+                        ((char2 & 0x3F) << 6) |
+                        ((char3 & 0x3F) << 0));
+                    break;
+            }
+        }
+
+        return out;
+    }
+
     const connectToP1 = () => {
         setShowLoading(true);
         resetBox();
         connectToPeripheral().then((devicedata: any) => {
+            setPeripheralID(devicedata.data.id);
+            setPeripheralRSSI(devicedata.data.rssi);
             console.log(devicedata.message);
-            if(checkHardwareID) {
-                readHardwareID(devicedata.data.id).then((data: any) => {
-                    API.database.sendHardwareID(token, data.data).then((response) => {
-                        console.log("Hardware ID saved");
-                    }, (err) => {
-                        console.log(err);
-                    })
-                }, (errdata: any) => {
-                    if(errdata.message == "This ID has no current connection.") {
-                        var alertdata = {
-                            showBox: true,
-                            header: "Fout",
-                            message: "De verbinding met het apparaat is verbroken. Probeer het opnieuw."
-                        }
-                        setShowLoading(false);
-                        setAlert(alertdata);
-                        return false;
-                    }
-                })
-            }
+            // if(checkHardwareID) {
+            //     readHardwareID(devicedata.data.id).then((data: any) => {
+            //         API.database.sendHardwareID(token, data.data).then((response) => {
+            //             console.log("Hardware ID saved");
+            //         }, (err) => {
+            //             console.log(err);
+            //         })
+            //     }, (errdata: any) => {
+            //         if(errdata.message == "This ID has no current connection.") {
+            //             var alertdata = {
+            //                 showBox: true,
+            //                 header: "Fout",
+            //                 message: "De verbinding met het apparaat is verbroken. Probeer het opnieuw."
+            //             }
+            //             setShowLoading(false);
+            //             setAlert(alertdata);
+            //             return false;
+            //         }
+            //     })
+            // }
             if(wifiSSID !== undefined && wifiPassword !== undefined) {
                 writeWifiCredentials(devicedata.data.id, wifiSSID, wifiPassword).then((data:any) => {
-                    console.log("Wifi SSID: " + data.ssid.message);
-                    console.log("Wifi Password: " + data.password.message);
-                    checkWifiState(data.data.id);
+                    checkWifiState(devicedata.data.id);
                 }, (errdata: any) => {
-                    console.log("Wifi SSID: " + errdata.ssid.message);
-                    console.log("Wifi Password: " + errdata.password.message);
                     if(errdata.ssid.message == "This ID has no current connection." || errdata.ssid.message == "This ID has no current connection.") {
                         var alertdata = {
                             showBox: true,
@@ -106,7 +152,8 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
         let wifiState = false;
         let interval = setInterval(() => {
             readWifiState(id).then((data: any) => {
-                if(data.data) {
+                var stateRead = uint8ToString(data.data);
+                if(stateRead == 'true') {
                     wifiState = true;
                 }
             })
@@ -118,7 +165,7 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
                 var alertdata = {
                     showBox: true,
                     header: "Succes",
-                    message: "De apparatuur is succesvol gekoppeld aan uw WIFI-netwerk."
+                    message: "De apparatuur is succesvol gekoppeld aan uw WIFI-netwerk. Druk nu op de knop ID's ophalen."
                 }
                 setShowLoading(false);
                 setAlert(alertdata);
@@ -150,6 +197,68 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
         }, 4000)
     }
 
+    const retrieveIDS = () => {
+        resetBox();
+        setShowLoading(true);
+        readGatewayID(peripheralID).then((data: any) => {
+            let gatewaystring = uint8ToString(data.data);
+            setGatewayID(gatewaystring);
+            readBoilerID(peripheralID).then((data: any) => {
+                let boilerstring = uint8ToString(data.data);
+                setBoilerID(boilerstring);
+                readRoomID(peripheralID).then((data: any) => {
+                    let roomstring = uint8ToString(data.data);
+                    setRoomID(roomstring);
+                    let successalert = {
+                        showBox: true,
+                        header: "Gelukt",
+                        message: "Gateway ID: " + gatewayID + "; Boiler ID: " + boilerID + "; Room ID: " + roomID + ";"
+                    }
+                    setShowLoading(false);
+                    setAlert(successalert);
+                }, (errdata: any) => {
+                    if(errdata.message == "This ID has no current connection.") {
+                        var alertdata = {
+                            showBox: true,
+                            header: "Fout",
+                            message: "De verbinding met het apparaat is verbroken. Probeer het opnieuw."
+                        }
+                        setShowLoading(false);
+                        setAlert(alertdata);
+                    }
+                    console.log(errdata);
+                })
+            }, (errdata: any) => {
+                if(errdata.message == "This ID has no current connection.") {
+                    var alertdata = {
+                        showBox: true,
+                        header: "Fout",
+                        message: "De verbinding met het apparaat is verbroken. Probeer het opnieuw."
+                    }
+                    setShowLoading(false);
+                    setAlert(alertdata);
+                }
+                console.log(errdata);
+            })
+            // API.database.sendHardwareID(token, data.data).then((response) => {
+            //     console.log("Hardware ID saved");
+            // }, (err) => {
+            //     console.log(err);
+            // })
+        }, (errdata: any) => {
+            if(errdata.message == "This ID has no current connection.") {
+                var alertdata = {
+                    showBox: true,
+                    header: "Fout",
+                    message: "De verbinding met het apparaat is verbroken. Probeer het opnieuw."
+                }
+                setShowLoading(false);
+                setAlert(alertdata);
+            }
+            console.log(errdata);
+        })
+    }
+
     return (
         <div>
             <AlertBox {...alert}/>
@@ -159,7 +268,11 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
                 <p className={"stepText"}><strong>Stap 2:</strong> Druk op de knop op de P1-stick. Er begint nu een lampje te knipperen in 'een patroon'.</p>
                 <p className={"stepText"}><strong>Stap 3:</strong> Druk op de knop 'Verbind' hieronder.</p>
                 <IonButton color={"warning"} className={"connectButton"} onClick={() => connectToP1()}>Verbind</IonButton>
+                <IonButton color={"warning"} className={"connectButton"} onClick={() => retrieveIDS()}>Haal ID's op</IonButton>
+                <p className={"stepText"}>Current connected Peripheral ID: {peripheralID}</p>
+                <p className={"stepText"}>Current connected Peripheral RSSI: {peripheralRSSI}</p>
             </IonCardContent>
+            <IonButton color={"warning"} onClick={() => stepBackFunction()}>Terug</IonButton>
             <IonButton color={"warning"} className="instructionsNextButton" onClick={() => stepUpFunction()}>Volgende</IonButton>
         </div>
     )
