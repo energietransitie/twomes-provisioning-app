@@ -96,10 +96,10 @@ const InstallSensors: React.FC<InstructionsInterface> = ({
             </IonGrid>
 
             <IonCardContent className={'instructionsContent sensorContent'}>
-                <IonContent>
+                <IonContent style={{overflowY: "scroll"}}>
                     <IonCardContent className={'cardContent'}>
                         <IonItem lines="none">
-                            <IonLabel className={"ion-text-wrap"}> Als hierboven wordt aangegeven dat de P1-stick
+                            <IonLabel className={"ion-text-wrap stepText"}> Als hierboven wordt aangegeven dat de P1-stick
                                 nog
                                 niet
                                 verbonden is, wacht dan tot deze is verbonden. Is dat na een minuut nog niet
@@ -110,7 +110,7 @@ const InstallSensors: React.FC<InstructionsInterface> = ({
                             </IonNote>
                         </IonItem>
                         <IonItem lines="none">
-                            <IonLabel className={"ion-text-wrap"}> Steek de stekker van sensor 1 in het stopcontact
+                            <IonLabel className={"ion-text-wrap stepText"}> Steek de stekker van sensor 1 in het stopcontact
                                 en
                                 klik
                                 de sensor op de buis van de verwarming in de woonkamer.</IonLabel>
@@ -119,7 +119,7 @@ const InstallSensors: React.FC<InstructionsInterface> = ({
                             </IonNote>
                         </IonItem>
                         <IonItem lines="none">
-                            <IonLabel className={"ion-text-wrap"}> Steek de stekker van sensor 2 in het stopcontact
+                            <IonLabel className={"ion-text-wrap stepText"}> Steek de stekker van sensor 2 in het stopcontact
                                 en
                                 klik
                                 de sensor op de buis van de boiler.</IonLabel>
@@ -128,7 +128,7 @@ const InstallSensors: React.FC<InstructionsInterface> = ({
                             </IonNote>
                         </IonItem>
                         <IonItem lines="none">
-                            <IonLabel className={"ion-text-wrap"}> Wacht tot hierboven wordt aangegeven dat beide
+                            <IonLabel className={"ion-text-wrap stepText"}> Wacht tot hierboven wordt aangegeven dat beide
                                 sensoren
                                 succesvol zijn verbonden. Als dit na een minuut nog niet het geval is, trek dan de
                                 stekker
@@ -139,7 +139,7 @@ const InstallSensors: React.FC<InstructionsInterface> = ({
                             </IonNote>
                         </IonItem>
                         <IonItem lines="none">
-                            <IonLabel className={"ion-text-wrap"}> Als het niet lukt, neem dan contact op met de
+                            <IonLabel className={"ion-text-wrap stepText"}> Als het niet lukt, neem dan contact op met de
                                 helpdesk.
                                 Contactinformatie vindt u in de e-mail die u heeft ontvangen met de link naar deze
                                 app.</IonLabel>
