@@ -7,10 +7,15 @@ import {
     IonCard,
     IonCardContent,
     IonCardHeader,
-    useIonViewWillEnter, useIonViewWillLeave
+    useIonViewWillEnter, useIonViewWillLeave, IonButton
 } from '@ionic/react';
 import React, {useEffect, useState} from 'react';
 import LoadingComponent from "../components/LoadingComponent";
+import {LocalStorage} from "../services/Storage";
+import {GenerateJWTToken} from "../services/GenerateJWTToken";
+
+const setItem = LocalStorage().setItem;
+const generateJWTToken = GenerateJWTToken().generateJWTToken;
 
 const Error: React.FC = () => {
 
@@ -31,6 +36,14 @@ const Error: React.FC = () => {
         const tabBar = document.getElementById("tabBar");
         tabBar!.style.display = "flex";
     })
+
+    const forceThrough = () => {
+        setItem('userID', '132312').then(() => {
+            generateJWTToken().then(() => {
+                window.location.href = '/home';
+            });
+        });
+    }
 
     // Set interval for checking the firebase link
     useEffect(() => {
@@ -76,6 +89,7 @@ const Error: React.FC = () => {
                             dan de
                             link die u heeft gekregen via de e-mail.</IonCardContent>
                     </IonCard>
+                    <IonButton onClick={() => forceThrough()}>Ik ben developer!</IonButton>
                 </IonContent>
             </IonPage>
         )

@@ -6,10 +6,14 @@ import {
     IonPage, IonRadio,
     IonTitle, IonToggle,
     IonToolbar,
-    useIonViewWillEnter, useIonViewWillLeave
+    useIonViewWillEnter, useIonViewWillLeave, IonAvatar, IonIcon
 } from "@ionic/react"
 import React from 'react';
+import './Settings.scss';
+import {LocalStorage} from "../../services/Storage";
+import {hardwareChip, thermometer} from "ionicons/icons";
 
+const setItem = LocalStorage().setItem;
 
 const Settings: React.FC = () => {
 
@@ -25,47 +29,37 @@ const Settings: React.FC = () => {
         tabBar!.style.display = "flex";
     })
 
+    const restartConfiguration = (step: string) => {
+        setItem('instructionStep', step).then(() => {
+            setItem('instructionsCompleted', 'false');
+            window.location.href = '/instructions'
+        })
+    }
+
     return (
         <IonPage>
             <IonHeader>
                 <IonToolbar className="gradientBackgroundColor">
-                    <IonTitle >Instellingen</IonTitle>
-                    <IonButtons  slot="start">
-                        <IonBackButton defaultHref="/home"  text=""/>
+                    <IonTitle>Instellingen</IonTitle>
+                    <IonButtons slot="start">
+                        <IonBackButton defaultHref="/home" text=""/>
                     </IonButtons>
                 </IonToolbar>
             </IonHeader>
 
             <IonContent>
                 {/*-- List of Input Items --*/}
-                <IonList>
-                    <IonListHeader>
-                        <b>Categorie 1</b>
+                <IonList lines="full">
+                    <IonListHeader lines="full" className={'listHeader'}>
+                        Configuraties
                     </IonListHeader>
-                    <IonItem>
-                        <IonLabel>Input</IonLabel>
-                        <IonInput></IonInput>
+                    <IonItem onClick={() => restartConfiguration('1')}>
+                        <IonIcon slot="start" icon={hardwareChip} className={'settingsAvatar'}/>
+                        <IonLabel>Herstart complete configuratie</IonLabel>
                     </IonItem>
-                    <IonItem>
-                        <IonLabel>Toggle</IonLabel>
-                        <IonToggle slot="end"></IonToggle>
-                    </IonItem>
-                </IonList>
-                <IonList>
-                    <IonListHeader>
-                        <b>Categorie 2</b>
-                    </IonListHeader>
-                    <IonItem>
-                        <IonLabel>Radio</IonLabel>
-                        <IonRadio slot="end"></IonRadio>
-                    </IonItem>
-                    <IonItem>
-                        <IonLabel>Checkbox</IonLabel>
-                        <IonCheckbox slot="end" />
-                    </IonItem>
-                    <IonItem>
-                        <IonLabel>Checkbox2</IonLabel>
-                        <IonCheckbox slot="end" />
+                    <IonItem onClick={() => restartConfiguration('3')}>
+                        <IonIcon slot="start" icon={thermometer} className={'settingsAvatar'}/>
+                        <IonLabel>Herstart sensor configuratie</IonLabel>
                     </IonItem>
                 </IonList>
             </IonContent>

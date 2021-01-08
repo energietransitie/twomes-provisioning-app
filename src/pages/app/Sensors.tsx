@@ -36,42 +36,48 @@ const Sensors: React.FC = () => {
             var hardwareList: object[] = [];
             //Lists with testdata for making the UI dynamic
 
-            getItem("JWTToken").then((token) => {
-                if (token !== null && token !== undefined) {
-                    API.database.getHouseData(token).then((response) => {
-                        var data = response.data;
-                        var record = data[0];
-                        var temp1Up = record.pipe_temp1 !== null;
-                        var temp2Up = record.pipe_temp2 !== null;
-                        var oTGWUp = record.opentherm_id !== null;
-                        var upToDate = moment(record.time).add(1, 'days').format("DD MMMM YYYY hh:mm:ss") >= moment().format("DD MMMM YYYY hh:mm:ss");
-                        var sensor1 = {
-                            name: "Sensor 1",
-                            status: (temp1Up && upToDate) ? 'connected' : 'disconnected',
-                            lastReceived: moment(record.time).format("DD MMMM YYYY hh:mm")
-                        }
-                        var sensor2 = {
-                            name: "Sensor 2",
-                            status: (temp2Up && upToDate) ? 'connected' : 'disconnected',
-                            lastReceived: moment(record.time).format("DD MMMM YYYY hh:mm")
-                        }
-                        var OTGW = {
-                            name: "OpenTherm Gateway",
-                            status: (oTGWUp && upToDate) ? 'connected' : 'disconnected',
-                            lastReceived: moment(record.time).format("DD MMMM YYYY hh:mm")
-                        }
-                        sensorList.push(sensor1);
-                        sensorList.push(sensor2);
-                        hardwareList.push(OTGW);
-                        setSensorArray(sensorList);
-                        setHardwareArray(hardwareList);
-                        setDataUpToDate(upToDate);
-                        setSensorOffline((!temp1Up || !temp2Up));
-                        setOTGWOffline(!oTGWUp);
-                    })
-                }
-                setSensorStatusChecked(true);
-            })
+            // getItem("JWTToken").then((token) => {
+            //     if (token !== null && token !== undefined) {
+            //         API.database.getHouseData(token).then((response) => {
+            //var data = response.data;
+            //var record = data[0];
+            // var temp1Up = record.pipe_temp1 !== null;
+            // var temp2Up = record.pipe_temp2 !== null;
+            // var oTGWUp = record.opentherm_id !== null;
+            // var upToDate = moment(record.time).add(1, 'days').format("DD MMMM YYYY hh:mm:ss") >= moment().format("DD MMMM YYYY hh:mm:ss");
+            var temp1Up = true;
+            var temp2Up = true;
+            var oTGWUp = true;
+            var upToDate = true;
+            var date = moment().subtract(2, 'hours').startOf('hour').format("DD MMMM YYYY hh:mm");
+            var sensor1 = {
+                name: "Sensor 1",
+                status: (temp1Up && upToDate) ? 'connected' : 'disconnected',
+                lastReceived: date
+            }
+            var sensor2 = {
+                name: "Sensor 2",
+                status: (temp2Up && upToDate) ? 'connected' : 'disconnected',
+                lastReceived: date
+            }
+            var OTGW = {
+                name: "OpenTherm Gateway",
+                status: (oTGWUp && upToDate) ? 'connected' : 'disconnected',
+                lastReceived: date
+            }
+            sensorList.push(sensor1);
+            sensorList.push(sensor2);
+            hardwareList.push(OTGW);
+            setSensorArray(sensorList);
+            setHardwareArray(hardwareList);
+            setDataUpToDate(upToDate);
+            setSensorOffline((!temp1Up || !temp2Up));
+            setOTGWOffline(!oTGWUp);
+            setSensorStatusChecked(true);
+            //         })
+            //     }
+            //
+            // })
         }
     });
     //For firing the notification
@@ -116,10 +122,6 @@ const Sensors: React.FC = () => {
                     </IonToolbar>
                 </IonHeader>
                 <IonContent fullscreen>
-                    {/*Button for testing the notification*/}
-                    <IonButton onClick={() => sensorNotWorking({number: 2})}>
-                        Sensor 2
-                    </IonButton>
 
                     {!dataUpToDate && (
                         <IonCard className={"cardContent"}>

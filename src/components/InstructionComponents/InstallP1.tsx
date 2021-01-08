@@ -1,4 +1,13 @@
-import {IonButton, IonCard, IonCardContent, IonLabel} from '@ionic/react';
+import {
+    IonBadge,
+    IonButton,
+    IonCard,
+    IonCardContent,
+    IonCardHeader,
+    IonCardSubtitle,
+    IonCardTitle, IonItem,
+    IonLabel, IonNote
+} from '@ionic/react';
 import React, {useEffect, useState} from 'react';
 import './InstallP1.scss';
 import {InstructionsInterface} from "../../services/InstructionsInterface";
@@ -7,6 +16,7 @@ import {BLEService} from "../../services/BLEService";
 import {LocalStorage} from "../../services/Storage";
 import AlertBox from "../AlertBox";
 import API from "../../api/Calls";
+import {installationconfig} from "../../../package.json";
 
 const connectToPeripheral = BLEService().connectToPeripheral;
 const writeWifiCredentials = BLEService().writeWifiCredentials;
@@ -237,16 +247,38 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
         <div>
             <AlertBox {...alert}/>
             <LoadingComponent showLoading={showLoading}/>
+            <IonCardHeader>
+                <IonBadge className={'stepCountBadge'}>Stap {installationconfig.P1step}</IonBadge>
+                <IonCardTitle>Installeren en configureren P1-stick</IonCardTitle>
+            </IonCardHeader>
             <IonCardContent className="instructionsCardContent">
-                <p className={"stepText"}><strong>Stap 1:</strong> Zet uw BlueTooth aan.</p>
-                <p className={"stepText"}><strong>Stap 2:</strong> Druk op de knop op de P1-stick. Er begint nu een lampje te knipperen in 'een patroon'.</p>
-                <p className={"stepText"}><strong>Stap 3:</strong> Druk op de knop 'Verbind' hieronder.</p>
+                <IonItem lines="none">
+                    <IonLabel className={"ion-text-wrap"}> Zet uw BlueTooth aan</IonLabel>
+                    <IonNote className={"ionNoteSteps"} slot="start">
+                        <IonBadge className={"stepBadge"}>1</IonBadge>
+                    </IonNote>
+                </IonItem>
+                <IonItem lines="none">
+                    <IonLabel className={"ion-text-wrap"}> Klik de P1-stick in uw slimme meter.</IonLabel>
+                    <IonNote className={"ionNoteSteps"} slot="start">
+                        <IonBadge className={"stepBadge"}>2</IonBadge>
+                    </IonNote>
+                </IonItem>
+                <IonItem lines="none">
+                    <IonLabel className={"ion-text-wrap"}> Druk op de knop op de P1-stick. Er begint nu een lampje te knipperen.</IonLabel>
+                    <IonNote className={"ionNoteSteps"} slot="start">
+                        <IonBadge className={"stepBadge"}>3</IonBadge>
+                    </IonNote>
+                </IonItem>
+                <IonItem lines="none">
+                    <IonLabel className={"ion-text-wrap"}> Druk op de knop 'Verbind' hieronder.</IonLabel>
+                    <IonNote className={"ionNoteSteps"} slot="start">
+                        <IonBadge className={"stepBadge"}>4</IonBadge>
+                    </IonNote>
+                </IonItem>
                 <IonButton color={"warning"} className={"connectButton"} onClick={() => connectToP1()}>Verbind</IonButton>
-                <IonButton color={"warning"} className={"connectButton"} onClick={() => retrieveIDS()}>Haal ID's op</IonButton>
-                <p className={"stepText"}>Current connected Peripheral ID: {peripheralID}</p>
-                <p className={"stepText"}>Current connected Peripheral RSSI: {peripheralRSSI}</p>
             </IonCardContent>
-            <IonButton color={"warning"} onClick={() => stepBackFunction()}>Terug</IonButton>
+            <IonButton color={"warning"} className="instructionsPreviousButton" onClick={() => stepBackFunction()}>Terug</IonButton>
             <IonButton color={"warning"} className="instructionsNextButton" onClick={() => stepUpFunction()}>Volgende</IonButton>
         </div>
     )

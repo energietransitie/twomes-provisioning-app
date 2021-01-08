@@ -126,14 +126,14 @@ const Instructions: React.FC = () => {
                     <IonCard className="instructionsCard">
                         {currentStep === installationconfig.OTGWstep && (
                             <InstallOTGW router={routerRef.current} stepUpFunction={stepUp}
-                                         finishFunction={completeInstructions} wifiSSID={wifiSSID} wifiPassword={wifiPassword}
+                                         finishFunction={completeInstructions} wifiSSID={wifiSSID} wifiPassword={wifiPassword} stepBackFunction={stepBack}
                                          lastStep={userID.split("")[0] === "1"}/>
                         )}
                         {currentStep === installationconfig.P1step && (
-                            <InstallP1 router={routerRef.current} stepUpFunction={stepUp} wifiSSID={wifiSSID} wifiPassword={wifiPassword}/>
+                            <InstallP1 router={routerRef.current} stepUpFunction={stepUp} stepBackFunction={stepBack} wifiSSID={wifiSSID} wifiPassword={wifiPassword}/>
                         )}
                         {currentStep === installationconfig.Sensorstep && (
-                            <InstallSensors router={routerRef.current} stepUpFunction={stepUp}
+                            <InstallSensors router={routerRef.current} stepUpFunction={stepUp} stepBackFunction={stepBack}
                                             finishFunction={completeInstructions}
                                             lastStep={userID.split("")[0] !== "1"}/>
                         )}

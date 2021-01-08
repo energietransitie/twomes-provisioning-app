@@ -43,15 +43,52 @@ const Dashboard: React.FC = () => {
     // Fill datasets with data
     useEffect(() => {
         if (!dataSet || (dataSet && refreshing)) {
-            var tempdata:any = [];
+            var tempdata:any = [
+                {
+                    'electricity_delivered': 20,
+                    'electricity_received': 41,
+                    'time': moment().subtract(6, 'days')
+                },
+                {
+                    'electricity_delivered': 18,
+                    'electricity_received': 30,
+                    'time': moment().subtract(5, 'days')
+                },
+                {
+                    'electricity_delivered': 19,
+                    'electricity_received': 38,
+                    'time': moment().subtract(4, 'days')
+                },
+                {
+                    'electricity_delivered': 18.5,
+                    'electricity_received': 35,
+                    'time': moment().subtract(3, 'days')
+                },
+                {
+                    'electricity_delivered': 21,
+                    'electricity_received': 45,
+                    'time': moment().subtract(2, 'days')
+                },
+                {
+                    'electricity_delivered': 20.5,
+                    'electricity_received': 43,
+                    'time': moment().subtract(1, 'days')
+                },
+                {
+                    'electricity_delivered': 20,
+                    'electricity_received': 37,
+                    'time': moment()
+                }
+            ];
+            setItem("HouseData", JSON.stringify(tempdata));
             getItem('JWTToken').then((token) => {
 
                 // Retrieve housedata
 
-                API.database.getHouseData(token!).then((response) => {
-                    tempdata = response.data;
-                    var dataset1: any = {title: 'Electricity delivered'};
-                    var dataset2: any = {title: 'Electricity received'};
+                API.weather.getLocalWeather(10,10).then((response) => {
+                    //tempdata = response.data;
+                    var dataset1: any = {title: 'Gemiddelde kamertemperatuur in °C'};
+                    var dataset2: any = {title: 'Gemiddelde pijptemperatuur in °C'};
                     var data1: string[] = [];
                     var data2: string[] = [];
                     var labels: string[] = [];
@@ -70,12 +107,13 @@ const Dashboard: React.FC = () => {
                     setDataSet(true);
                     setItem("HouseData", JSON.stringify(tempdata));
                 }, (err) => {
+                    console.log(err);
                     // If no data is retrieved, use data from last save
                     getItem("HouseData").then((data) => {
                         if(data !== null && data !== undefined) {
                             tempdata = JSON.parse(data);
-                            var dataset1: any = {title: 'Electricity delivered'};
-                            var dataset2: any = {title: 'Electricity received'};
+                            var dataset1: any = {title: 'Gemiddelde kamertemperatuur in °C'};
+                            var dataset2: any = {title: 'Gemiddelde pijptemperatuur in °C'};
                             var data1: string[] = [];
                             var data2: string[] = [];
                             var labels: string[] = [];
@@ -95,7 +133,6 @@ const Dashboard: React.FC = () => {
                             setOldDataDate(date);
                             setOldData(true);
                             setDataSet(true);
-
                         } else {
                             // If there is also no data from a last save, show error
                             setError(true);
@@ -118,7 +155,8 @@ const Dashboard: React.FC = () => {
                         label: graphData1.title,
                         data: graphData1.data,
                         backgroundColor: 'transparent',
-                        borderColor: 'rgba(255,153,51)' // Light orange
+                        borderColor: 'rgba(255,153,51)', // Light orange
+                        borderWidth: 4
                     }]
                 },
                 options: {
@@ -158,7 +196,8 @@ const Dashboard: React.FC = () => {
                         label: graphData2.title,
                         data: graphData2.data,
                         backgroundColor: 'transparent',
-                        borderColor: 'rgba(0,255,128)' // Light green
+                        borderColor: 'rgba(0,255,128)', // Light green
+                        borderWidth: 4
                     }]
                 },
                 options: {
@@ -201,7 +240,7 @@ const Dashboard: React.FC = () => {
         setTimeout(() => {
             setRefreshing(false);
             event.detail.complete();
-        }, 3000);
+        }, 500);
     }
 
     if (dataSet) {

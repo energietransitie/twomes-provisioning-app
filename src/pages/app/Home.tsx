@@ -132,23 +132,32 @@ const Home: React.FC = () => {
         }
     }, [])
 
+    // useEffect(() => {
+    //     if (!sensorStatusSet) {
+    //         getItem("JWTToken").then((token) => {
+    //             if (token !== null && token !== undefined) {
+    //                 API.database.getHouseData(token).then((response) => {
+    //                     var data = response.data;
+    //                     var record = data[0];
+    //                     var temp1Up = record.pipe_temp1 !== null;
+    //                     var temp2Up = record.pipe_temp2 !== null;
+    //                     var upToDate = moment(record.time).add(1, 'days').format("DD MMMM YYYY hh:mm:ss") >= moment().format("DD MMMM YYYY hh:mm:ss");
+    //                     setSensor1Status(temp1Up);
+    //                     setSensor2Status(temp2Up);
+    //                     setDataUpToDate(upToDate);
+    //                 })
+    //             }
+    //             setSensorStatusSet(true);
+    //         })
+    //     }
+    // })
+
     useEffect(() => {
-        if (!sensorStatusSet) {
-            getItem("JWTToken").then((token) => {
-                if (token !== null && token !== undefined) {
-                    API.database.getHouseData(token).then((response) => {
-                        var data = response.data;
-                        var record = data[0];
-                        var temp1Up = record.pipe_temp1 !== null;
-                        var temp2Up = record.pipe_temp2 !== null;
-                        var upToDate = moment(record.time).add(1, 'days').format("DD MMMM YYYY hh:mm:ss") >= moment().format("DD MMMM YYYY hh:mm:ss");
-                        setSensor1Status(temp1Up);
-                        setSensor2Status(temp2Up);
-                        setDataUpToDate(upToDate);
-                    })
-                }
-                setSensorStatusSet(true);
-            })
+        if(!sensorStatusSet) {
+            setSensor1Status(true);
+            setSensor2Status(true);
+            setDataUpToDate(true);
+            setSensorStatusSet(true);
         }
     })
 
@@ -216,21 +225,21 @@ const Home: React.FC = () => {
                             </IonRow>
                         </IonCardContent>
                     </IonCard>
-                    <Link to={"/dashboard"} replace>
-                        <IonCard className="dashboardCard">
-                            <IonItem lines="none" className={"dashboardCardHeader"}>
-                            </IonItem>
-                            <IonCardContent className={"dashboardCardContent"}>
-                                <IonIcon className="dashboardIcon" icon={arrowForwardOutline}/>
-                            </IonCardContent>
-                        </IonCard>
-                    </Link>
-                    <IonItem>
-                        <IonButton onClick={() => {
-                            setInstructionsChecked(false);
-                            window.location.href = '/instructions'
-                        }}>Show Instructions</IonButton>
-                    </IonItem>
+                    {/*<Link to={"/dashboard"} replace>*/}
+                    {/*    <IonCard className="dashboardCard">*/}
+                    {/*        <IonItem lines="none" className={"dashboardCardHeader"}>*/}
+                    {/*        </IonItem>*/}
+                    {/*        <IonCardContent className={"dashboardCardContent"}>*/}
+                    {/*            <IonIcon className="dashboardIcon" icon={arrowForwardOutline}/>*/}
+                    {/*        </IonCardContent>*/}
+                    {/*    </IonCard>*/}
+                    {/*</Link>*/}
+                    {/*<IonItem>*/}
+                    {/*    <IonButton onClick={() => {*/}
+                    {/*        setInstructionsChecked(false);*/}
+                    {/*        window.location.href = '/instructions'*/}
+                    {/*    }}>Show Instructions</IonButton>*/}
+                    {/*</IonItem>*/}
                 </IonContent>
             </IonPage>
         );

@@ -69,7 +69,7 @@ const App: React.FC = () => {
             console.log(response.data);
             if(response.data === 0) {
                 setItem("userID", id).then(() => {
-                    generateJWTToken().then(() => {
+                    setItem("JWTToken", 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJob3VzZV9pZCI6IjEzMjMxMiIsIkFQSWtleSI6IjM0VEY1MzczVzUzMjQ1NU9CQ01DQTY3RTE2UzNEIiwiaWF0IjoxNjEwMDMzMDA2LCJleHAiOjE2MTA2Mzc4MDZ9.MC10NcpoVVNu-GWAwXY1Ugra_O94TQVTfQiHk56cduQ').then(() => {
                         setFirebaseOutsideTriggered(true);
                     });
                 });
@@ -106,7 +106,7 @@ const App: React.FC = () => {
                 console.log(response.data);
                 if(response.data === 0) {
                     setItem("userID", id).then(() => {
-                        generateJWTToken().then(() => {
+                        setItem("JWTToken", 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJob3VzZV9pZCI6IjEzMjMxMiIsIkFQSWtleSI6IjM0VEY1MzczVzUzMjQ1NU9CQ01DQTY3RTE2UzNEIiwiaWF0IjoxNjEwMDMzMDA2LCJleHAiOjE2MTA2Mzc4MDZ9.MC10NcpoVVNu-GWAwXY1Ugra_O94TQVTfQiHk56cduQ').then(() => {
                             setFirebaseTriggered(true);
                         });
                     });
