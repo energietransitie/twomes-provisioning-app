@@ -50,7 +50,9 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction, router,
 
     // These functions will be executed when the user is about to enter the view
     useIonViewWillEnter(() => {
-        startWifiConfig();
+        WifiWizard2.requestPermission().then(() => {
+            startWifiConfig();
+        })
 
         // gets the default height of the page
         let pageHeight = (document.getElementsByClassName('ion-page')[0] as HTMLInputElement)?.offsetHeight;
@@ -137,7 +139,7 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction, router,
     }
 
     // Check if Wifi is enabled
-    const checkIfWifiEnabled = () => WifiWizard2.isWifiEnabled().then((result) => result).catch((error) => console.log(error));
+    const checkIfWifiEnabled = () => {return WifiWizard2.isWifiEnabled()};
 
     // Scan for available networks
     const scanAvailableNetworks = () => {
@@ -145,7 +147,7 @@ const ConfigureWIFI: React.FC<InstructionsInterface> = ({stepUpFunction, router,
             setScanResults(results);
             setTimeout(() => {
                 setIsSearching(false);
-            }, 1000);
+            }, 100);
         }).catch(function (error) {
             console.log('Error getting results!', error);
         });

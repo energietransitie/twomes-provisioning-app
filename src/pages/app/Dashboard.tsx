@@ -104,6 +104,7 @@ const Dashboard: React.FC = () => {
                     dataset2.labels = labels;
                     setGraphData1(dataset1);
                     setGraphData2(dataset2);
+                    setOldData(false);
                     setDataSet(true);
                     setItem("HouseData", JSON.stringify(tempdata));
                 }, (err) => {

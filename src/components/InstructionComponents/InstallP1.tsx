@@ -17,6 +17,8 @@ import {LocalStorage} from "../../services/Storage";
 import AlertBox from "../AlertBox";
 import API from "../../api/Calls";
 import {installationconfig} from "../../../package.json";
+import {BLE} from "@ionic-native/ble";
+
 
 const connectToPeripheral = BLEService().connectToPeripheral;
 const writeWifiCredentials = BLEService().writeWifiCredentials;
@@ -27,7 +29,13 @@ const readRoomID = BLEService().readRoomID;
 
 const getItem = LocalStorage().getItem;
 
-const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFunction, wifiSSID, wifiPassword, checkHardwareID}) => {
+const InstallP1: React.FC<InstructionsInterface> = ({
+                                                        stepUpFunction,
+                                                        stepBackFunction,
+                                                        wifiSSID,
+                                                        wifiPassword,
+                                                        checkHardwareID
+                                                    }) => {
 
     const [showLoading, setShowLoading] = useState(false);
     const [alert, setAlert] = useState({showBox: false})
@@ -40,7 +48,7 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
     const [roomID, setRoomID] = useState("");
 
     useEffect(() => {
-        if(!tokenLoaded) {
+        if (!tokenLoaded) {
             getItem("JWTToken").then((data: any) => {
                 setToken(data);
                 setTokenLoaded(true);
@@ -52,7 +60,7 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
         setAlert({showBox: false})
     }
 
-    const uint8ToString = (array:any) => {
+    const uint8ToString = (array: any) => {
         var out, i, len, c;
         var char2, char3;
 
@@ -99,11 +107,11 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
         connectToPeripheral().then((devicedata: any) => {
             setPeripheralID(devicedata.data.id);
             setPeripheralRSSI(devicedata.data.rssi);
-            if(wifiSSID !== undefined && wifiPassword !== undefined) {
-                writeWifiCredentials(devicedata.data.id, wifiSSID, wifiPassword).then((data:any) => {
+            if (wifiSSID !== undefined && wifiPassword !== undefined) {
+                writeWifiCredentials(devicedata.data.id, wifiSSID, wifiPassword).then((data: any) => {
                     checkWifiState(devicedata.data.id);
                 }, (errdata: any) => {
-                    if(errdata.ssid.message == "This ID has no current connection." || errdata.ssid.message == "This ID has no current connection.") {
+                    if (errdata.ssid.message == "This ID has no current connection." || errdata.ssid.message == "This ID has no current connection.") {
                         var alertdata = {
                             showBox: true,
                             header: "Fout",
@@ -116,7 +124,7 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
                 });
             }
         }).catch((errdata: any) => {
-            if(errdata.message == 'No Twomes device found') {
+            if (errdata.message == 'No Twomes device found') {
                 var alertdata = {
                     showBox: true,
                     header: "Fout",
@@ -141,7 +149,7 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
         let interval = setInterval(() => {
             readWifiState(id).then((data: any) => {
                 var stateRead = uint8ToString(data.data);
-                if(stateRead == 'true') {
+                if (stateRead == 'true') {
                     wifiState = true;
                 }
             })
@@ -149,7 +157,7 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
 
         setTimeout(() => {
             clearInterval(interval);
-            if(wifiState) {
+            if (wifiState) {
                 var alertdata = {
                     showBox: true,
                     header: "Succes",
@@ -205,7 +213,7 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
                     setShowLoading(false);
                     setAlert(successalert);
                 }, (errdata: any) => {
-                    if(errdata.message == "This ID has no current connection.") {
+                    if (errdata.message == "This ID has no current connection.") {
                         var alertdata = {
                             showBox: true,
                             header: "Fout",
@@ -216,7 +224,7 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
                     }
                 })
             }, (errdata: any) => {
-                if(errdata.message == "This ID has no current connection.") {
+                if (errdata.message == "This ID has no current connection.") {
                     var alertdata = {
                         showBox: true,
                         header: "Fout",
@@ -231,7 +239,7 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
                 console.log(err);
             })
         }, (errdata: any) => {
-            if(errdata.message == "This ID has no current connection.") {
+            if (errdata.message == "This ID has no current connection.") {
                 var alertdata = {
                     showBox: true,
                     header: "Fout",
@@ -240,6 +248,24 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
                 setShowLoading(false);
                 setAlert(alertdata);
             }
+        })
+    }
+
+    const connectToP1DEMO = () => {
+        resetBox();
+        setShowLoading(true);
+        BLE.enable().then(() => {
+            setTimeout(() => {
+                var alertdata = {
+                    showBox: true,
+                    header: "Succes",
+                    message: "De P1-stick is succesvol verbonden aan uw Wi-Fi netwerk."
+                }
+                setShowLoading(false);
+                setAlert(alertdata);
+            }, 5000)
+        }, (err) => {
+
         })
     }
 
@@ -265,7 +291,8 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
                     </IonNote>
                 </IonItem>
                 <IonItem lines="none">
-                    <IonLabel className={"ion-text-wrap"}> Druk op de knop op de P1-stick. Er begint nu een lampje te knipperen.</IonLabel>
+                    <IonLabel className={"ion-text-wrap"}> Druk op de knop op de P1-stick. Er begint nu een lampje te
+                        knipperen.</IonLabel>
                     <IonNote className={"ionNoteSteps"} slot="start">
                         <IonBadge className={"stepBadge"}>3</IonBadge>
                     </IonNote>
@@ -276,10 +303,13 @@ const InstallP1: React.FC<InstructionsInterface> = ({stepUpFunction, stepBackFun
                         <IonBadge className={"stepBadge"}>4</IonBadge>
                     </IonNote>
                 </IonItem>
-                <IonButton color={"warning"} className={"connectButton"} onClick={() => connectToP1()}>Verbind</IonButton>
+                <IonButton color={"warning"} className={"connectButton"}
+                           onClick={() => connectToP1DEMO()}>Verbind</IonButton>
             </IonCardContent>
-            <IonButton color={"warning"} className="instructionsPreviousButton" onClick={() => stepBackFunction()}>Terug</IonButton>
-            <IonButton color={"warning"} className="instructionsNextButton" onClick={() => stepUpFunction()}>Volgende</IonButton>
+            <IonButton color={"warning"} className="instructionsPreviousButton"
+                       onClick={() => stepBackFunction()}>Terug</IonButton>
+            <IonButton color={"warning"} className="instructionsNextButton"
+                       onClick={() => stepUpFunction()}>Volgende</IonButton>
         </div>
     )
 }

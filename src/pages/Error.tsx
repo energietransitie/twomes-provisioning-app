@@ -89,7 +89,7 @@ const Error: React.FC = () => {
                             dan de
                             link die u heeft gekregen via de e-mail.</IonCardContent>
                     </IonCard>
-                    <IonButton onClick={() => forceThrough()}>Ik ben developer!</IonButton>
+                    {/*<IonButton onClick={() => forceThrough()}>Ik ben developer!</IonButton>*/}
                 </IonContent>
             </IonPage>
         )

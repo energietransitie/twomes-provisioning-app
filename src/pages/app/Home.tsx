@@ -153,7 +153,7 @@ const Home: React.FC = () => {
     // })
 
     useEffect(() => {
-        if(!sensorStatusSet) {
+        if (!sensorStatusSet) {
             setSensor1Status(true);
             setSensor2Status(true);
             setDataUpToDate(true);
@@ -225,15 +225,28 @@ const Home: React.FC = () => {
                             </IonRow>
                         </IonCardContent>
                     </IonCard>
-                    {/*<Link to={"/dashboard"} replace>*/}
-                    {/*    <IonCard className="dashboardCard">*/}
-                    {/*        <IonItem lines="none" className={"dashboardCardHeader"}>*/}
-                    {/*        </IonItem>*/}
-                    {/*        <IonCardContent className={"dashboardCardContent"}>*/}
-                    {/*            <IonIcon className="dashboardIcon" icon={arrowForwardOutline}/>*/}
-                    {/*        </IonCardContent>*/}
-                    {/*    </IonCard>*/}
-                    {/*</Link>*/}
+                    <IonCard className="dashboardCard" onClick={() => window.location.href = '/dashboard'}>
+                        <IonItem lines='none' className={"dashboardCardHeader"}>
+                            <IonLabel className={"dashboardCardLabel ion-text-wrap"}>
+                                Laatst gemeten kamertemperatuur
+                            </IonLabel>
+                            <IonLabel className={"dashboardCardLabel  ion-text-wrap"}>
+                                Laatst gemeten pijptemperatuur
+                            </IonLabel>
+                        </IonItem>
+                        <IonItem lines="none" className={"dashboardCardHeader"}>
+                            <IonLabel className={"dashboardCardLabel dashboardCardLabelTemps ion-text-wrap"}>
+                                20.3°
+                            </IonLabel>
+                            <IonLabel className={"dashboardCardLabel dashboardCardLabelTemps  ion-text-wrap"}>
+                                42.6°
+                            </IonLabel>
+                        </IonItem>
+                        <IonCardContent className={"dashboardCardContent"}>
+                            <IonIcon className="dashboardIcon" icon={arrowForwardOutline}/>
+                        </IonCardContent>
+                    </IonCard>
+
                     {/*<IonItem>*/}
                     {/*    <IonButton onClick={() => {*/}
                     {/*        setInstructionsChecked(false);*/}
