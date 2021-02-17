@@ -20,3 +20,6 @@ Then to restart the emulator with the new changes, click on 'Run'.
  - In case android studio says you have no configuration available it can mean that you're missing the required sdk version. You install these go to 
  **File > Settings > Appearance & Behaviour > System Settings > Android SDK**.
  Here you can select and download whichever version is required to run the App.
+
+ ### References
+ For more info checkout the [Android Studio Docs](https://developer.android.com/training/basics/firstapp/running-app).
