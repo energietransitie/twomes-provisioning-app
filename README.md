@@ -1,19 +1,19 @@
 # Warmtewachter
 The WarmteWachter app is used to help clients successfully install varying sets of sensors.
 
-### Getting Started
+## Getting Started
 Contains the follow contents;
  1. [Prerequisites](#Prerequisites) 
  2. [Installing dependencies](#installing-dependencies)
  3. [Running and Debugging](#running-and-debugging)
     - [Native Debugging](#native-debugging)
 
-#### Prerequisites
+### Prerequisites
  - Yarn installed.
  - Android Studio installed.
  - Xcode installed.
 
-#### Installing dependencies
+### Installing dependencies
 The app is build using Ionic hence you need to;
 ```
     yarn add global @ionic/cli
