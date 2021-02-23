@@ -51,8 +51,7 @@
     "eject": "react-scripts eject",
     "resources": "cordova-res ios --skip-config --copy && cordova-res android --skip-config --copy && node scripts/resources.js",
     "android": "ionic cap build android",
-    "ios": "ionic cap build ios",
-    "eslint": "eslint **/*.{js,jsx,ts,tsx} --max-warnings=0 --format=codeframe"
+    "ios": "ionic cap build ios"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -70,17 +69,7 @@
     ]
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.12.16",
-    "@capacitor/cli": "2.4.2",
-    "@typescript-eslint/eslint-plugin": "^4.15.1",
-    "@typescript-eslint/parser": "^4.15.1",
-    "eslint": "^7.20.0",
-    "eslint-plugin-import": "^2.22.1",
-    "eslint-plugin-jest": "^24.1.5",
-    "eslint-plugin-jsdoc": "^32.0.2",
-    "eslint-plugin-jsx": "^0.1.0",
-    "eslint-plugin-react": "^7.22.0",
-    "eslint-plugin-react-hooks": "^4.2.0"
+    "@capacitor/cli": "2.4.2"
   },
   "description": "An Ionic project",
   "installationconfig": {
