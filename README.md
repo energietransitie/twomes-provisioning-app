@@ -7,6 +7,7 @@ Contains the follow contents;
  2. [Installing dependencies](#installing-dependencies)
  3. [Running and Debugging](#running-and-debugging)
     - [Native Debugging](#native-debugging)
+ 4. [Scripts](#scripts)
 
 ### Prerequisites
  - Yarn installed.
@@ -39,3 +40,8 @@ When you are dependend on native functions you need to do a few steps for the re
 For more info see:
  - [Android Development](./docs/android.md)
  - [iOS Development](./docs/ios.md)
+
+### Scripts
+Above you've already been introduced to a couple of the available scripts for this project.
+
+For a complete list of all the available scripts see [Available Scripts](./docs/scripts.md)
