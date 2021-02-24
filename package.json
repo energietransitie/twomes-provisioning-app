@@ -1,5 +1,5 @@
 {
-  "name": "WarmteWachter",
+  "name": "warmtewachter",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
@@ -42,7 +42,8 @@
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
-    "typescript": "3.8.3"
+    "typescript": "3.8.3",
+    "esp-provisioning-plugin": "github:mk-prins/EspProvisioningCapPlugin"
   },
   "scripts": {
     "start": "react-scripts start",

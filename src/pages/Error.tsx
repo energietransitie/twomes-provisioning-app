@@ -40,9 +40,10 @@ const Error: React.FC = () => {
 
     const forceThrough = () => {
         setItem('userID', '132312').then(() => {
-            generateJWTToken().then(() => {
-                window.location.href = '/home';
-            });
+            // generateJWTToken().then(() => {
+            //     window.location.href = '/home';
+            // });
+            window.location.href = '/home';
         });
     }
 
