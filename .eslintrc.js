@@ -87,17 +87,5 @@ module.exports = {
             }
         }
     ],
-    rules: {
-        '@typescript-eslint/ban-ts-ignore': 0,
-        '@typescript-eslint/interface-name-prefix': 0,
-        '@typescript-eslint/explicit-function-return-type': 2,
-        '@typescript-eslint/no-var-requires': 2,
-        '@typescript-eslint/explicit-module-boundary-types': 2,
-        '@typescript-eslint/no-explicit-any': 2,
-        '@typescript-eslint/ban-types': 2,
-        '@typescript-eslint/no-non-null-assertion': 2,
-        'jest/prefer-expect-assertions': 0,
-        'jest/no-hooks': 0,
-        'jest/lowercase-name': 0
-    }
+    rules: {}
 };
