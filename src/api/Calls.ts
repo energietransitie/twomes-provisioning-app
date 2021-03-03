@@ -7,17 +7,27 @@ export default {
         getTemperature: function() {
             return DatabaseAPI.get('/temperature')
         },
-        sendDeviceToken: function(data: any) {
-            return DatabaseAPI.post('/geenideenog', data)
+        sendDeviceToken: function(houseID: string) {
+            var url = `/startSession?house_id=${houseID}&house_key=34TF5373W532455OBCMCA67E16S3D`;
+            return DatabaseAPI.get(url)
+        },
+        getHouseData: function(token: string) {
+            var url = `/get/house/data?token=${token}`
+            return DatabaseAPI.get(url);
+        },
+        sendHardwareID: function(token: string, id: string) {
+            var url = '/';
+            return DatabaseAPI.get(url);
+        },
+        checkUserID: function(id: string) {
+            var url = `/get/house/registration?id=${id}`
+            return DatabaseAPI.get(url);
         }
     },
     weather: {
         getLocalWeather: function(lat:number, lon:number) {
             return WeatherAPI.get(`/data/2.5/weather?lat=${lat}&lon=${lon}`)
         },
-        getRandomNumber: function() {
-            return WeatherAPI.get('/integers/?num=1&min=1&max=100&col=1&base=10&format=plain&rnd=new')
-        }
     },
     gateway: {
         sendWIFICredentials: function(SSID: string, Password: string) {

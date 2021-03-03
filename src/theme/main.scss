@@ -1,24 +1,63 @@
 .tab-selected {
   #svgGradient {
-    --color-stop-1:#45B97C;
-    --color-stop-2:#B1D249;
+    --color-stop-1: #45B97C;
+    --color-stop-2: #B1D249;
+  }
+  #svgGradientHome {
+    --color-stop-1: #45B97C;
+    --color-stop-2: #B1D249;
   }
 
-  #icon {
-    stroke: url(#svgGradient) black;
-    fill: url(#svgGradient) black;
+  #svgGradientDashboard {
+    --color-stop-1: #45B97C;
+    --color-stop-2: #B1D249;
+  }
+
+  #svgGradientSensors {
+    --color-stop-1: #45B97C;
+    --color-stop-2: #B1D249;
+  }
+
+  #tabHomeIcon {
+    stroke: url(#svgGradientHome) black;
+    fill: url(#svgGradientHome) black;
     width: 25%;
   }
+
+  #tabDashboardIcon {
+    stroke: url(#svgGradientDashboard) black;
+    fill: url(#svgGradientDashboard) black;
+    width: 25%;
+  }
+
+  #tabSensorsIcon {
+    stroke: url(#svgGradientSensors) black;
+    fill: url(#svgGradientSensors) black;
+    width: 25%;
+  }
+
 }
 
-#icon {
+#tabHomeIcon {
+  stroke: white;
+  fill: white;
+  width: 25%;
+}
+
+#tabDashboardIcon {
+  stroke: white;
+  fill: white;
+  width: 25%;
+}
+
+#tabSensorsIcon {
   stroke: white;
   fill: white;
   width: 25%;
 }
 
 .gradientBackgroundColor {
-  background-image: linear-gradient(to right, #45B97C , #B1D249);
+  background-image: linear-gradient(to right, #45B97C, #B1D249);
 }
 
 .instructionsCard {
@@ -35,7 +74,10 @@
   padding-inline-start: 0;
   padding-inline-end: 0;
   color: white;
-
+  p {
+    color: white;
+    font-size: 16px;
+  }
 }
 
 .instructionsNextButton {
@@ -114,11 +156,133 @@
   padding: 0px!important;
 }
 
-.cardContentLoading{
-  background-color: #4d4d4d!important;
+.centerContent {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding:0px;
+}
+
+.cardContentLoading {
+  background-color: #4d4d4d !important;
   height: 200%;
 }
 
 .searchWifiNetworksButton {
   margin-left: 16px;
+}
+.modalBackground{
+  --background: #222222!important;
+}
+
+.modalCardAndroidBig .modal-wrapper {
+  top: 25%;
+  bottom: 25%;
+  height: 50%;
+  left: 8%;
+  right: 8%;
+  width: 84%;
+  position: absolute;
+  display: block;
+  --backdrop-opacity: var(--ion-backdrop-opacity, 0)!important;
+  border-radius: 10px 10px ;
+}
+
+.modalCardAndroidSmall .modal-wrapper {
+  top: 30%;
+  bottom: 30%;
+  height: 40%;
+  left: 8%;
+  right: 8%;
+  width: 84%;
+  position: absolute;
+  display: block;
+  --backdrop-opacity: var(--ion-backdrop-opacity, 0)!important;
+  border-radius: 10px 10px ;
+}
+
+.modalCardIos .modal-wrapper {
+  top: 23%;
+  bottom: 23%;
+  height: 54%;
+  left: 8%;
+  right: 8%;
+  width: 84%;
+  position: absolute;
+  display: block;
+  --backdrop-opacity: var(--ion-backdrop-opacity, 0)!important;
+  border-radius: 10px ;
+}
+
+.passwordContentAndroid IonInput{
+  font-size: 19px;
+}
+
+.passwordContentIos ion-item ion-input{
+  font-size: 19px;
+}
+
+.card-content-ios{
+  padding:0px!important;
+}
+
+.modalButton1{
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  font-size: 12px ;
+  margin-right: 5%;
+  margin-bottom: 5%;
+}
+
+.modalButton2{
+  font-size: 12px;
+  position: absolute;
+  bottom: 0;
+  left:0;
+  margin-left:5%;
+  margin-bottom: 5%;
+}
+
+.centerContentModal {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding:0px;
+}
+
+.infoIconModal{
+  height: 50px!important;
+  width: 50px!important;
+}
+
+.modalSubtitle{
+  color: white;
+  font-weight: normal;
+  text-transform: unset !important;
+}
+
+.modalHeader{
+  padding-left:7%!important;
+  padding-right:7%!important;
+}
+
+.modalHeader h3{
+  margin:0 0 8px 0;
+}
+
+.modalContent{
+  padding:0 7% 0 7% !important;
+}
+
+.headingIos {
+  font-size: 10px!important;
+}
+
+.sc-ion-input-ios-s{
+  font-size: 14px!important;
+}
+
+.showPasswordLabel{
+  font-size: 14px!important;
 }

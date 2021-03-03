@@ -1,0 +1,9 @@
+/node_modules/
+/.idea/
+/android/
+/build/
+/config/
+/docs/
+/ios/
+/public/
+/resources/

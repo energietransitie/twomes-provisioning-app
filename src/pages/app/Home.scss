@@ -1,4 +1,4 @@
-.sensorCard {
+.sensorStatusCard {
   background: #4d4d4d;
   height: 80px;
 }
@@ -13,7 +13,7 @@
   margin-left: -20px;
 }
 
-.sensorIcon {
+.sensorsIcon {
   width: 50px;
   height: 50px;
 }
@@ -73,11 +73,6 @@
 
 .dashboardCard {
   background: #4d4d4d;
-  height: 13%;
-}
-
-.dashboardCardHeader {
-  height: 75%;
 }
 
 .dashboardCardContent {
@@ -99,13 +94,12 @@
   width: 25px;
   position: absolute;
 }
-
-.chart {
-  //width: 33%!important;
-  //margin-top: 10px;
+.ion-text-wrap{
+  text-decoration: none;
 }
-
-.chartContainer {
-  width: 33%;
-  height: 100%;
+.sensorCardContent{
+  position: absolute;
+}
+.cardInfo{
+  text-align: center;
 }

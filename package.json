@@ -1,5 +1,5 @@
 {
-  "name": "WarmteWachter",
+  "name": "warmtewachter",
   "version": "0.0.1",
   "private": true,
   "dependencies": {
@@ -30,8 +30,8 @@
     "cordova-plugin-wifiwizard2": "^3.1.1",
     "cordova-res": "^0.15.2",
     "cordova-support-android-plugin": "^1.0.2",
-    "crypto-js": "^4.0.0",
     "es6-promise-plugin": "^4.2.2",
+    "fernet": "^0.3.1",
     "ionicons": "^5.0.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.20",
@@ -42,16 +42,26 @@
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
-    "typescript": "3.8.3"
+    "typescript": "3.8.3",
+    "esp-provisioning-plugin": "github:mk-prins/EspProvisioningCapPlugin"
   },
   "scripts": {
     "start": "react-scripts start",
+    "prestart": "yarn install",
     "build": "react-scripts build",
     "test": "react-scripts test",
     "eject": "react-scripts eject",
     "resources": "cordova-res ios --skip-config --copy && cordova-res android --skip-config --copy && node scripts/resources.js",
-    "android": "ionic cap build android",
-    "ios": "ionic cap build ios"
+    "build-android": "ionic cap build android",
+    "copy-android": "ionic cap build android",
+    "open-android": "ionic cap open android",
+    "build-ios": "ionic cap build ios",
+    "copy-ios": "ionic cap build ios",
+    "open-ios": "ionic cap open ios",
+    "sync-plugins": "ionic cap sync",
+    "eslint": "eslint **/*.{js,jsx,ts,tsx} --max-warnings=0 --format=codeframe",
+    "eslint-fix": "yarn eslint --fix",
+    "typescript": "tsc --noEmit"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -69,7 +79,16 @@
     ]
   },
   "devDependencies": {
-    "@capacitor/cli": "2.4.2"
+    "@babel/eslint-parser": "^7.12.16",
+    "@capacitor/cli": "2.4.2",
+    "@typescript-eslint/eslint-plugin": "^4.15.1",
+    "@typescript-eslint/parser": "^4.15.1",
+    "eslint-plugin-import": "^2.22.1",
+    "eslint-plugin-jest": "^24.1.5",
+    "eslint-plugin-jsdoc": "^32.0.2",
+    "eslint-plugin-jsx": "^0.1.0",
+    "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "^4.2.0"
   },
   "description": "An Ionic project",
   "installationconfig": {

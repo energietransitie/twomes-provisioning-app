@@ -1,8 +1,15 @@
 .deviceCard{
   background: #333333;
   color: white;
+  height: 200px;
 }
 .deviceCard:active{
-  background: #2dd36f;
+  background: #45B97C;
   color: white;
+  max-height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+.idList{
+  overflow: scroll;
 }

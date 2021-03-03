@@ -8,12 +8,14 @@ import {
     IonTabs
 } from '@ionic/react';
 import {IonReactRouter} from '@ionic/react-router';
-import Home from './pages/Home';
-import Dashboard from './pages/Dashboard';
-import Sensors from './pages/Sensors';
-import Settings from "./pages/Settings";
-import Instructions from "./pages/Instructions";
+import Home from './pages/app/Home';
+import Dashboard from './pages/app/Dashboard';
+import Sensors from './pages/app/Sensors';
+import Settings from "./pages/app/Settings";
+import Instructions from "./pages/app/Instructions";
+import Error from "./pages/Error";
 import {LocalStorage} from "./services/Storage";
+import {GenerateJWTToken} from "./services/GenerateJWTToken";
 import {Icons} from "./components/Icons";
 import API from "./api/Calls";
 import {Plugins} from "@capacitor/core";
@@ -39,84 +41,116 @@ import './theme/variables.scss';
 import './theme/main.scss';
 
 import {FirebaseDynamicLinks} from "@ionic-native/firebase-dynamic-links";
+import LoadingComponent from "./components/LoadingComponent";
+import AlertBox from "./components/AlertBox";
 
-var HomeIcon = Icons().HomeIcon();
-var DashboardIcon = Icons().DashboardIcon();
-var SensorIcon = Icons().SensorIcon();
+var dashboardIcon = Icons().DashboardIcon();
+var homeIcon = Icons().HomeIcon();
+var sensorsIcon = Icons().sensorsIcon();
 
+const generateJWTToken = GenerateJWTToken().generateJWTToken;
 const setItem = LocalStorage().setItem;
 const getItem = LocalStorage().getItem;
-const CryptoJS = require('crypto-js');
-const {Device} = Plugins;
 const jwt = require('jsonwebtoken');
+const fernet = require('fernet');
+const Crypto = require('crypto');
 
 const App: React.FC = () => {
 
     const [tokenChecked, setTokenChecked] = useState(false);
+    const [linkChecked, setLinkChecked] = useState(false);
+    const [firebaseTriggered, setFirebaseTriggered] = useState(false);
+    const [firebaseOutsideTriggered, setFirebaseOutsideTriggered] = useState(false);
 
+    const [showLoading, setShowLoading] = useState(false);
+    const [alert, setAlert] = useState<any>({showBox: false});
+
+    // Gets dynamic link when app is in the background while link is clicked
     FirebaseDynamicLinks.onDynamicLink().subscribe((data: any) => {
+        localStorage.setItem("firebaseTriggered", 'true');
         console.log("dynamic Link triggered");
         console.log("data: " + JSON.stringify(data));
         var url = data.deepLink;
         var id = url.split('https://app.twomes.warmtewachter/')[1];
         console.log("userID: " + id);
-        setItem("userID", id);
+        API.database.checkUserID(id).then((response) => {
+            console.log(response.data);
+            if(response.data === 0) {
+                setItem("userID", id).then(() => {
+                    generateJWTToken().then(() => {
+                        setFirebaseOutsideTriggered(true);
+                    });
+                });
+            } else {
+                var alertdata = {
+                    showBox: true,
+                    header: "Fout",
+                    message: "Het ID gekoppeld aan uw link is al in gebruik. Als dit niet klopt, of u heeft eerder een mobiel toestel geregistreerd en wilt deze veranderen, neem dan contact op met de afzender van uw ontvangen e-mail."
+                }
+                setAlert(alertdata);
+            }
+        }, (err) => {
+            console.log(err.response);
+            var erroralertdata = {
+                showBox: true,
+                header: "Fout",
+                message: err.response
+            }
+            setAlert(erroralertdata);
+        })
+
     });
 
-    useEffect(() => {
-        if (!tokenChecked) {
-            var senddata = {}
-            //Get System UUID for API
-            Device.getInfo().then((info: any) => {
-                senddata = {
-                    houseID: info.uuid.toString()
-                }
-            })
-
-            //Get encrypted key from API
-
-            // API.database.sendDeviceToken(senddata).then((response: any) => {
-            // var secret = CryptoJS.AES.decrypt(response.data.key, info.uuid.toString());
-            var secret = "hallo"
-            // Check if JWTToken exists and is still valid
-            getItem("JWTToken").then((oldToken: any) => {
-                if (oldToken == null || oldToken == "") {
-                    generateJWTToken(secret);
-                } else {
-                    jwt.verify(oldToken, secret, (err: any, decoded: any) => {
-                        console.log(decoded);
-                        console.log(err);
-                        if (decoded == undefined) {
-                            generateJWTToken(secret);
-                        }
+    // Gets dynamic link when app is terminated while link is clicked
+    FirebaseDynamicLinks.getDynamicLink().then((data) => {
+        if(data) {
+            localStorage.setItem("firebaseTriggered", 'true');
+            console.log("dynamic Link triggered");
+            console.log("data: " + JSON.stringify(data));
+            var url = data.deepLink;
+            var id = url.split('https://app.twomes.warmtewachter/')[1];
+            console.log("userID: " + id);
+            API.database.checkUserID(id).then((response) => {
+                console.log(response.data);
+                if(response.data === 0) {
+                    setItem("userID", id).then(() => {
+                        generateJWTToken().then(() => {
+                            setFirebaseTriggered(true);
+                        });
                     });
+                } else {
+                    var alertdata = {
+                        showBox: true,
+                        header: "Fout",
+                        message: "Het ID gekoppeld aan uw link is al in gebruik. Als dit niet klopt, of u heeft eerder een mobiel toestel geregistreerd en wilt deze veranderen, neem dan contact op met de afzender van uw ontvangen e-mail."
+                    }
+                    setAlert(alertdata);
                 }
-            });
-            // }, (err) => {console.log(err)})
+            }, (err) => {
+                console.log(err.response);
+                var erroralertdata = {
+                    showBox: true,
+                    header: "Fout",
+                    message: err.response
+                }
+                setAlert(erroralertdata);
+            })
+        } else {
+            console.log("geen link gevonden");
         }
-    }, [])
+    })
 
-    // Generate JWT token based on secret key
-    const generateJWTToken = (secret: string) => {
-        var houseID = "";
-
-        getItem("userID").then((userID: any) => {
-            houseID = userID
-        });
-
-        var data = {
-            "houseID": houseID
+    useEffect(() => {
+        if (!linkChecked && firebaseTriggered) {
+            window.location.href = '/home';
+            setLinkChecked(true);
         }
-        var signedToken = jwt.sign(data, secret, {expiresIn: '168h'})
-
-        console.log(signedToken);
-
-        setItem("JWTToken", signedToken);
-        setTokenChecked(true);
-    }
+    }, [firebaseTriggered])
 
     return (
         <IonApp>
+            <LoadingComponent showLoading={showLoading}/>
+            <AlertBox {...alert}/>
             <IonReactRouter>
                 <IonTabs>
                     <IonRouterOutlet>
@@ -125,23 +159,24 @@ const App: React.FC = () => {
                         <Route path="/sensors" component={Sensors}/>
                         <Route path="/settings" component={Settings} exact={true}/>
                         <Route path="/instructions" component={Instructions} exact={true}/>
-                        <Route path="/" render={() => <Redirect to="/home"/>} exact={true}/>
+                        <Route path="/error" component={Error} exact={true}/>
+                        <Route path="/" render={() => <Redirect to="/error"/>} exact={true}/>
                     </IonRouterOutlet>
                     <IonTabBar slot="bottom" id="tabBar">
                         <IonTabButton tab="home" href="/home">
-                            {HomeIcon}
+                            {homeIcon}
                         </IonTabButton>
                         <IonTabButton tab="dashboard" href="/dashboard">
-                            {DashboardIcon}
+                            {dashboardIcon}
                         </IonTabButton>
                         <IonTabButton tab="sensors" href="/sensors">
-                            {SensorIcon}
+                            {sensorsIcon}
                         </IonTabButton>
                     </IonTabBar>
                 </IonTabs>
             </IonReactRouter>
         </IonApp>
     )
-};
+}
 
 export default App;
