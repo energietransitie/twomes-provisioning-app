@@ -31,8 +31,10 @@ jobs:
 
       # Run linting
       - name: eslint
-        run: yarn eslint
+        run: |
+          yarn eslint
 
       # Run typechecking
       - name: typescript
-      run: yarn eslint
+        run: |
+          yarn typescript
