@@ -13,9 +13,11 @@
     "@ionic-native/wifi-wizard-2": "^5.29.0",
     "@ionic/react": "^5.0.7",
     "@ionic/react-router": "^5.0.7",
+    "@material-ui/styles": "^4.11.3",
     "@testing-library/jest-dom": "^4.2.4",
     "@testing-library/react": "^9.4.0",
     "@testing-library/user-event": "^8.0.3",
+    "@types/classnames": "^2.2.11",
     "@types/jest": "^24.0.25",
     "@types/node": "^12.12.24",
     "@types/react": "^16.9.17",
@@ -24,6 +26,7 @@
     "@types/react-router-dom": "^5.1.3",
     "axios": "^0.21.0",
     "chart.js": "^2.9.4",
+    "classnames": "^2.2.6",
     "cordova-plugin-ble-central": "^1.3.1",
     "cordova-plugin-firebase-analytics": "^5.0.0",
     "cordova-plugin-firebase-dynamiclinks": "^5.0.0",
@@ -31,6 +34,7 @@
     "cordova-res": "^0.15.2",
     "cordova-support-android-plugin": "^1.0.2",
     "es6-promise-plugin": "^4.2.2",
+    "esp-provisioning-plugin": "github:mk-prins/EspProvisioningCapPlugin",
     "fernet": "^0.3.1",
     "ionicons": "^5.0.0",
     "jsonwebtoken": "^8.5.1",
@@ -42,8 +46,7 @@
     "react-router": "^5.1.2",
     "react-router-dom": "^5.1.2",
     "react-scripts": "3.4.0",
-    "typescript": "3.8.3",
-    "esp-provisioning-plugin": "github:mk-prins/EspProvisioningCapPlugin"
+    "typescript": "3.8.3"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -53,18 +56,16 @@
     "eject": "react-scripts eject",
     "resources": "cordova-res ios --skip-config --copy && cordova-res android --skip-config --copy && node scripts/resources.js",
     "build-android": "ionic cap build android",
-    "copy-android": "ionic cap build android",
+    "copy-android": "ionic cap copy android",
     "open-android": "ionic cap open android",
+    "sync-android": "ionic cap sync android",
     "build-ios": "ionic cap build ios",
-    "copy-ios": "ionic cap build ios",
+    "copy-ios": "ionic cap copy ios",
     "open-ios": "ionic cap open ios",
-    "sync-plugins": "ionic cap sync",
+    "sync-ios": "ionic cap sync ios",
     "eslint": "eslint **/*.{js,jsx,ts,tsx} --max-warnings=0 --format=codeframe",
     "eslint-fix": "yarn eslint --fix",
     "typescript": "tsc --noEmit"
-  },
-  "eslintConfig": {
-    "extends": "react-app"
   },
   "browserslist": {
     "production": [
