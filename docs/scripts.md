@@ -9,10 +9,11 @@ The following scripts are available:
  - [yarn build-android](#yarn-build-android)
  - [yarn copy-android](#yarn-copy-android)
  - [yarn open-android](#yarn-open-android)
+ - [yarn sync-android](#yarn-sync-android)
  - [yarn build-ios](#yarn-build-ios)
  - [yarn copy-ios](#yarn-copy-ios)
  - [yarn open-ios](#yarn-open-ios)
- - [yarn sync-plugins](#yarn-sync-plugins)
+ - [yarn sync-ios](#yarn-sync-ios)
  - [yarn eslint](#yarn-eslint)
  - [yarn eslint-fix](#yarn-eslint-fix)
  - [yarn typescript](#yarn-typescript)
@@ -72,6 +73,12 @@ yarn open-android
 ```
 This will launch Android Studio and essentially just open the contents of the `/android` folder.
 
+## yarn sync-android
+```
+yarn sync-android
+```
+Doing this will make [capacitor](https://capacitorjs.com/docs) aware of any added, updated or removed plugins for android.
+
 ## yarn build-ios
 ```
 yarn build-ios
@@ -90,11 +97,11 @@ yarn open-ios
 ```
 This will launch Xcode and essentially just open the contents of the `/ios` folder.
 
-## yarn sync-plugins
+## yarn sync-ios
 ```
-yarn sync-plugins
+yarn sync-ios
 ```
-Doing this will make [capacitor](https://capacitorjs.com/docs) aware of any added, updated or removed plugins.
+Doing this will make [capacitor](https://capacitorjs.com/docs) aware of any added, updated or removed plugins for iOS.
 
 ## yarn eslint
 ```
