@@ -34,10 +34,8 @@
     "cordova-res": "^0.15.2",
     "cordova-support-android-plugin": "^1.0.2",
     "es6-promise-plugin": "^4.2.2",
-    "eslint": "^7.21.0",
     "esp-provisioning-plugin": "github:mk-prins/EspProvisioningCapPlugin",
     "fernet": "^0.3.1",
-    "global": "^4.4.0",
     "ionicons": "^5.0.0",
     "jsonwebtoken": "^8.5.1",
     "lodash": "^4.17.20",
@@ -69,9 +67,6 @@
     "eslint-fix": "yarn eslint --fix",
     "typescript": "tsc --noEmit"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -95,9 +90,6 @@
     "eslint-plugin-jsx": "^0.1.0",
     "eslint-plugin-react": "^7.22.0",
     "eslint-plugin-react-hooks": "^4.2.0"
-  },
-  "resolutions": {
-    "eslint": "^6.6.0"
   },
   "description": "An Ionic project",
   "installationconfig": {
