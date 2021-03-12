@@ -20,6 +20,8 @@ import {Icons} from "./components/Icons";
 import API from "./api/Calls";
 import {Plugins} from "@capacitor/core";
 
+import { Debug } from './pages/Debug'
+
 /* Core CSS required for Ionic components to work properly */
 import '@ionic/react/css/core.css';
 
@@ -44,9 +46,9 @@ import {FirebaseDynamicLinks} from "@ionic-native/firebase-dynamic-links";
 import LoadingComponent from "./components/LoadingComponent";
 import AlertBox from "./components/AlertBox";
 
-var dashboardIcon = Icons().DashboardIcon();
-var homeIcon = Icons().HomeIcon();
-var sensorsIcon = Icons().sensorsIcon();
+const dashboardIcon = Icons().DashboardIcon();
+const homeIcon = Icons().HomeIcon();
+const sensorsIcon = Icons().sensorsIcon();
 
 const generateJWTToken = GenerateJWTToken().generateJWTToken;
 const setItem = LocalStorage().setItem;
@@ -70,8 +72,8 @@ const App: React.FC = () => {
         localStorage.setItem("firebaseTriggered", 'true');
         console.log("dynamic Link triggered");
         console.log("data: " + JSON.stringify(data));
-        var url = data.deepLink;
-        var id = url.split('https://app.twomes.warmtewachter/')[1];
+        const url = data.deepLink;
+        const id = url.split('https://app.twomes.warmtewachter/')[1];
         console.log("userID: " + id);
         API.database.checkUserID(id).then((response) => {
             console.log(response.data);
@@ -82,7 +84,7 @@ const App: React.FC = () => {
                     });
                 });
             } else {
-                var alertdata = {
+                const alertdata = {
                     showBox: true,
                     header: "Fout",
                     message: "Het ID gekoppeld aan uw link is al in gebruik. Als dit niet klopt, of u heeft eerder een mobiel toestel geregistreerd en wilt deze veranderen, neem dan contact op met de afzender van uw ontvangen e-mail."
@@ -91,7 +93,7 @@ const App: React.FC = () => {
             }
         }, (err) => {
             console.log(err.response);
-            var erroralertdata = {
+            const erroralertdata = {
                 showBox: true,
                 header: "Fout",
                 message: err.response
@@ -107,8 +109,8 @@ const App: React.FC = () => {
             localStorage.setItem("firebaseTriggered", 'true');
             console.log("dynamic Link triggered");
             console.log("data: " + JSON.stringify(data));
-            var url = data.deepLink;
-            var id = url.split('https://app.twomes.warmtewachter/')[1];
+            const url = data.deepLink;
+            const id = url.split('https://app.twomes.warmtewachter/')[1];
             console.log("userID: " + id);
             API.database.checkUserID(id).then((response) => {
                 console.log(response.data);
@@ -119,7 +121,7 @@ const App: React.FC = () => {
                         });
                     });
                 } else {
-                    var alertdata = {
+                    const alertdata = {
                         showBox: true,
                         header: "Fout",
                         message: "Het ID gekoppeld aan uw link is al in gebruik. Als dit niet klopt, of u heeft eerder een mobiel toestel geregistreerd en wilt deze veranderen, neem dan contact op met de afzender van uw ontvangen e-mail."
@@ -128,7 +130,7 @@ const App: React.FC = () => {
                 }
             }, (err) => {
                 console.log(err.response);
-                var erroralertdata = {
+                const erroralertdata = {
                     showBox: true,
                     header: "Fout",
                     message: err.response
@@ -160,7 +162,8 @@ const App: React.FC = () => {
                         <Route path="/settings" component={Settings} exact={true}/>
                         <Route path="/instructions" component={Instructions} exact={true}/>
                         <Route path="/error" component={Error} exact={true}/>
-                        <Route path="/" render={() => <Redirect to="/error"/>} exact={true}/>
+                        {/* <Route path="/" render={() => <Redirect to="/error"/>} exact={true}/> */}
+                        <Route path="/" component={Debug} exact={true}/>
                     </IonRouterOutlet>
                     <IonTabBar slot="bottom" id="tabBar">
                         <IonTabButton tab="home" href="/home">
