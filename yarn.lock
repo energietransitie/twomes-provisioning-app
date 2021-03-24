@@ -1167,6 +1167,11 @@
     lodash "^4.17.19"
     to-fast-properties "^2.0.0"
 
+"@capacitor-community/barcode-scanner@^1.2.1":
+  version "1.2.1"
+  resolved "https://registry.yarnpkg.com/@capacitor-community/barcode-scanner/-/barcode-scanner-1.2.1.tgz#4afb330a5cf58c11d4c430a1ae86662866fd981d"
+  integrity sha512-6NZf4O2ZUmlhqgQvTihc96/AMOGtKSsuru790+f7TCceSTYRrl3SCepUY02WBsUHR+G8HSqrTNvkgTxDA+hGsg==
+
 "@capacitor-community/fcm@^1.0.8":
   version "1.0.8"
   resolved "https://registry.yarnpkg.com/@capacitor-community/fcm/-/fcm-1.0.8.tgz#52c165ee5e226907eab5f07910ec5eab01476462"

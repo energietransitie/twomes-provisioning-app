@@ -4,11 +4,13 @@ import { makeStyles } from '../theme/makeStyles';
 import { Plugins } from '@capacitor/core';
 import { IonContent, IonPage } from '@ionic/react';
 
-const { EspProvisioning } = Plugins;
+const { EspProvisioning, BarcodeScanner } = Plugins;
 
 console.log('[PLUGIN]:', EspProvisioning);
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 (window as any).EspProvisioning = EspProvisioning;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+(window as any).BarcodeScanner = BarcodeScanner;
 
 const useStyles = makeStyles((theme) => ({
     container: {
@@ -96,7 +98,9 @@ export const Debug: FC = () => {
     };
 
     const scanQRCode = async (): Promise<void> => {
-        handleAction(EspProvisioning.scanQRCode);
+        // handleAction(EspProvisioning.scanQRCode);
+        BarcodeScanner.hideBackground(); // make background of WebView transparent
+        handleAction(BarcodeScanner.startScan); // start scanning and wait for a result
     };
 
     return (
