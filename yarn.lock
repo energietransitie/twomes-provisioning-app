@@ -5089,9 +5089,9 @@ eslint@^6.6.0:
     text-table "^0.2.0"
     v8-compile-cache "^2.0.3"
 
-"esp-provisioning-plugin@github:mk-prins/EspProvisioningCapPlugin":
-  version "0.0.1"
-  resolved "https://codeload.github.com/mk-prins/EspProvisioningCapPlugin/tar.gz/6c6768c7198cb9c9b238faabba377975e82b24d9"
+"esp-provisioning-plugin@github:energietransitie/esp-provisioning-capacitor-plugin":
+  version "0.0.3"
+  resolved "git+ssh://git@github.com/energietransitie/esp-provisioning-capacitor-plugin.git#93dfc675e2b4c088681f5089afcbf036aefc7dff"
 
 espree@^6.1.2:
   version "6.2.1"
