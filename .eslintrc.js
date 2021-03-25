@@ -80,12 +80,15 @@ module.exports = {
                 '@typescript-eslint/explicit-module-boundary-types': 2,
                 '@typescript-eslint/no-explicit-any': 2,
                 '@typescript-eslint/ban-types': 2,
-                '@typescript-eslint/no-non-null-assertion': 2,
-                'jest/prefer-expect-assertions': 0,
-                'jest/no-hooks': 0,
-                'jest/lowercase-name': 0
+                '@typescript-eslint/no-non-null-assertion': 2
             }
         }
     ],
-    rules: {}
+    rules: {
+        'jest/prefer-expect-assertions': 0,
+        'jest/no-hooks': 0,
+        'jest/lowercase-name': 0,
+
+        'react-hooks/exhaustive-deps': 0
+    }
 };
