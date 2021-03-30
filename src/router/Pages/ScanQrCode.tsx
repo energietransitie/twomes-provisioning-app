@@ -4,10 +4,10 @@ import { makeStyles } from '../../theme/makeStyles';
 import { Page, PageBody } from './Page';
 
 import { Plugins } from '@capacitor/core';
+import { ProvisioningService } from '../../services/ProvisioningService';
+import { useHistory } from 'react-router';
 
-const { EspProvisioning, BarcodeScanner } = Plugins;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-(window as any).EspProvisioning = EspProvisioning;
+const { BarcodeScanner } = Plugins;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 (window as any).BarcodeScanner = BarcodeScanner;
 
@@ -33,6 +33,8 @@ export const ScanQRCode: FC = () => {
     const classes = useStyles();
     const [isScanning, setIsScanning] = useState(false);
 
+    const history = useHistory();
+
     useEffect(() => {
         const styleNode = document.createElement('style');
         if (isScanning) {
@@ -48,10 +50,14 @@ export const ScanQRCode: FC = () => {
     const scanQR = async () => {
         setIsScanning(true);
         BarcodeScanner.hideBackground();
+
         const result = await BarcodeScanner.startScan();
-        console.log('MARCO', result);
+        ProvisioningService.createEspDevice(JSON.parse(result.content));
+        
         BarcodeScanner.showBackground();
         setIsScanning(false);
+
+        history.push("/ConnectToDevice");
     };
 
     const cancelScan = () => {
