@@ -1,18 +1,23 @@
 import React, { FC } from 'react';
 import { IonReactRouter } from '@ionic/react-router'
 import { IonRouterOutlet } from '@ionic/react';
-import { Redirect, Route } from 'react-router';
-
-import { Invite, ScanQRCode } from './Pages';
+import { Redirect, Route as IonRoute} from 'react-router';
+import { routeList, Route } from './routeList';
 
 export const Router: FC = () => {
+    const startRoute: Route = 'ScanQRCode'
+
     return (
         <div>
             <IonReactRouter>
                 <IonRouterOutlet>
-                    <Route path="/ScanQRCode" component={ScanQRCode} />
-                    <Route path="/invite" component={Invite} />
-                    <Redirect exact from="/" to="/ScanQRCode" />
+                    { Object.keys(routeList).map((key) => (
+                        <IonRoute
+                            key={key}
+                            path={`/${key}`}
+                            component={routeList[key as Route]} />    
+                    )) }
+                    <Redirect exact from="/" to={`/${startRoute}`} />
                 </IonRouterOutlet>
             </IonReactRouter>
         </div>
