@@ -7,3 +7,4 @@ export * from './Header';
 export * from './Portal';
 export * from './SlimButton';
 export * from './Loader';
+export * from './List';
