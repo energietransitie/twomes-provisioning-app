@@ -10,10 +10,14 @@ const useStyles = makeStyles(theme => ({
         fontWeight: 'bold'
     }
 }));
-
 interface HeaderProps extends BaseProps {
     children?: ReactNode;
+    ['h1'|'h2'|'h3'|'h4'|'h5'|'h6']: boolean;
 }
+
+// const fontSizeFromProps = (props: HeaderProps): number => {
+    
+// };
 
 export const Header: FC<HeaderProps> = (props) => {
     const { children, className, ...restProps } = props;

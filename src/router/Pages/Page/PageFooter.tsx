@@ -6,7 +6,9 @@ import { makeStyles } from '../../../theme/makeStyles';
 const useStyles = makeStyles({
     container: {
         display: 'flex',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        flexDirection: 'column',
+        alignItems: 'center'
     }
 });
 
