@@ -6,26 +6,40 @@ import { BaseProps } from '../IBaseProps';
 const useStyles = makeStyles(theme => ({
     container: {
         color: theme.colors.grey900,
-        fontSize: 24,
-        fontWeight: 'bold'
-    }
+    },
+    h1: { fontSize: 24, fontWeight: 'bold' },
+    h2: { fontSize: 20, fontWeight: 'normal' },
+    h3: { fontSize: 16, fontWeight: 'bold' },
+    h4: { fontSize: 14, fontWeight: 'bold' },
+    h5: { fontSize: 12, fontWeight: 'normal' },
+    h6: { fontSize: 10, fontWeight: 'normal' }
 }));
-interface HeaderProps extends BaseProps {
-    children?: ReactNode;
-    ['h1'|'h2'|'h3'|'h4'|'h5'|'h6']: boolean;
-}
 
-// const fontSizeFromProps = (props: HeaderProps): number => {
-    
-// };
+type HeaderSize = 'h1'|'h2'|'h3'|'h4'|'h5'|'h6';
+type HeaderSizesMap = {
+    [key in HeaderSize]?: boolean;
+}
+interface HeaderProps extends HeaderSizesMap, BaseProps {
+    children?: ReactNode;
+}
 
 export const Header: FC<HeaderProps> = (props) => {
     const { children, className, ...restProps } = props;
     const classes = useStyles();
 
+    const headingFromProps = (props: HeaderProps): HeaderSize => {
+        return Object.keys(props).find(key => /h[1-6]\b/.test(key)) as HeaderSize || 'h1';
+    };
+
+    const combinedClassNames = classNames(
+        classes.container,
+        classes[headingFromProps(props)],
+        className
+    );
+
     return (
         <div
-            className={classNames(classes.container, className)}
+            className={combinedClassNames}
             {...restProps} >
 
             {children}

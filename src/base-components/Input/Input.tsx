@@ -1,7 +1,7 @@
 import classNames from 'classnames';
 import React, { ChangeEvent, FC } from 'react';
-import { inherits } from 'util';
 import { makeStyles } from '../../theme/makeStyles';
+import { Header } from '../Header';
 import { BaseProps } from '../IBaseProps';
 
 const useStyles = makeStyles(theme => ({
@@ -50,7 +50,7 @@ export const Input: FC<InputProps> = (props) => {
             className={classNames(classes.container, className)}
             {...restProps} >
 
-            {label && <p className={classes.label} >{label}</p>}
+            {label && <Header h3 className={classes.label} >{label}</Header>}
             <input
                 type={inputType}
                 className={classes.input}

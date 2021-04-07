@@ -19,11 +19,16 @@ export const WifiCredentials: FC = () => {
     const classes = useStyles();
     const history = useHistory();
 
-    // TODO: Remove default value before merge
+    // TODO: Remove default values before merge
     const { device } = ProvisioningService.getEspDevice() || { device: { name: 'OpenThermGateWay' } };
+    // const { network } = ProvisioningService.getNetwork()
+    const network = { ssid: 'VGV564AF545D' }
 
     const connectToNetwork = () => {
-        /* */
+        /*
+            ProvisioningService.ProvisionDevice({ssid, passphrase})
+            history.push('/ProcessProvisioning');
+        */
     }
 
     const backToNetworkList = () => {
@@ -35,11 +40,11 @@ export const WifiCredentials: FC = () => {
             <PageHeader>{device.name}</PageHeader>
             
             <PageBody className={classes.pageBody} >
-                <Header>Verbinden met uw WiFi-netwerk</Header>
+                <Header h2 className={classes.section} >Verbinden met uw WiFi-netwerk</Header>
 
                 <div className={classes.section} >
-                    <p>Netwerk naam:</p>
-                    <p>VGV564AF545D</p>
+                    <Header h3>Netwerk naam:</Header>
+                    <p>{network.ssid}</p>
                 </div>
 
                 <div className={classes.section} >
