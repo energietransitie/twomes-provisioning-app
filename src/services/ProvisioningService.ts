@@ -12,6 +12,8 @@ type NetworkList = any;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ConnectionStatus = any;
 
+type Network = any;
+
 interface EspDeviceQRJson {
     name: string;
     pop: string; // Proof-of-Possesion
@@ -25,6 +27,7 @@ export class ProvisioningService {
     private static pendingAction: Promise<unknown>;
     private static espDevice: ESPDevice;
     private static networkList: NetworkList;
+    private static network: Network;
 
     public static getPendingAction(): Promise<unknown> {
         return ProvisioningService.pendingAction;
@@ -38,14 +41,6 @@ export class ProvisioningService {
         return ProvisioningService.espDevice;
     }
     public static getEspDevice(): ESPDevice {
-        // TODO: Remove before merge
-        return {
-            id: 0,
-            device: {
-                name: 'PROV_XXX'
-            }
-        }
-
         return ProvisioningService.espDevice;
     }
 
@@ -61,21 +56,16 @@ export class ProvisioningService {
         return ProvisioningService.networkList;
     }
     public static getNetworks(): NetworkList {
-        // TODO: Remove before merge
-        return {
-            count: 8,
-            networks: [
-                { ssid: 'Hide Yo Wife', channel: '16', rssi: 'somestring' },
-                { ssid: 'ShoutPenisForPassword', channel: '34', rssi: 'somestring' },
-                { ssid: 'MyWifi', channel: '45', rssi: 'somestring' },
-                { ssid: 'McDonalds Free Wifi', channel: '69', rssi: 'somestring' },
-                { ssid: 'TwomesSexDungeonSapphire', channel: '42', rssi: 'somestring' }
-            ]
-        };
-
         return ProvisioningService.networkList;
     }
 
+    public static setNetwork(network: Network): void {
+        ProvisioningService.network = network;
+    }
+
+    public static getNetwork(): Network {
+        return ProvisioningService.network;
+    }
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

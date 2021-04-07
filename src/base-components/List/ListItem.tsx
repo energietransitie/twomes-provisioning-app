@@ -8,12 +8,10 @@ const useStyles = makeStyles(theme => ({
     container: {
         display: 'block',
         flexDirection: 'column',
-        boxShadow: theme.shadows.level1,
-        backgroundColor: '#6800ad',
-        color: 'white',
         cursor: 'pointer',
         padding: '10px 20px',
-        margin: '1px 0 0 0'
+        margin: '1px 0 0 0',
+        backgroundColor: theme.colors.white
     }
 }));
 

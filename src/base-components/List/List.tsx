@@ -7,8 +7,16 @@ const useStyles = makeStyles(theme => ({
     container: {
         display: 'flex',
         flexDirection: 'column',
-        boxShadow: theme.shadows.level1,
-        width: '100%'
+        width: '100%',
+        marginTop: 25,
+
+        '& > *': {
+            borderBottom: `1px solid ${theme.colors.grey300}`,
+
+            '&:last-of-type': {
+                border: 'none'
+            }
+        }
     }
 }));
 
