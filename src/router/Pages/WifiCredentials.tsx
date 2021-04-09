@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useState } from 'react';
 import { useHistory } from 'react-router';
 import { Button, Header, Input, SlimButton } from '../../base-components';
 import { ProvisioningService } from '../../services/ProvisioningService';
@@ -18,19 +18,22 @@ const useStyles = makeStyles({
 export const WifiCredentials: FC = () => {
     const classes = useStyles();
     const history = useHistory();
+    const [passphrase, setPassphrase] = useState('');
 
     const { device } = ProvisioningService.getEspDevice();
     const network = ProvisioningService.getNetwork();
 
     const connectToNetwork = () => {
-        /*
-            ProvisioningService.ProvisionDevice({ssid, passphrase})
-            history.push('/ProcessProvisioning');
-        */
+        ProvisioningService.provisionDevice({ssid: network.ssid, passphrase})
+        history.push('/ProcessProvisioning');
     }
 
     const backToNetworkList = () => {
         history.push('/WifiList');
+    };
+
+    const handlePasswordChange = (value: string) => {
+        setPassphrase(value);
     };
     
     return (
@@ -49,7 +52,7 @@ export const WifiCredentials: FC = () => {
                     <Input password
                         label="Wachtwoord:"
                         placeholder="vul hier uw wachtwoord"
-                        onChange={() => { /**/ } } />
+                        onChange={handlePasswordChange} />
                 </div>
             </PageBody>
 
