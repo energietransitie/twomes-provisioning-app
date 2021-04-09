@@ -12,6 +12,8 @@ type NetworkList = any;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ConnectionStatus = any;
 
+type Network = any;
+
 interface EspDeviceQRJson {
     name: string;
     pop: string; // Proof-of-Possesion
@@ -25,6 +27,7 @@ export class ProvisioningService {
     private static pendingAction: Promise<unknown>;
     private static espDevice: ESPDevice;
     private static networkList: NetworkList;
+    private static network: Network;
 
     public static getPendingAction(): Promise<unknown> {
         return ProvisioningService.pendingAction;
@@ -56,6 +59,13 @@ export class ProvisioningService {
         return ProvisioningService.networkList;
     }
 
+    public static setNetwork(network: Network): void {
+        ProvisioningService.network = network;
+    }
+
+    public static getNetwork(): Network {
+        return ProvisioningService.network;
+    }
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
