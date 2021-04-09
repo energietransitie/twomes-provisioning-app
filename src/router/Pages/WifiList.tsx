@@ -1,18 +1,16 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Header, SlimButton } from '../../base-components';
+import { useHistory } from 'react-router';
+import { Header, SlimButton, List, ListItem } from '../../base-components';
 import { ProvisioningService } from '../../services/ProvisioningService';
-import { makeStyles } from '../../theme/makeStyles';
 import { Page, PageBody, PageFooter, PageHeader } from './Page';
 
-const useStyles = makeStyles(theme => ({
-    container: {
-
-    }
-}));
+// TODO: replace temp type with actual type from esp-provisioning-plugin
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type Network = any;
 
 export const WifiList: FC = () => {
     const { device } = ProvisioningService.getEspDevice();
-    const classes = useStyles();
+    const history = useHistory();
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [networkList, setNetworkList] = useState<any>();
@@ -28,7 +26,12 @@ export const WifiList: FC = () => {
     }, []);
 
     const previousStep = () => {
-        //
+        history.push('/ScanQrCode');
+    };
+
+    const selectNetwork = (network: Network) => {
+        ProvisioningService.setNetwork(network);
+        history.push('/WifiCredentials');
     };
 
     return (
@@ -37,12 +40,11 @@ export const WifiList: FC = () => {
             
             <PageBody>
                 <Header>Selecteer uw WiFi-netwerk</Header>
-                <ul>
-                    {/* TODO: Fix typing */}
-                    {networkList && networkList.map((network: { ssid: string }) => (
-                        <li>{network.ssid}</li>
+                <List className={'my-custom-list'} >
+                    {networkList && networkList.map((network: Network) => (
+                        <ListItem key={network.ssid} onClick={() => selectNetwork(network)}>{network.ssid}</ListItem>
                     ))}
-                </ul>
+                </List>
             </PageBody>
 
             <PageFooter>

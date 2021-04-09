@@ -10,7 +10,6 @@ const useStyles = makeStyles({
         position: 'relative',
         overflow: 'hidden',
         transition: 'background 400ms',
-        borderRadius: 4
     },
     ripple: {
         position: 'absolute',
