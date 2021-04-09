@@ -17,7 +17,7 @@ export const WifiList: FC = () => {
     
     useEffect(() => {
         const getNetworks = async () => {
-            // await ProvisioningService.getPendingAction();
+            await ProvisioningService.getPendingAction();
             const { networks } = await ProvisioningService.getNetworks();
             setNetworkList(networks);
         };
