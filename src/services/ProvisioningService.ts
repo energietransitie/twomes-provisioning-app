@@ -66,6 +66,14 @@ export class ProvisioningService {
     public static getNetwork(): Network {
         return ProvisioningService.network;
     }
+
+    public static async provisionDevice({ ssid, passphrase }: { ssid: string, passphrase: string}): Promise<void> {
+        return EspProvisioning.provision({
+            device: ProvisioningService.espDevice.id,
+            ssid,
+            passphrase
+        });
+    }
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any

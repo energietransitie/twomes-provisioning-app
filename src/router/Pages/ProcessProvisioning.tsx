@@ -27,7 +27,7 @@ export const ProcessProvisioning: FC = () => {
     const setRedirectTimeout = () => {
         setTimeout(() => {
             history.push('/ScanQRCode');
-        }, 1000);
+        }, 2000);
     };
 
     return (
