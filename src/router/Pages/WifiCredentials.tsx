@@ -19,10 +19,8 @@ export const WifiCredentials: FC = () => {
     const classes = useStyles();
     const history = useHistory();
 
-    // TODO: Remove default values before merge
-    const { device } = ProvisioningService.getEspDevice() || { device: { name: 'OpenThermGateWay' } };
-    // const { network } = ProvisioningService.getNetwork()
-    const network = { ssid: 'VGV564AF545D' }
+    const { device } = ProvisioningService.getEspDevice();
+    const network = ProvisioningService.getNetwork();
 
     const connectToNetwork = () => {
         /*
