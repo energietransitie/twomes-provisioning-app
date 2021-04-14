@@ -1,5 +1,6 @@
 // import { EspProvisioning } from 'esp-provisioning-plugin';
 import { Plugins } from '@capacitor/core';
+import { NetworkService } from './NetworkService';
 const { EspProvisioning } = Plugins;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -68,11 +69,13 @@ export class ProvisioningService {
     }
 
     public static async provisionDevice({ ssid, passphrase }: { ssid: string, passphrase: string}): Promise<void> {
-        return EspProvisioning.provision({
+        await EspProvisioning.provision({
             device: ProvisioningService.espDevice.id,
             ssid,
             passphrase
         });
+
+        NetworkService.SaveNetwork(ssid, passphrase);        
     }
 }
 
