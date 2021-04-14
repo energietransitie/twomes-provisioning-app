@@ -19,7 +19,17 @@ export class ProvisioningServiceDev {
 
     private static pendingAction: Promise<unknown>;
     private static espDevice: ESPDevice;
-    private static networkList: NetworkList;
+    private static networkList: NetworkList = {
+        count: 6,
+        networks: [
+            { ssid: 'VRV343AV786B', channel: '12' },
+            { ssid: 'VRVASC897BDS', channel: '69' },
+            { ssid: 'VRVAS68GASG8', channel: '54' },
+            { ssid: 'TMNL-3454D1', channel: '32' },
+            { ssid: 'GZA7987DF834AVS', channel: '14' },
+            { ssid: 'Ziggo384598352', channel: '16' }
+        ]
+    };
     private static network: Network;
 
     public static getPendingAction(): Promise<unknown> {
@@ -38,7 +48,15 @@ export class ProvisioningServiceDev {
         return this.pendingAction;
     }
     public static getEspDevice(): ESPDevice {
-        return this.espDevice;
+        return this.espDevice || {
+            id: 0,
+            device: {
+                name: 'PROV_XXX',
+                pop: 'abcd1234',
+                transport: 'ble',
+                security: 1
+            }
+        };
     }
 
     public static connectToDevice(): ConnectionStatus {
@@ -53,17 +71,6 @@ export class ProvisioningServiceDev {
     public static async scanForNetworks(): Promise<NetworkList> {
         this.pendingAction = new Promise((resolve) => {
             setTimeout(() => {
-                this.networkList = {
-                    count: 6,
-                    networks: [
-                        { ssid: 'VRV343AV786B', channel: '12' },
-                        { ssid: 'VRVASC897BDS', channel: '69' },
-                        { ssid: 'VRVAS68GASG8', channel: '54' },
-                        { ssid: 'TMNL-3454D1', channel: '32' },
-                        { ssid: 'GZA7987DF834AVS', channel: '14' },
-                        { ssid: 'Ziggo384598352', channel: '16' }
-                    ]
-                }
                 resolve(this.networkList);
             }, 1000);
         });
