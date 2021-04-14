@@ -3,13 +3,9 @@ import { Button, Header, PaddedContainer, Portal, SlimButton } from '../../base-
 import { makeStyles } from '../../theme/makeStyles';
 import { Page, PageBody } from './Page';
 
-import { Plugins } from '@capacitor/core';
 import { ProvisioningService } from '../../services/ProvisioningService';
 import { useHistory } from 'react-router';
-
-const { BarcodeScanner } = Plugins;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-(window as any).BarcodeScanner = BarcodeScanner;
+import { QRScanService } from '../../services/QRScanService';
 
 const useStyles = makeStyles(theme => ({
     image: {
@@ -36,25 +32,19 @@ export const ScanQRCode: FC = () => {
     const history = useHistory();
 
     useEffect(() => {
-        const styleNode = document.createElement('style');
         if (isScanning) {
-            document.head.appendChild(styleNode);
-            (styleNode.sheet as CSSStyleSheet).insertRule('#root { opacity: 0 }');
-
-            return () => {
-                document.head.removeChild(styleNode);
-            }
+            QRScanService.prepareQRScan();
+            return QRScanService.unprepareQRScan;
         }
     }, [isScanning]);
 
     const scanQR = async () => {
         setIsScanning(true);
-        BarcodeScanner.hideBackground();
-
-        const result = await BarcodeScanner.startScan();
-        ProvisioningService.createEspDevice(JSON.parse(result.content));
-        
-        BarcodeScanner.showBackground();
+        const result = await QRScanService.scan();
+        // TODO: Fix type
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        ProvisioningService.createEspDevice(result);
         setIsScanning(false);
 
         history.push("/ConnectToDevice");
@@ -62,8 +52,7 @@ export const ScanQRCode: FC = () => {
 
     const cancelScan = () => {
         setIsScanning(false);
-        BarcodeScanner.showBackground();
-        BarcodeScanner.stopScan();
+        QRScanService.stopScan();
     };
 
     return isScanning ? (
