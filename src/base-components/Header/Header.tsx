@@ -16,17 +16,11 @@ const useStyles = makeStyles(theme => ({
 }));
 
 type HeaderSize = 'h1'|'h2'|'h3'|'h4'|'h5'|'h6';
-// type HeaderSizesMap = {
-//     [key in HeaderSize]?: boolean;
-// }
-interface HeaderProps extends BaseProps {
+type HeaderSizesMap = {
+    [key in HeaderSize]?: boolean;
+}
+interface HeaderProps extends HeaderSizesMap, BaseProps {
     children?: ReactNode;
-    h1?: boolean;
-    h2?: boolean;
-    h3?: boolean;
-    h4?: boolean;
-    h5?: boolean;
-    h6?: boolean;
 }
 
 export const Header: FC<HeaderProps> = (props) => {
