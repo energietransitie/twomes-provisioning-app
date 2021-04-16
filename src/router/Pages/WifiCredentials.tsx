@@ -1,8 +1,8 @@
 import React, { FC, useState } from 'react';
-import { useHistory } from 'react-router';
 import { Button, Header, Input, SlimButton } from '../../base-components';
 import { ProvisioningService } from '../../services/ProvisioningService';
 import { makeStyles } from '../../theme/makeStyles';
+import { useNavigation } from '../useNavigation';
 import { Page, PageBody, PageFooter, PageHeader } from './Page';
 
 const useStyles = makeStyles({
@@ -17,7 +17,7 @@ const useStyles = makeStyles({
 
 export const WifiCredentials: FC = () => {
     const classes = useStyles();
-    const history = useHistory();
+    const navigation = useNavigation();
     const [passphrase, setPassphrase] = useState('');
 
     const { device } = ProvisioningService.getEspDevice();
@@ -25,11 +25,11 @@ export const WifiCredentials: FC = () => {
 
     const connectToNetwork = () => {
         ProvisioningService.provisionDevice({ssid: network.ssid, passphrase})
-        history.push('/ProcessProvisioning');
+        navigation.toRoute('ProcessProvisioning');
     }
 
     const backToNetworkList = () => {
-        history.push('/WifiList');
+        navigation.toRoute('WifiList');
     };
 
     const handlePasswordChange = (value: string) => {
