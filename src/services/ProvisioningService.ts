@@ -1,6 +1,8 @@
 // import { EspProvisioning } from 'esp-provisioning-plugin';
 import { Plugins } from '@capacitor/core';
 import { NetworkService } from './NetworkService';
+import { ProvisioningServiceDev } from './__dev/ProvisioningService';
+
 const { EspProvisioning } = Plugins;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -12,8 +14,8 @@ type ESPDevice = any;
 type NetworkList = any;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ConnectionStatus = any;
-
-type Network = any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+export type Network = { ssid: string, passphrase: string };
 
 interface EspDeviceQRJson {
     name: string;
@@ -23,7 +25,7 @@ interface EspDeviceQRJson {
     password: string;
 }
 
-export class ProvisioningService {
+class ProvisioningServiceProd {
 
     private static pendingAction: Promise<unknown>;
     private static espDevice: ESPDevice;
@@ -31,46 +33,46 @@ export class ProvisioningService {
     private static network: Network;
 
     public static getPendingAction(): Promise<unknown> {
-        return ProvisioningService.pendingAction;
+        return this.pendingAction;
     }
     
     public static async createEspDevice(espDeviceQRJson: EspDeviceQRJson): Promise<ESPDevice> {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        ProvisioningService.pendingAction = EspProvisioning.createESPDevice(espDeviceQRJson as any);
-        const result = await ProvisioningService.pendingAction;
-        ProvisioningService.espDevice = result;
-        return ProvisioningService.espDevice;
+        this.pendingAction = EspProvisioning.createESPDevice(espDeviceQRJson as any);
+        const result = await this.pendingAction;
+        this.espDevice = result;
+        return this.espDevice;
     }
     public static getEspDevice(): ESPDevice {
-        return ProvisioningService.espDevice;
+        return this.espDevice;
     }
 
     public static connectToDevice(): ConnectionStatus {
-        ProvisioningService.pendingAction = EspProvisioning.connectToDevice({ device: ProvisioningService.espDevice.id })
-        return ProvisioningService.pendingAction;
+        this.pendingAction = EspProvisioning.connectToDevice({ device: this.espDevice.id })
+        return this.pendingAction;
     }
 
     public static async scanForNetworks(): Promise<NetworkList> {
-        ProvisioningService.pendingAction = EspProvisioning.scanWifiList({ device: ProvisioningService.espDevice.id })
-        const result = ProvisioningService.pendingAction;
-        ProvisioningService.networkList = result;
-        return ProvisioningService.networkList;
+        this.pendingAction = EspProvisioning.scanWifiList({ device: this.espDevice.id })
+        const result = this.pendingAction;
+        this.networkList = result;
+        return this.networkList;
     }
     public static getNetworks(): NetworkList {
-        return ProvisioningService.networkList;
+        return this.networkList;
     }
 
     public static setNetwork(network: Network): void {
-        ProvisioningService.network = network;
+        this.network = network;
     }
 
     public static getNetwork(): Network {
-        return ProvisioningService.network;
+        return this.network;
     }
 
     public static async provisionDevice({ ssid, passphrase }: { ssid: string, passphrase: string}): Promise<void> {
         await EspProvisioning.provision({
-            device: ProvisioningService.espDevice.id,
+            device: this.espDevice.id,
             ssid,
             passphrase
         });
@@ -80,4 +82,8 @@ export class ProvisioningService {
 }
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-(window as any).ProvisioningService = ProvisioningService;
+(window as any).ProvisioningService = ProvisioningServiceProd;
+
+export const ProvisioningService = process.env.NODE_ENV === 'development'
+    ? ProvisioningServiceDev
+    : ProvisioningServiceProd;

@@ -1,5 +1,6 @@
 import classNames from 'classnames';
-import React, { ChangeEvent, FC } from 'react';
+import { relative } from 'path';
+import React, { ChangeEvent, FC, useState } from 'react';
 import { makeStyles } from '../../theme/makeStyles';
 import { Header } from '../Header';
 import { BaseProps } from '../IBaseProps';
@@ -17,6 +18,7 @@ const useStyles = makeStyles(theme => ({
         border: `2px solid ${theme.colors.grey300}`,
         borderRadius: 3,
         fontSize: 16,
+        width: '100%',
 
         '&:focus': {
             border: `2px solid ${theme.colors.grey400}`,
@@ -25,6 +27,14 @@ const useStyles = makeStyles(theme => ({
     },
     label: {
         marginBottom: 5
+    }, 
+    fieldIcon: {
+        position: 'absolute',
+        top: 0,
+        height: '100%',
+        right: 12.5,
+        display: 'flex',
+        alignItems: 'center'
     }
 }));
 
@@ -39,11 +49,17 @@ export const Input: FC<InputProps> = (props) => {
     const { className, onChange, label, placeholder, password = false, ...restProps } = props;
     const classes = useStyles();
 
+    const [isPassword, setIsPassword] = useState<boolean>(password);
+
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
         onChange(event.target.value, event);
     };
 
-    const inputType = password ? 'password' : 'text';
+    const toggleVisible = () => {
+        setIsPassword(!isPassword);
+    }
+
+    const inputType = isPassword ? 'password' : 'text';
 
     return (
         <div
@@ -51,11 +67,18 @@ export const Input: FC<InputProps> = (props) => {
             {...restProps} >
 
             {label && <Header h3 className={classes.label} >{label}</Header>}
-            <input
-                type={inputType}
-                className={classes.input}
-                placeholder={placeholder}
-                onChange={handleChange} />
+            
+            <div style={{position: 'relative'}}>
+                <input
+                    type={inputType}
+                    className={classes.input}
+                    placeholder={placeholder}
+                    onChange={handleChange} />
+                
+                <span className={classNames("far fa-fw fa-eye", classes.fieldIcon)} onClick={toggleVisible}>{isPassword ? '★' : '©'}</span>
+
+                
+            </div>
         </div>
     );
 };
