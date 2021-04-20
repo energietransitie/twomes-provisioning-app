@@ -1,11 +1,11 @@
 import React, { FC, useEffect } from "react";
-import { useHistory } from "react-router";
 import { Header, Loader } from "../../base-components";
 import { ProvisioningService } from "../../services/ProvisioningService";
+import { useNavigation } from "../useNavigation";
 import { Page, PageBody } from "./Page";
 
 export const ConnectToDevice: FC = () => {
-    const history = useHistory();
+    const navigation = useNavigation();
 
     useEffect(() => {
         const handleDeviceConnection = async () => {
@@ -13,7 +13,7 @@ export const ConnectToDevice: FC = () => {
                 await ProvisioningService.getPendingAction();
                 await ProvisioningService.connectToDevice();
                 await ProvisioningService.scanForNetworks();
-                history.push('/WifiList');
+                navigation.toRoute('WifiList');
             } catch (e) {
                 throw e;
             }

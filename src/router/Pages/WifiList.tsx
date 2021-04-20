@@ -1,10 +1,16 @@
 import classNames from 'classnames';
 import React, { FC, useEffect, useState } from 'react';
+<<<<<<< HEAD
 import { useHistory } from 'react-router';
 import { Header, SlimButton, List, ListItem, Input, Button } from '../../base-components';
 import { ProvisioningService, Network } from '../../services/ProvisioningService';
 import { NetworkService } from '../../services/NetworkService';
 import { makeStyles } from '../../theme/makeStyles';
+=======
+import { Header, SlimButton, List, ListItem } from '../../base-components';
+import { ProvisioningService } from '../../services/ProvisioningService';
+import { useNavigation } from '../useNavigation';
+>>>>>>> 89a484d4869a16c12a22ff9c635dc25275a5b10c
 import { Page, PageBody, PageFooter, PageHeader } from './Page';
 
 // TODO: replace temp type with actual type from esp-provisioning-plugin
@@ -27,9 +33,13 @@ const useStyles = makeStyles(theme => ({
 
 export const WifiList: FC = () => {
     const { device } = ProvisioningService.getEspDevice();
+<<<<<<< HEAD
     const knownNetworks = NetworkService.GetKnownNetworks();
     const classes = useStyles();
     const history = useHistory();
+=======
+    const navigation = useNavigation();
+>>>>>>> 89a484d4869a16c12a22ff9c635dc25275a5b10c
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [networkList, setNetworkList] = useState<Network[]>();
@@ -51,9 +61,10 @@ export const WifiList: FC = () => {
     }, []);
 
     const previousStep = () => {
-        history.push('/ScanQrCode');
+        navigation.toRoute('ScanQRCode');
     };
 
+<<<<<<< HEAD
     const connectToNetwork = (network: Network) => {
         ProvisioningService.provisionDevice({ssid: network.ssid, passphrase})
         history.push('/ProcessProvisioning');
@@ -61,6 +72,11 @@ export const WifiList: FC = () => {
 
     const handlePasswordChange = (value: string) => {
         setPassphrase(value);
+=======
+    const selectNetwork = (network: Network) => {
+        ProvisioningService.setNetwork(network);
+        navigation.toRoute('WifiCredentials');
+>>>>>>> 89a484d4869a16c12a22ff9c635dc25275a5b10c
     };
 
     return (

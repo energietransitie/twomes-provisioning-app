@@ -1,3 +1,5 @@
+import { IProvisioningService } from "../ProvisioningService";
+
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ESPDevice = any;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -15,7 +17,7 @@ interface EspDeviceQRJson {
     password: string;
 }
 
-export class ProvisioningServiceDev {
+export class ProvisioningServiceDev implements IProvisioningService {
 
     private static pendingAction: Promise<unknown>;
     private static espDevice: ESPDevice;
@@ -88,6 +90,7 @@ export class ProvisioningServiceDev {
         return this.network;
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public static async provisionDevice({ ssid, passphrase }: { ssid: string, passphrase: string}): Promise<void> {
         this.pendingAction = new Promise((resolve) => {
             setTimeout(() => {

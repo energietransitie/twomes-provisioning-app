@@ -17,7 +17,7 @@ module.exports = {
         'eslint-plugin-react'
     ],
     extends: [
-        'plugin:jest/all',
+        // 'plugin:jest/all',
         'plugin:react-hooks/recommended'
     ],
     env: {
@@ -69,7 +69,7 @@ module.exports = {
             ],
             extends: [
                 'plugin:@typescript-eslint/recommended',
-                'plugin:jest/all',
+                // 'plugin:jest/all',
                 'plugin:react-hooks/recommended'
             ],
             rules: {
@@ -79,18 +79,27 @@ module.exports = {
                 '@typescript-eslint/no-var-requires': 2,
                 '@typescript-eslint/explicit-module-boundary-types': 2,
                 '@typescript-eslint/no-explicit-any': 2,
-                '@typescript-eslint/ban-types': 2,
+                "@typescript-eslint/ban-types": [ "error", {
+                    "extendDefaults": true,
+                    "types": {
+                        "{}": false
+                    }
+                }],
                 '@typescript-eslint/no-non-null-assertion': 2,
+                '@typescript-eslint/no-extra-semi': 0,
 
                 'jest/prefer-expect-assertions': 0,
                 'jest/no-hooks': 0,
                 'jest/lowercase-name': 0,
 
-                'react-hooks/exhaustive-deps': 0
+                'react-hooks/exhaustive-deps': 0,
+                'no-extra-semi': 0
             }
         }
     ],
     rules: {
+        'no-extra-semi': 0,
+
         'jest/prefer-expect-assertions': 0,
         'jest/no-hooks': 0,
         'jest/lowercase-name': 0,
