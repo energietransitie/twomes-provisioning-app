@@ -32,11 +32,14 @@ const useStyles = makeStyles(theme => ({
 type LoaderProps = BaseProps;
 
 export const Loader: FC<LoaderProps> = (props) => {
-    const { className } = props;
+    const { className, ...restProps } = props;
     const classes = useStyles();
 
     return (
-        <div className={classNames(classes.container, className)} >
+        <div
+            className={classNames(classes.container, className)}
+            {...restProps} >
+
             <span className={classes.dot} ></span>
             <span className={classNames(classes.dot, classes.delay300)} ></span>
             <span className={classNames(classes.dot, classes.delay600)} ></span>
