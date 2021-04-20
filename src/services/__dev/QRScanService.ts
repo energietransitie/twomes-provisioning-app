@@ -1,6 +1,14 @@
-export class QRScanServiceDev {
+import { CameraPermisionStatus, IQRScanService } from "../QRScanService";
 
-    private static styleNode: HTMLStyleElement;
+export class QRScanServiceDev implements IQRScanService {
+
+    public static async getCameraPermissionStatus(): Promise<CameraPermisionStatus> {
+        return CameraPermisionStatus.Granted;
+    }
+
+    public static async requestCameraPermission(): Promise<void> {
+        return;
+    }
 
     public static prepareQRScan(): void {
         return;

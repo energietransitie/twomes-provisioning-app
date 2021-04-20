@@ -4,8 +4,8 @@ import { makeStyles } from '../../theme/makeStyles';
 import { Page, PageBody } from './Page';
 
 import { ProvisioningService } from '../../services/ProvisioningService';
-import { useHistory } from 'react-router';
 import { QRScanService } from '../../services/QRScanService';
+import { useNavigation } from '../useNavigation';
 
 const useStyles = makeStyles(theme => ({
     image: {
@@ -29,7 +29,7 @@ export const ScanQRCode: FC = () => {
     const classes = useStyles();
     const [isScanning, setIsScanning] = useState(false);
 
-    const history = useHistory();
+    const navigation = useNavigation();
 
     useEffect(() => {
         if (isScanning) {
@@ -40,6 +40,7 @@ export const ScanQRCode: FC = () => {
 
     const scanQR = async () => {
         setIsScanning(true);
+        await QRScanService.requestCameraPermission();
         const result = await QRScanService.scan();
         // TODO: Fix type
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
@@ -47,7 +48,7 @@ export const ScanQRCode: FC = () => {
         ProvisioningService.createEspDevice(result);
         setIsScanning(false);
 
-        history.push("/ConnectToDevice");
+        navigation.toRoute('ConnectToDevice');
     };
 
     const cancelScan = () => {
@@ -65,7 +66,7 @@ export const ScanQRCode: FC = () => {
     ) : (
         <Page>
             <PageBody>
-                <Header>Scan een QR code</Header>
+                <Header h1={true} >Scan een QR code</Header>
                 <img className={classes.image} alt="Scan" src="/resources/ScanQRCode.png" />
                 <Button label="Scannen" onClick={scanQR} />
             </PageBody>

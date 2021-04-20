@@ -14,6 +14,8 @@ type NetworkList = any;
 type ConnectionStatus = any;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Network = any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type ProvisionStatus = any;
 
 interface EspDeviceQRJson {
     name: string;
@@ -68,17 +70,17 @@ class ProvisioningServiceProd {
         return this.network;
     }
 
-    public static async provisionDevice({ ssid, passphrase }: { ssid: string, passphrase: string}): Promise<void> {
-        return EspProvisioning.provision({
+    public static async provisionDevice({ ssid, passphrase }: { ssid: string, passphrase: string}): Promise<ProvisionStatus> {
+        this.pendingAction = EspProvisioning.provision({
             device: this.espDevice.id,
             ssid,
             passphrase
         });
+        return this.pendingAction;
     }
 }
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-(window as any).ProvisioningService = ProvisioningServiceProd;
+export type IProvisioningService = InstanceType<typeof ProvisioningServiceProd>;
 
 export const ProvisioningService = process.env.NODE_ENV === 'development'
     ? ProvisioningServiceDev

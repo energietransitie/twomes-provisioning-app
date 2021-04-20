@@ -1,7 +1,7 @@
 import React, { FC, useEffect, useState } from 'react';
-import { useHistory } from 'react-router';
 import { Header, SlimButton, List, ListItem } from '../../base-components';
 import { ProvisioningService } from '../../services/ProvisioningService';
+import { useNavigation } from '../useNavigation';
 import { Page, PageBody, PageFooter, PageHeader } from './Page';
 
 // TODO: replace temp type with actual type from esp-provisioning-plugin
@@ -10,7 +10,7 @@ type Network = any;
 
 export const WifiList: FC = () => {
     const { device } = ProvisioningService.getEspDevice();
-    const history = useHistory();
+    const navigation = useNavigation();
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [networkList, setNetworkList] = useState<any>();
@@ -26,12 +26,12 @@ export const WifiList: FC = () => {
     }, []);
 
     const previousStep = () => {
-        history.push('/ScanQrCode');
+        navigation.toRoute('ScanQRCode');
     };
 
     const selectNetwork = (network: Network) => {
         ProvisioningService.setNetwork(network);
-        history.push('/WifiCredentials');
+        navigation.toRoute('WifiCredentials');
     };
 
     return (
