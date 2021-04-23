@@ -1,16 +1,11 @@
 import classNames from 'classnames';
 import React, { FC, useEffect, useState } from 'react';
-<<<<<<< HEAD
 import { useHistory } from 'react-router';
 import { Header, SlimButton, List, ListItem, Input, Button } from '../../base-components';
 import { ProvisioningService, Network } from '../../services/ProvisioningService';
 import { NetworkService } from '../../services/NetworkService';
 import { makeStyles } from '../../theme/makeStyles';
-=======
-import { Header, SlimButton, List, ListItem } from '../../base-components';
-import { ProvisioningService } from '../../services/ProvisioningService';
 import { useNavigation } from '../useNavigation';
->>>>>>> 89a484d4869a16c12a22ff9c635dc25275a5b10c
 import { Page, PageBody, PageFooter, PageHeader } from './Page';
 
 // TODO: replace temp type with actual type from esp-provisioning-plugin
@@ -33,51 +28,85 @@ const useStyles = makeStyles(theme => ({
 
 export const WifiList: FC = () => {
     const { device } = ProvisioningService.getEspDevice();
-<<<<<<< HEAD
     const knownNetworks = NetworkService.GetKnownNetworks();
     const classes = useStyles();
     const history = useHistory();
-=======
     const navigation = useNavigation();
->>>>>>> 89a484d4869a16c12a22ff9c635dc25275a5b10c
 
     // eslint-disable-next-line @typescript-eslint/no-explicit-any
-    const [networkList, setNetworkList] = useState<Network[]>();
+    const [networkList, setNetworkList] = useState<Network[]>([]);
     const [activeNetwork, setActiveNetwork] = useState<Network>();
-    const [passphrase, setPassphrase] = useState('');
+    const [intialPassphraseFocus, setInitialPassphraseFocus] = useState(true);
+    const [passphrase, setPassphrase] = useState<string>();
 
-    {
-        console.log(ProvisioningService.getNetworks())
-    }
-    
     useEffect(() => {
         const getNetworks = async () => {
             await ProvisioningService.getPendingAction();
             const { networks } = await ProvisioningService.getNetworks();
-            setNetworkList(networks);
+            setNetworkList(findKnownNetworks(networks.sort((a: Network, b: Network) => (a.rssi < b.rssi) ? 1 : -1)));  
         };
 
         getNetworks();
     }, []);
 
+    const findKnownNetworks = (networks: Network[]) => {
+        const sortedNetworks: Network[] = [];
+
+        // Add previously used networks to sortedNetworks in order based on rssi.
+        knownNetworks.forEach(network => {
+            if(networks.some(n => n.ssid === network.ssid))
+            {
+                const n = networks.find(n => n.ssid === network.ssid);
+                if(n === undefined)
+                    return;
+
+                // Add network to sortedlist.
+                sortedNetworks.push(n);
+            }
+        });
+
+        // Add networks not previously used for provisioning to sortedNetworks in order based on rssi. 
+        networks.forEach(network => {
+            if (!sortedNetworks.includes(network)) {
+                sortedNetworks.push(network);
+        }});
+
+        // Set first network active.
+        if(sortedNetworks.length > 0)
+            handleSelection(sortedNetworks[0]);
+
+        return sortedNetworks;
+    };
+
     const previousStep = () => {
         navigation.toRoute('ScanQRCode');
     };
 
-<<<<<<< HEAD
     const connectToNetwork = (network: Network) => {
-        ProvisioningService.provisionDevice({ssid: network.ssid, passphrase})
+        network.passphrase = passphrase;
+        ProvisioningService.provisionDevice(network)
         history.push('/ProcessProvisioning');
+    };
+
+    const handleSelection = (network: Network) => {
+        setActiveNetwork(network);
+        setPassphrase(network.passphrase || ''); // OR if known network set known passphrase
+        setInitialPassphraseFocus(true);
     }
 
     const handlePasswordChange = (value: string) => {
         setPassphrase(value);
-=======
-    const selectNetwork = (network: Network) => {
-        ProvisioningService.setNetwork(network);
-        navigation.toRoute('WifiCredentials');
->>>>>>> 89a484d4869a16c12a22ff9c635dc25275a5b10c
     };
+
+    const handlePasswordFocus = () => {
+        if (intialPassphraseFocus) {
+            setPassphrase('');
+            setInitialPassphraseFocus(false);
+        }
+    };
+
+
+    console.log(ProvisioningService.getNetworks());
 
     return (
         <Page>
@@ -85,30 +114,40 @@ export const WifiList: FC = () => {
             
             <PageBody>
                 <Header>Selecteer uw WiFi-netwerk</Header>
-                <List className={'my-custom-list'} >
-                    {networkList && networkList.map((network: Network) => network === activeNetwork
-                        ? <div className={classes.container} key={network.ssid} onClick={() => setActiveNetwork(network)}>
-                                <div>{network.ssid}</div>
+                
+                {
+                    networkList.length <= 0 ? <div>Geen netwerken gevonden</div> :
+                    
+                    <List className={'my-custom-list'} >
+                        {networkList && networkList.map((network: Network) => network === activeNetwork
+                            ? <div className={classes.container} key={network.ssid}>
 
-                                <Input password
-                                    className={classes.section}
-                                    label="Wachtwoord:"
-                                    placeholder="vul hier uw wachtwoord"
-                                    onChange={handlePasswordChange} 
-                                />
-                                
-                                
-                                <Button
-                                    className={classes.section}
-                                    label="Verbinden"
-                                    onClick={() => connectToNetwork(network)}
-                                />
+                                    <div>{network.ssid}</div>
 
-                            </div>
+                                    <Input password
+                                        className={classes.section}
+                                        value={passphrase}
+                                        label="Wachtwoord:"
+                                        disabled={!network.isSecured}
+                                        placeholder={network.isSecured ? "vul hier uw wachtwoord" : "onbeveiligd netwerk"}
+                                        onChange={handlePasswordChange}
+                                        onFocus={handlePasswordFocus}
+                                    />
 
-                        : <ListItem key={network.ssid} onClick={() => setActiveNetwork(network)}>{network.ssid}</ListItem>
-                    )}
-                </List>
+
+                                    <Button
+                                        className={classes.section}
+                                        label="Verbinden"
+                                        onClick={() => connectToNetwork(network)}
+                                    />
+
+                                </div>
+
+                            : <ListItem key={network.ssid} onClick={() => handleSelection(network)}>{network.ssid}</ListItem>
+                        )}
+                    </List>
+                }
+
             </PageBody>
 
             <PageFooter>

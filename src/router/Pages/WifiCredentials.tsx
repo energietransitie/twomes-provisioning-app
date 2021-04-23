@@ -24,7 +24,7 @@ export const WifiCredentials: FC = () => {
     const network = ProvisioningService.getNetwork();
 
     const connectToNetwork = () => {
-        ProvisioningService.provisionDevice({ssid: network.ssid, passphrase})
+        ProvisioningService.provisionDevice(network)
         navigation.toRoute('ProcessProvisioning');
     }
 

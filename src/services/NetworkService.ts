@@ -1,30 +1,32 @@
+import { Network } from '../services/ProvisioningService';
 
 
 
-type KnownNetwork = { ssid: string, passphrase: string }
-
-type KnownNetworkList = Array<KnownNetwork>;
+type KnownNetworkList = Array<Network>;
 
 export class NetworkService {
-    private static KnownNetworks: KnownNetworkList = [];
+    private static KnownNetworks: KnownNetworkList = [
+        { ssid: 'TMNL-3454D1', channel: 32, rssi: -31, passphrase: "Marco" },
+        { ssid: 'GZA7987DF834AVS', channel: 14, rssi: -46 }
+    ];
 
-    public static SaveNetwork(ssid: string, passphrase: string) : void {
+    public static SaveNetwork(network: Network) : void {
         let isNewNetwork = true;
 
         this.KnownNetworks.forEach(element => {
-            if(element.ssid === ssid)
+            if(element.ssid === network.ssid)
             {
-                element.passphrase = passphrase;
+                element.passphrase = network.passphrase;
                 isNewNetwork = false;
                 return;
             }
         });
 
         if(isNewNetwork)
-            this.KnownNetworks.push({ssid, passphrase});
+            this.KnownNetworks.push(network);
     }
 
-    public static GetKnownNetworks() : Array<KnownNetwork> {
+    public static GetKnownNetworks() : Array<Network> {
         return this.KnownNetworks;
     }
 }

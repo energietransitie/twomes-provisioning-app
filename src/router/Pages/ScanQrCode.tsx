@@ -2,7 +2,6 @@ import React, { FC, useState, useEffect } from 'react';
 import { Button, Header, PaddedContainer, Portal, SlimButton } from '../../base-components';
 import { makeStyles } from '../../theme/makeStyles';
 import { Page, PageBody } from './Page';
-
 import { ProvisioningService } from '../../services/ProvisioningService';
 import { QRScanService } from '../../services/QRScanService';
 import { useNavigation } from '../useNavigation';

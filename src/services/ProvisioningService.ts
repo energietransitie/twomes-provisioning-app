@@ -15,7 +15,13 @@ type NetworkList = any;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ConnectionStatus = any;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-export type Network = { ssid: string, passphrase: string };
+export interface Network {
+    ssid: string;
+    rssi: number; // Maybe a string?
+    channel: number;
+    passphrase?: string;
+    isSecured?: boolean;
+  }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ProvisionStatus = any;
 
@@ -73,14 +79,14 @@ class ProvisioningServiceProd {
     }
 
 
-    public static async provisionDevice({ ssid, passphrase }: { ssid: string, passphrase: string}): Promise<ProvisionStatus> {
+    public static async provisionDevice(network: Network): Promise<ProvisionStatus> {
         this.pendingAction = EspProvisioning.provision({
             device: this.espDevice.id,
-            ssid,
-            passphrase
+            ssid: network.ssid,
+            passphrase: network.passphrase
         });
 
-        NetworkService.SaveNetwork(ssid, passphrase);        
+        NetworkService.SaveNetwork(network);        
         
         return this.pendingAction;
     }
