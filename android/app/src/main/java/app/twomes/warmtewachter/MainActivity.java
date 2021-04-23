@@ -1,4 +1,4 @@
-package app.twomes.warmtewachter;
+package nl.windesheim.energietransitie.warmtewachter;
 
 import android.os.Bundle;
 

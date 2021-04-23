@@ -10,7 +10,7 @@
       "client_info": {
         "mobilesdk_app_id": "1:320547820715:android:a916684c2099beb1d393ee",
         "android_client_info": {
-          "package_name": "app.twomes.warmtewachter"
+          "package_name": "nl.windesheim.energietransitie.warmtewachter"
         }
       },
       "oauth_client": [
@@ -18,7 +18,7 @@
           "client_id": "320547820715-ah98953847ab9egfhe2jdbf3fd7b6666.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
-            "package_name": "app.twomes.warmtewachter",
+            "package_name": "nl.windesheim.energietransitie.warmtewachter",
             "certificate_hash": "1baab5bd28efe4ca111cb3efe63b01ba03150565"
           }
         },
