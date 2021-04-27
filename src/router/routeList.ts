@@ -1,12 +1,23 @@
-import { Invite, ScanQRCode, WifiList, ConnectToDevice, ProcessProvisioning, WifiCredentials } from './Pages';
+import {
+    Welcome,
+    Invite,
+    ScanQRCode,
+    Instructions,
+    ConnectToDevice,
+    WifiList,
+    WifiCredentials,
+    ProcessProvisioning
+} from './Pages';
 
 export type Route = keyof typeof routeList;
 
 export const routeList = {
-    WifiList,
-    ScanQRCode,
+    Welcome,
     Invite,
+    ScanQRCode,
+    Instructions,
     ConnectToDevice,
-    ProcessProvisioning,
-    WifiCredentials
+    WifiList,
+    WifiCredentials,
+    ProcessProvisioning
 }
