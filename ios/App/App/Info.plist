@@ -32,7 +32,7 @@
 		</dict>
 	</array>
 	<key>CFBundleVersion</key>
-	<string>1</string>
+	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>FIREBASE_ANALYTICS_COLLECTION_ENABLED</key>
 	<string>$ANALYTICS_COLLECTION_ENABLED</string>
 	<key>FirebaseAutomaticScreenReportingEnabled</key>
@@ -49,6 +49,8 @@
 		<key>NSAllowsArbitraryLoads</key>
 		<true/>
 	</dict>
+	<key>NSBluetoothPeripheralUsageDescription</key>
+	<string>Your bluetooth peripheral is required for xyz benefits for you</string>
 	<key>NSBluetoothAlwaysUsageDescription</key>
 	<string>Your bluetooth is required for xyz benefits for you</string>
 	<key>NSCameraUsageDescription</key>

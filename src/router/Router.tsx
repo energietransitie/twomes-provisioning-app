@@ -5,7 +5,7 @@ import { Redirect, Route as IonRoute} from 'react-router';
 import { routeList, Route } from './routeList';
 
 export const Router: FC = () => {
-    const startRoute: Route = 'ScanQRCode';
+    const startRoute: Route = 'Welcome';
 
     return (
         <div>

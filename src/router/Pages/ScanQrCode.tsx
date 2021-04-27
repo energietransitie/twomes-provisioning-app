@@ -3,7 +3,6 @@ import { Button, Header, PaddedContainer, Portal, SlimButton } from '../../base-
 import { makeStyles } from '../../theme/makeStyles';
 import { Page, PageBody } from './Page';
 
-import { ProvisioningService } from '../../services/ProvisioningService';
 import { QRScanService } from '../../services/QRScanService';
 import { useNavigation } from '../useNavigation';
 
@@ -41,14 +40,9 @@ export const ScanQRCode: FC = () => {
     const scanQR = async () => {
         setIsScanning(true);
         await QRScanService.requestCameraPermission();
-        const result = await QRScanService.scan();
-        // TODO: Fix type
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        ProvisioningService.createEspDevice(result);
+        await QRScanService.scan();
         setIsScanning(false);
-
-        navigation.toRoute('ConnectToDevice');
+        navigation.toRoute('Instructions');
     };
 
     const cancelScan = () => {
