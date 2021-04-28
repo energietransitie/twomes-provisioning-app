@@ -14,7 +14,7 @@ type ESPDevice = any;
 type NetworkList = any;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ConnectionStatus = any;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
+
 export interface Network {
     ssid: string;
     rssi: number; // Maybe a string?

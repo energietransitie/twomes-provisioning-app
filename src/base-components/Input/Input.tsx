@@ -1,5 +1,4 @@
 import classNames from 'classnames';
-import { relative } from 'path';
 import React, { ChangeEvent, FC, useState } from 'react';
 import { makeStyles } from '../../theme/makeStyles';
 import { Header } from '../Header';
@@ -45,7 +44,7 @@ interface InputProps extends BaseProps {
     placeholder?: string;
     password?: boolean;
     value?: string;
-    disabled?: boolean
+    disabled?: boolean;
 }
 
 export const Input: FC<InputProps> = (props) => {
@@ -81,7 +80,7 @@ export const Input: FC<InputProps> = (props) => {
                     onChange={handleChange}
                     onFocus={onFocus} />
                 
-                <span className={classNames("far fa-fw fa-eye", classes.fieldIcon)} onClick={toggleVisible}>{isPassword ? '★' : '©'}</span>
+                <span className={classNames(classes.fieldIcon)} onClick={toggleVisible}>{isPassword ? '★' : '©'}</span>
             </div>
         </div>
     );

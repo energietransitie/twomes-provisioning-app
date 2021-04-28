@@ -1,4 +1,3 @@
-import classNames from 'classnames';
 import React, { FC, useEffect, useState } from 'react';
 import { useHistory } from 'react-router';
 import { Header, SlimButton, List, ListItem, Input, Button } from '../../base-components';
@@ -7,9 +6,6 @@ import { NetworkService } from '../../services/NetworkService';
 import { makeStyles } from '../../theme/makeStyles';
 import { useNavigation } from '../useNavigation';
 import { Page, PageBody, PageFooter, PageHeader } from './Page';
-
-// TODO: replace temp type with actual type from esp-provisioning-plugin
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 
 const useStyles = makeStyles(theme => ({
     section: {
@@ -43,40 +39,16 @@ export const WifiList: FC = () => {
         const getNetworks = async () => {
             await ProvisioningService.getPendingAction();
             const { networks } = await ProvisioningService.getNetworks();
-            setNetworkList(findKnownNetworks(networks.sort((a: Network, b: Network) => (a.rssi < b.rssi) ? 1 : -1)));  
+            const sortedNetworks = NetworkService.findKnownNetworks(networks.sort((a: Network, b: Network) => (a.rssi < b.rssi) ? 1 : -1));
+            if (sortedNetworks.length > 0){
+                handleSelection(sortedNetworks[0]);
+            }
+            console.log(sortedNetworks);
+            setNetworkList(sortedNetworks);  
         };
 
-        getNetworks();
+        getNetworks();   
     }, []);
-
-    const findKnownNetworks = (networks: Network[]) => {
-        const sortedNetworks: Network[] = [];
-
-        // Add previously used networks to sortedNetworks in order based on rssi.
-        knownNetworks.forEach(network => {
-            if(networks.some(n => n.ssid === network.ssid))
-            {
-                const n = networks.find(n => n.ssid === network.ssid);
-                if(n === undefined)
-                    return;
-
-                // Add network to sortedlist.
-                sortedNetworks.push(n);
-            }
-        });
-
-        // Add networks not previously used for provisioning to sortedNetworks in order based on rssi. 
-        networks.forEach(network => {
-            if (!sortedNetworks.includes(network)) {
-                sortedNetworks.push(network);
-        }});
-
-        // Set first network active.
-        if(sortedNetworks.length > 0)
-            handleSelection(sortedNetworks[0]);
-
-        return sortedNetworks;
-    };
 
     const previousStep = () => {
         navigation.toRoute('ScanQRCode');
@@ -105,9 +77,6 @@ export const WifiList: FC = () => {
         }
     };
 
-
-    console.log(ProvisioningService.getNetworks());
-
     return (
         <Page>
             <PageHeader>{device.name}</PageHeader>
@@ -117,7 +86,7 @@ export const WifiList: FC = () => {
                 
                 {
                     networkList.length <= 0 ? <div>Geen netwerken gevonden</div> :
-                    
+                                        
                     <List className={'my-custom-list'} >
                         {networkList && networkList.map((network: Network) => network === activeNetwork
                             ? <div className={classes.container} key={network.ssid}>

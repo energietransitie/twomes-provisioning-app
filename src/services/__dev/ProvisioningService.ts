@@ -24,7 +24,7 @@ export class ProvisioningServiceDev implements IProvisioningService {
     private static networkList: NetworkList = {
         count: 6,
         networks: [
-            { ssid: 'VRV343AV786B', channel: 12, rssi: -51, isSecured: true },
+            { ssid: 'VRV343AV786B', channel: 12, rssi: -51, isSecured: true, password: "MySecretPassowrd" },
             { ssid: 'VRVASC897BDS', channel: 69, rssi: -41, isSecured: true },
             { ssid: 'VRVAS68GASG8', channel: 54, rssi: -21, isSecured: true },
             { ssid: 'TMNL-3454D1', channel: 32, rssi: -31, isSecured: true },
