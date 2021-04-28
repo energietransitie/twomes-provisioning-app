@@ -1,5 +1,5 @@
 {
-  "appId": "app.twomes.warmtewachter",
+  "appId": "nl.windesheim.energietransitie.warmtewachter",
   "appName": "WarmteWachter",
   "bundledWebRuntime": false,
   "npmClient": "yarn",

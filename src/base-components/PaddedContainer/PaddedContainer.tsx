@@ -15,11 +15,14 @@ interface PaddedContainerProps extends BaseProps {
 }
 
 export const PaddedContainer: FC<PaddedContainerProps> = (props) => {
-    const { children, className } = props;
+    const { children, className, ...restProps } = props;
     const classes = useStyles();
 
     return (
-        <div className={classNames(classes.container, className)} >
+        <div
+            className={classNames(classes.container, className)}
+            {...restProps} >
+
             {children}
         </div>
     );

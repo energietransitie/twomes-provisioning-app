@@ -40,14 +40,9 @@ export const ScanQRCode: FC = () => {
     const scanQR = async () => {
         setIsScanning(true);
         await QRScanService.requestCameraPermission();
-        const result = await QRScanService.scan();
-        // TODO: Fix type
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
-        ProvisioningService.createEspDevice(result);
+        await QRScanService.scan();
         setIsScanning(false);
-
-        navigation.toRoute('ConnectToDevice');
+        navigation.toRoute('Instructions');
     };
 
     const cancelScan = () => {

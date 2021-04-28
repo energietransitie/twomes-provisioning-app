@@ -15,7 +15,9 @@ export const ConnectToDevice: FC = () => {
                 await ProvisioningService.scanForNetworks();
                 navigation.toRoute('WifiList');
             } catch (e) {
-                throw e;
+                console.log(e);
+                alert(e);
+                navigation.toRoute('ScanQRCode');
             }
         }
 
@@ -26,8 +28,12 @@ export const ConnectToDevice: FC = () => {
         <Page>
             <PageBody>
                 <Header>We maken verbinding met het apparaat.</Header>
-                <Loader/>
-                <p>Dit kan enkele seconden duren</p>
+                
+                <Loader style={{ padding: 60 }} />
+
+                <div>
+                    Dit kan enkele seconden duren
+                </div>
             </PageBody>
         </Page>
     )

@@ -41,9 +41,7 @@ export class ProvisioningServiceDev implements IProvisioningService {
     public static async createEspDevice(espDeviceQRJson: EspDeviceQRJson): Promise<ESPDevice> {
         this.pendingAction = new Promise((resolve) => {
             setTimeout(() => {
-                console.log('MARCO', espDeviceQRJson);
                 this.espDevice = { id: 0, device: espDeviceQRJson };
-                console.log('MARCO', this.espDevice);
                 resolve(this.espDevice);
             }, 1000);
         });

@@ -18,8 +18,8 @@ export const ProcessProvisioning: FC = () => {
                 navigation.toRoute('ScanQRCode', 3000);
             } catch (e) {
                 setProvisioningStatus('failure');
-                navigation.toRoute('WifiCredentials', 3000);
-                throw e;
+                alert(e);
+                navigation.toRoute('WifiCredentials', 2000);
             }
         }
         handleProvisioning();
@@ -30,7 +30,7 @@ export const ProcessProvisioning: FC = () => {
             <PageBody>
                 { provisioningStatus === 'pending' && <>
                     <Header>Het apparaat wordt verbonden met uw WiFi netwerk</Header>
-                    <Loader/>
+                    <Loader style={{ margin: 60 }}/>
                     <p>Dit kan enkele seconden duren</p>
                 </> }
 
