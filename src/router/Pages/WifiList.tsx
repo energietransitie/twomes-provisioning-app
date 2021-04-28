@@ -1,5 +1,4 @@
 import React, { FC, useEffect, useState } from 'react';
-import { useHistory } from 'react-router';
 import { Header, SlimButton, List, ListItem, Input, Button } from '../../base-components';
 import { ProvisioningService, Network } from '../../services/ProvisioningService';
 import { NetworkService } from '../../services/NetworkService';
@@ -24,12 +23,9 @@ const useStyles = makeStyles(theme => ({
 
 export const WifiList: FC = () => {
     const { device } = ProvisioningService.getEspDevice();
-    const knownNetworks = NetworkService.GetKnownNetworks();
     const classes = useStyles();
-    const history = useHistory();
     const navigation = useNavigation();
 
-    // eslint-disable-next-line @typescript-eslint/no-explicit-any
     const [networkList, setNetworkList] = useState<Network[]>([]);
     const [activeNetwork, setActiveNetwork] = useState<Network>();
     const [intialPassphraseFocus, setInitialPassphraseFocus] = useState(true);
@@ -43,7 +39,6 @@ export const WifiList: FC = () => {
             if (sortedNetworks.length > 0){
                 handleSelection(sortedNetworks[0]);
             }
-            console.log(sortedNetworks);
             setNetworkList(sortedNetworks);  
         };
 
@@ -57,7 +52,7 @@ export const WifiList: FC = () => {
     const connectToNetwork = (network: Network) => {
         network.passphrase = passphrase;
         ProvisioningService.provisionDevice(network)
-        history.push('/ProcessProvisioning');
+        navigation.toRoute("ProcessProvisioning");
     };
 
     const handleSelection = (network: Network) => {
