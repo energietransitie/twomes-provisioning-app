@@ -42,6 +42,7 @@ export const ScanQRCode: FC = () => {
         setIsScanning(true);
         await QRScanService.requestCameraPermission();
         const result = await QRScanService.scan();
+        await ProvisioningService.requestLocationPermissions();
         // TODO: Fix type
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore

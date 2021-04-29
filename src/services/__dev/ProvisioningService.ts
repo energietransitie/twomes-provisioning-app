@@ -1,3 +1,4 @@
+import { exception } from "console";
 import { IProvisioningService } from "../ProvisioningService";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -8,6 +9,8 @@ type NetworkList = any;
 type ConnectionStatus = any;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Network = any;
+
+type PermissionStatus = any;
 
 interface EspDeviceQRJson {
     name: string;
@@ -38,6 +41,10 @@ export class ProvisioningServiceDev implements IProvisioningService {
         return this.pendingAction;
     }
     
+    public static requestLocationPermissions(): PermissionStatus {
+        return true;
+    }
+
     public static async createEspDevice(espDeviceQRJson: EspDeviceQRJson): Promise<ESPDevice> {
         this.pendingAction = new Promise((resolve) => {
             setTimeout(() => {

@@ -17,6 +17,8 @@ type Network = any;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ProvisionStatus = any;
 
+type PermissionStatus = any;
+
 interface EspDeviceQRJson {
     name: string;
     pop: string; // Proof-of-Possesion
@@ -35,7 +37,12 @@ class ProvisioningServiceProd {
     public static getPendingAction(): Promise<unknown> {
         return this.pendingAction;
     }
-    
+
+    public static requestLocationPermissions(): PermissionStatus {
+        this.pendingAction = EspProvisioning.requestLocationPermissions();
+        return this.pendingAction;
+    }
+
     public static async createEspDevice(espDeviceQRJson: EspDeviceQRJson): Promise<ESPDevice> {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         this.pendingAction = EspProvisioning.createESPDevice(espDeviceQRJson as any);
