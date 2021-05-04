@@ -26,18 +26,18 @@ For getting started with the development of the WarmteWachter app see [Developin
 ## Features
 List of features ready and TODOs for future development. Ready:
 
-* Activate your account using a Firebase Dynamic Link
-* Scan the QR Code of any of the Twomes Planets.
-* Connect to a Twomes Planet using BLE.
-* Select your Home Network from a list of available wifi networks for the device. Provide the correct password and the device will be provisioned.
+- [x] Activate your account using a Firebase Dynamic Link
+- [x] Scan the QR Code of any of the Twomes Planets.
+- [x] Connect to a Twomes Planet using BLE.
+- [x] Select your Home Network from a list of available wifi networks for the device. Provide the correct password and the device will be provisioned.
 
 To-do:
 
-* Present device specific 'Installation Instructions' that have been fetched from the Twomes Backoffice
-* Connect to a Twomes device using SoftAP.
-* Verify Succesful device provisioning with the Twomes Backoffice.
-* All-around non-happy flow coverage
-* All-around usability improvements.
+- [ ] Present device specific 'Installation Instructions' that have been fetched from the Twomes Backoffice
+- [ ] Connect to a Twomes device using SoftAP.
+- [ ] Verify Succesful device provisioning with the Twomes Backoffice.
+- [ ] All-around non-happy flow coverage
+- [ ] All-around usability improvements.
 
 ## Status
 Project is: _in progress_
