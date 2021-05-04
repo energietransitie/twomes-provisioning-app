@@ -11,9 +11,27 @@ export enum CameraPermisionStatus {
     Unknown = 'unknown'
 }
 
+export interface BleDeviceQRJson {
+    name: string;
+    pop: string;
+    transport: "ble";
+    security?: 0 | 1; // 0 = unsecure, 1 = secure
+}
+
+export interface SoftAPDeviceQRJson {
+    name: string;
+    pop: string;
+    transport: "softap";
+    security?: 0 | 1; // 0 = unsecure, 1 = secure
+    password?: string;
+}
+
+export type QRCodeJson = BleDeviceQRJson | SoftAPDeviceQRJson;
+
 class QRScanServiceProd {
 
     private static styleNode: HTMLStyleElement;
+    private static QRCodeJson: QRCodeJson;
 
     public static async getCameraPermissionStatus(): Promise<CameraPermisionStatus> {
         const status = await BarcodeScanner.checkPermission({ force: false });
@@ -48,11 +66,16 @@ class QRScanServiceProd {
         QRScanServiceProd.styleNode && document.head.removeChild(QRScanServiceProd.styleNode);
     }
 
-    public static async scan(): Promise<unknown> {
+    public static async scan(): Promise<QRCodeJson> {
         BarcodeScanner.hideBackground();
         const result = await BarcodeScanner.startScan({ targetedFormats: ['QR_CODE'] })
         BarcodeScanner.showBackground();
-        return JSON.parse(result.content);
+        QRScanServiceProd.QRCodeJson = JSON.parse(result.content);
+        return QRScanServiceProd.QRCodeJson;
+    }
+
+    public static getQRCodeJson(): QRCodeJson {
+        return QRScanServiceProd.QRCodeJson;
     }
 
     public static stopScan(): void {

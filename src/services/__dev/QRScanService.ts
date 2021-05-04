@@ -1,6 +1,13 @@
-import { CameraPermisionStatus, IQRScanService } from "../QRScanService";
+import { CameraPermisionStatus, IQRScanService, QRCodeJson } from "../QRScanService";
 
 export class QRScanServiceDev implements IQRScanService {
+
+    private static QRCodeJson: QRCodeJson = {
+        name: 'PROV_XXX',
+        pop: 'abcd1234',
+        transport: 'ble',
+        security: 1
+    };
 
     public static async getCameraPermissionStatus(): Promise<CameraPermisionStatus> {
         return CameraPermisionStatus.Granted;
@@ -18,13 +25,18 @@ export class QRScanServiceDev implements IQRScanService {
         return;
     }
 
-    public static async scan(): Promise<unknown> {
-        return {
+    public static async scan(): Promise<QRCodeJson> {
+        QRScanServiceDev.QRCodeJson = {
             name: 'PROV_XXX',
             pop: 'abcd1234',
             transport: 'ble',
             security: 1
-        }
+        };
+        return QRScanServiceDev.QRCodeJson;
+    }
+
+    public static getQRCodeJson(): QRCodeJson {
+        return QRScanServiceDev.QRCodeJson;
     }
 
     public static stopScan(): void {
