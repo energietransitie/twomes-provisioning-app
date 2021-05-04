@@ -20,7 +20,7 @@ export interface Network {
     rssi: number; // Maybe a string?
     channel: number;
     passphrase?: string;
-    isSecured?: boolean;
+    security?: boolean;
   }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ProvisionStatus = any;
