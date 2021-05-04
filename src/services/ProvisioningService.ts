@@ -24,7 +24,7 @@ export interface Network {
   }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ProvisionStatus = any;
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type PermissionStatus = any;
 
 interface EspDeviceQRJson {

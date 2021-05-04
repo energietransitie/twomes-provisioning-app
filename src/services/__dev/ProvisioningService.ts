@@ -1,4 +1,3 @@
-import { exception } from "console";
 import { IProvisioningService } from "../ProvisioningService";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -9,7 +8,7 @@ type NetworkList = any;
 type ConnectionStatus = any;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Network = any;
-
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type PermissionStatus = any;
 
 interface EspDeviceQRJson {
