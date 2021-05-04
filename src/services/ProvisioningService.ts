@@ -20,10 +20,12 @@ export interface Network {
     rssi: number; // Maybe a string?
     channel: number;
     passphrase?: string;
-    isSecured?: boolean;
+    security?: boolean;
   }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ProvisionStatus = any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type PermissionStatus = any;
 
 interface EspDeviceQRJson {
     name: string;
@@ -43,7 +45,12 @@ class ProvisioningServiceProd {
     public static getPendingAction(): Promise<unknown> {
         return this.pendingAction;
     }
-    
+
+    public static requestLocationPermissions(): PermissionStatus {
+        this.pendingAction = EspProvisioning.requestLocationPermissions();
+        return this.pendingAction;
+    }
+
     public static async createEspDevice(espDeviceQRJson: EspDeviceQRJson): Promise<ESPDevice> {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         this.pendingAction = EspProvisioning.createESPDevice(espDeviceQRJson as any);
