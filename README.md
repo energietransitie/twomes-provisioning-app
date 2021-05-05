@@ -49,7 +49,7 @@ This software is available under the [Apache 2.0 license](./LICENSE.md), Copyrig
 This software is a collaborative effort of the following students and researchers:
 * Henri ter Hofte  ·  [@henriterhofte](https://github.com/henriterhofte)
 * Wietske Veneberg  ·  [@WVeneberg](https://github.com/WVeneberg)
-* Amicia Smit  ·  [@Ricksmit14](https://github.com/Ricksmit14)
+* Amicia Smit  ·  [@AmiciaSmit](https://github.com/AmiciaSmit)
 * Marco Prins  ·  [@mk-prins](https://github.com/mk-prins)
 
 
