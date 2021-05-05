@@ -55,7 +55,12 @@ This software is a collaborative effort of the following students and researcher
 
 We use and gratefully aknowlegde the efforts of the makers of the following source code and libraries:
 
-* [library name 1 and version](library 1 URL), by <copyright holder name 1>, licensed under [license 1 name](license1 URL)
-* [library name 2 and version](library 2 URL), by <copyright holder name 2>, licensed under [license 2 name](license2 URL)
-* [library name 3 and version](library 3 URL), by <copyright holder name 3>, licensed under [license 3 name](license3 URL)
-* etc.
+* [Typescript](https://github.com/microsoft/TypeScript), by Microsoft, licensed under [Apache 2.0](https://github.com/microsoft/TypeScript/blob/master/LICENSE.txt)
+* [React](https://github.com/facebook/react/), by Facebook, Inc. and its affiliates., licensed under [MIT](https://github.com/facebook/react/blob/master/LICENSE)
+* [Capacitor](https://github.com/ionic-team/capacitor), by Drifty Co., licensed under [MIT](https://github.com/ionic-team/capacitor/blob/main/LICENSE)
+* [@capacitor-community/barcode-scanner](https://github.com/capacitor-community/barcode-scanner), by capacitor-community, licensed under [MIT](https://github.com/capacitor-community/barcode-scanner/blob/main/LICENSE)
+* [ionic-framework](https://github.com/ionic-team/ionic-framework), by Drifty Co., licensed under [MIT](https://github.com/ionic-team/ionic-framework/blob/master/LICENSE)
+* [@material-ui/styles](https://github.com/mui-org/material-ui), by Call-Em-All, licensed under [MIT](https://github.com/mui-org/material-ui/blob/latest/LICENSE)
+* [classnames](https://github.com/JedWatson/classnames), by Jed Watson, licensed under [MIT](https://github.com/JedWatson/classnames/blob/master/LICENSE)
+* [esp-idf-provisioning-ios](https://github.com/espressif/esp-idf-provisioning-ios), by Esspressif, licensed under [Apache 2.0](https://github.com/espressif/esp-idf-provisioning-ios/blob/master/LICENSE)
+* [esp-idf-provisioning-android](https://github.com/espressif/esp-idf-provisioning-android), by Esspressif, licensed under [Apache 2.0](https://github.com/espressif/esp-idf-provisioning-android/blob/master/LICENSE)
