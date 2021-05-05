@@ -33,15 +33,6 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
-	<key>FIREBASE_ANALYTICS_COLLECTION_ENABLED</key>
-	<string>$ANALYTICS_COLLECTION_ENABLED</string>
-	<key>FirebaseAutomaticScreenReportingEnabled</key>
-	<string>$AUTOMATIC_SCREEN_REPORTING_ENABLED</string>
-	<key>FirebaseDynamicLinksCustomDomains</key>
-	<array>
-		<string>http://$APP_DOMAIN_NAME$APP_DOMAIN_PATH</string>
-		<string>https://$APP_DOMAIN_NAME$APP_DOMAIN_PATH</string>
-	</array>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
