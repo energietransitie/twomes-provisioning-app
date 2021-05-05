@@ -1,22 +1,31 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { App } from './App';
-// import * as serviceWorker from './serviceWorker';
 import {Plugins} from "@capacitor/core";
-// const {LocalNotifications} = Plugins;
-const {SplashScreen} = Plugins;
+import { ApiService } from './services/ApiService';
+import { StorageService } from './services/StorageService';
 
-// LocalNotifications.addListener("localNotificationReceived", (data: any) => {
-//     console.log('localNotification Received');
-//     console.log('data: ' + JSON.stringify(data));
-// })
+const { SplashScreen } = Plugins;
 
-setTimeout(() => {
-    SplashScreen.hide();
-}, 300);
-ReactDOM.render(<App />, document.getElementById('root'));
+( async () => {
+    try {
+        const urlParams = new URLSearchParams(window.location.search);
+        const token = urlParams.get('token');
 
-// If you want your app to work offline and load faster, you can change
-// unregister() to register() below. Note this comes with some pitfalls.
-// Learn more about service workers: https://bit.ly/CRA-PWA
-// serviceWorker.unregister();
+        let authenticated = false; // Passed as a prop to <App /> which is then used to set the appropriate starting route.
+
+        if (token) {
+            const { session_token } = await ApiService.activateAccount(token);
+            await StorageService.set('token', session_token);
+            authenticated = true;
+        }
+
+        ReactDOM.render(<App authenticated={authenticated} />, document.getElementById('root'), () => {
+            SplashScreen.hide();
+        });
+
+    } catch (e) {
+        // TODO: Implement critical error and show some sort of error page or popup 
+        console.log(e);
+    }
+})();

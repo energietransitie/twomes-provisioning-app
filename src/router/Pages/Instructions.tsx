@@ -11,7 +11,13 @@ export const Instructions: FC = () => {
 
     const QRCodeJson = QRScanService.getQRCodeJson();
 
-    const handleSubmit = () => {
+    const handleSubmit = async () => {
+        // TODO: Fix type
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        // @ts-ignore
+        if(QRCodeJson.transport === "ble"){
+            await ProvisioningService.requestLocationPermissions();
+        }
         // TODO: Fix type
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore

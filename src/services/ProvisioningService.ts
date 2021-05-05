@@ -1,6 +1,8 @@
 // import { EspProvisioning } from 'esp-provisioning-plugin';
 import { Plugins } from '@capacitor/core';
+import { NetworkService } from './NetworkService';
 import { ProvisioningServiceDev } from './__dev/ProvisioningService';
+
 const { EspProvisioning } = Plugins;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -12,10 +14,18 @@ type ESPDevice = any;
 type NetworkList = any;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ConnectionStatus = any;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type Network = any;
+
+export interface Network {
+    ssid: string;
+    rssi: number; // Maybe a string?
+    channel: number;
+    passphrase?: string;
+    security?: boolean;
+  }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ProvisionStatus = any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type PermissionStatus = any;
 
 interface EspDeviceQRJson {
     name: string;
@@ -35,7 +45,12 @@ class ProvisioningServiceProd {
     public static getPendingAction(): Promise<unknown> {
         return this.pendingAction;
     }
-    
+
+    public static requestLocationPermissions(): PermissionStatus {
+        this.pendingAction = EspProvisioning.requestLocationPermissions();
+        return this.pendingAction;
+    }
+
     public static async createEspDevice(espDeviceQRJson: EspDeviceQRJson): Promise<ESPDevice> {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         this.pendingAction = EspProvisioning.createESPDevice(espDeviceQRJson as any);
@@ -70,12 +85,16 @@ class ProvisioningServiceProd {
         return this.network;
     }
 
-    public static async provisionDevice({ ssid, passphrase }: { ssid: string, passphrase: string}): Promise<ProvisionStatus> {
+
+    public static async provisionDevice(network: Network): Promise<ProvisionStatus> {
         this.pendingAction = EspProvisioning.provision({
             device: this.espDevice.id,
-            ssid,
-            passphrase
+            ssid: network.ssid,
+            passphrase: network.passphrase
         });
+
+        NetworkService.SaveNetwork(network);        
+        
         return this.pendingAction;
     }
 }

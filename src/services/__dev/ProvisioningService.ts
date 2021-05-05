@@ -8,6 +8,8 @@ type NetworkList = any;
 type ConnectionStatus = any;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Network = any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type PermissionStatus = any;
 
 interface EspDeviceQRJson {
     name: string;
@@ -24,12 +26,12 @@ export class ProvisioningServiceDev implements IProvisioningService {
     private static networkList: NetworkList = {
         count: 6,
         networks: [
-            { ssid: 'VRV343AV786B', channel: '12' },
-            { ssid: 'VRVASC897BDS', channel: '69' },
-            { ssid: 'VRVAS68GASG8', channel: '54' },
-            { ssid: 'TMNL-3454D1', channel: '32' },
-            { ssid: 'GZA7987DF834AVS', channel: '14' },
-            { ssid: 'Ziggo384598352', channel: '16' }
+            { ssid: 'VRV343AV786B', channel: 12, rssi: -51, security: true, password: "MySecretPassowrd" },
+            { ssid: 'VRVASC897BDS', channel: 69, rssi: -41, security: true },
+            { ssid: 'VRVAS68GASG8', channel: 54, rssi: -21, security: true },
+            { ssid: 'TMNL-3454D1', channel: 32, rssi: -31, security: true },
+            { ssid: 'GZA7987DF834AVS', channel: 14, rssi: -46, security: false },
+            { ssid: 'Ziggo384598352', channel: 16, rssi: -25, security: true }
         ]
     };
     private static network: Network;
@@ -38,6 +40,10 @@ export class ProvisioningServiceDev implements IProvisioningService {
         return this.pendingAction;
     }
     
+    public static requestLocationPermissions(): PermissionStatus {
+        return true;
+    }
+
     public static async createEspDevice(espDeviceQRJson: EspDeviceQRJson): Promise<ESPDevice> {
         this.pendingAction = new Promise((resolve) => {
             setTimeout(() => {
@@ -89,7 +95,7 @@ export class ProvisioningServiceDev implements IProvisioningService {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public static async provisionDevice({ ssid, passphrase }: { ssid: string, passphrase: string}): Promise<void> {
+    public static async provisionDevice(network: Network): Promise<void> {
         this.pendingAction = new Promise((resolve) => {
             setTimeout(() => {
                 resolve(true);
