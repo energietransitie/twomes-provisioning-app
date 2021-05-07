@@ -14,6 +14,8 @@ type ESPDevice = any;
 type NetworkList = any;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ConnectionStatus = any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type LocationPermissionStatus = any;
 
 export interface Network {
     ssid: string;
@@ -24,9 +26,6 @@ export interface Network {
   }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ProvisionStatus = any;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type PermissionStatus = any;
-
 interface EspDeviceQRJson {
     name: string;
     pop: string; // Proof-of-Possesion
@@ -46,8 +45,13 @@ class ProvisioningServiceProd {
         return this.pendingAction;
     }
 
-    public static requestLocationPermissions(): PermissionStatus {
+    public static requestLocationPermissions(): Promise<unknown> {
         this.pendingAction = EspProvisioning.requestLocationPermissions();
+        return this.pendingAction;
+    }
+
+    public static async checkLocationPermissions(): Promise<LocationPermissionStatus> {
+        this.pendingAction = EspProvisioning.checkLocationPermissions();
         return this.pendingAction;
     }
 

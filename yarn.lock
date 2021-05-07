@@ -1895,6 +1895,13 @@
   dependencies:
     "@types/cordova" latest
 
+"@ionic-native/open-native-settings@^5.32.1":
+  version "5.32.1"
+  resolved "https://registry.yarnpkg.com/@ionic-native/open-native-settings/-/open-native-settings-5.32.1.tgz#4ae67da87f6436f6b6805324f4bfac8d79b4b816"
+  integrity sha512-YP/hIMKRLf6X7Nse17px6QNq73FJ3E8yl5FOLgeqZ5isGb0wuGsiJGD83z0pMeys4GGpdxLPlpWZOWSZfNHsPQ==
+  dependencies:
+    "@types/cordova" latest
+
 "@ionic-native/wifi-wizard-2@^5.29.0":
   version "5.30.0"
   resolved "https://registry.yarnpkg.com/@ionic-native/wifi-wizard-2/-/wifi-wizard-2-5.30.0.tgz#c06aa1476349f0ebe5113be2e1cdef074a5a8358"
@@ -4729,6 +4736,11 @@ copy-descriptor@^0.1.0:
   resolved "https://registry.yarnpkg.com/copy-descriptor/-/copy-descriptor-0.1.1.tgz#676f6eb3c39997c2ee1ac3a924fd6124748f578d"
   integrity sha1-Z29us8OZl8LuGsOpJP1hJHSPV40=
 
+cordova-open-native-settings@^1.5.5:
+  version "1.5.5"
+  resolved "https://registry.yarnpkg.com/cordova-open-native-settings/-/cordova-open-native-settings-1.5.5.tgz#963b50d65cf20c2f6c7603dc1d4f42c7389697bd"
+  integrity sha512-t3we7dUTUamuxVMl/nE6RBNqEyTtUuxvtjXI/BrevuoBIl2nI9GJpTvD9witJkpzf0isCv3zMuiLd9tP+2+LVw==
+
 cordova-plugin-ble-central@^1.3.1:
   version "1.3.1"
   resolved "https://registry.yarnpkg.com/cordova-plugin-ble-central/-/cordova-plugin-ble-central-1.3.1.tgz#70575c7bd8ab2ffd898de85734789ec3513bf58e"
@@ -6087,9 +6099,9 @@ eslint@^7.11.0:
     text-table "^0.2.0"
     v8-compile-cache "^2.0.3"
 
-"esp-provisioning-plugin@github:energietransitie/esp-provisioning-capacitor-plugin#v0.0.6":
-  version "0.0.6"
-  resolved "git+ssh://git@github.com/energietransitie/esp-provisioning-capacitor-plugin.git#78a4b819c9e2aefdd764fd6aea6d06638ddab7cf"
+"esp-provisioning-plugin@github:energietransitie/esp-provisioning-capacitor-plugin#v0.0.9":
+  version "0.0.9"
+  resolved "git+ssh://git@github.com/energietransitie/esp-provisioning-capacitor-plugin.git#b9f9602c3631843e88e007c702cfff1193bcb44b"
 
 espree@^7.3.0, espree@^7.3.1:
   version "7.3.1"

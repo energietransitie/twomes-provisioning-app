@@ -5,6 +5,7 @@ import { Page, PageBody } from './Page';
 import { ProvisioningService } from '../../services/ProvisioningService';
 import { QRScanService } from '../../services/QRScanService';
 import { useNavigation } from '../useNavigation';
+import { isPlatform } from '@ionic/react';
 
 const useStyles = makeStyles(theme => ({
     image: {
@@ -42,7 +43,19 @@ export const ScanQRCode: FC = () => {
         await QRScanService.requestCameraPermission();
         await QRScanService.scan();
         setIsScanning(false);
-        navigation.toRoute('Instructions');
+        const QRCodeJson = QRScanService.getQRCodeJson();
+        if(QRCodeJson.transport === "ble"){
+            if(isPlatform('android')){
+                const { permissionStatus } = await ProvisioningService.checkLocationPermissions();
+                if(permissionStatus === "granted"){
+                    navigation.toRoute('Instructions');
+                } else {
+                    navigation.toRoute('RequestPermissions');
+                }
+            }
+        } else {
+            navigation.toRoute('Instructions');
+        }
     };
 
     const cancelScan = () => {
