@@ -7,9 +7,6 @@
   "plugins": {
     "SplashScreen": {
       "launchAutoHide": true
-    },
-    "LocalNotifications": {
-      "smallIcon": "main_icon"
     }
   },
   "cordova": {}
