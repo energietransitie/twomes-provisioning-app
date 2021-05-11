@@ -6,6 +6,7 @@ import { OpenNativeSettings } from '@ionic-native/open-native-settings';
 
 import { ProvisioningService } from '../../services/ProvisioningService';
 import { useNavigation } from '../useNavigation';
+import { isClassExpression } from 'typescript';
 
 const useStyles = makeStyles(theme => ({
     padded: {
@@ -22,28 +23,22 @@ const useStyles = makeStyles(theme => ({
 export const RequestPermissions: FC = () => {
     const classes = useStyles();
     const navigation = useNavigation();
-    const [isPermissionRejected, setIsPermissionRejected] = useState(false);
-    const [isReprompt, setIsReprompt] = useState(false);
-    // Step 1. Add new state property
-    // const [appRefocus, setAppRefocus] = useState(0);
+    const [appRefocus, setAppRefocus] = useState(0);
 
     useEffect(() => {
         const getPermissionStatus = async () => {
             const { permissionStatus } = await ProvisioningService.checkLocationPermissions();
-            if(permissionStatus === "denied"){
-                setIsPermissionRejected(true);
+            if (permissionStatus === "granted") {
+                navigation.toRoute("Instructions");
             }
         };
-
-        // step 2, Register event handler for app going back to ACTIVE from INACTIVE
-        /*
-        onAppRefocus(() => {
-            setAppRefocus(Date.now());
-        })
-        */
-
         getPermissionStatus();
-    }, []); // Step 3. Add appRefocus to useEffect dependency list `}, [appRefocus]); `
+    }, [appRefocus]); // Step 3. Add appRefocus to useEffect dependency list `}, [appRefocus]); `
+
+    const onResume = () => {
+        document.removeEventListener("resume",onResume);
+        setAppRefocus(Date.now());
+    }
 
     const handleSubmit = async () => {
         try{
@@ -54,12 +49,11 @@ export const RequestPermissions: FC = () => {
             navigation.toRoute('Instructions');
         } catch (e){
             console.log(e);
-            setIsPermissionRejected(true);
-            setIsReprompt(true);
         }
     };
     
     const openSettings = () => {
+        document.addEventListener("resume",onResume,true);
         OpenNativeSettings.open('application_details');    
     }
 
@@ -69,20 +63,11 @@ export const RequestPermissions: FC = () => {
                 <p>Om met dit meetapparaat te kunnen verbinden heeft de applicatie Locatie Permissies nodig.</p>
                 <br/> 
                 <p>Wij zullen deze permissies nooit gebruiken om daadwerkelijk uw locatie op te vragen.</p>
-                <br/>
-                <br/>
-                <br/>
-                { isReprompt
-                    ? <p className={classes.alert}>Weet u zeker dat u Locatie Permissies wilt weigeren? Zonder deze permissies kan dit meetapparaat niet worden geïnstalleerd.</p>
-                : <p className={classes.invisible}>Weet u zeker dat u Locatie Permissies wilt weigeren? Zonder deze permissies kan dit meetapparaat niet worden geïnstalleerd.</p> }
             </PageBody>
             <PageFooter>
-                { isPermissionRejected
-                    ? <div>
-                        <Button label="Open instellingen" onClick={openSettings} className={classes.padded} />
-                        <SlimButton onClick={() => { navigation.toRoute('ScanQRCode') }} label="Meetapparaat niet installeren" className={classes.padded} />
-                    </div>
-                    : <Button label="Ik heb het begrepen" onClick={handleSubmit} /> }
+                    <Button label="Ik heb het begrepen" onClick={handleSubmit} className={classes.padded} />
+                    <SlimButton label="Open instellingen" onClick={openSettings} className={classes.padded} />
+                    <SlimButton label="Meetapparaat niet installeren" onClick={() => { navigation.toRoute('ScanQRCode') }} className={classes.padded} />
             </PageFooter>
         </Page>
     );
