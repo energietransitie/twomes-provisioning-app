@@ -46,12 +46,9 @@ export const ScanQRCode: FC = () => {
         const QRCodeJson = QRScanService.getQRCodeJson();
         if(QRCodeJson.transport === "ble"){
             if(isPlatform('android')){
-                const { permissionStatus } = await ProvisioningService.checkLocationPermissions();
-                if(permissionStatus === "granted"){
-                    navigation.toRoute('Instructions');
-                } else {
-                    navigation.toRoute('RequestPermissions');
-                }
+                navigation.toRoute('RequestLocationPermissions');
+            } else {
+                navigation.toRoute('Instructions');
             }
         } else {
             navigation.toRoute('Instructions');

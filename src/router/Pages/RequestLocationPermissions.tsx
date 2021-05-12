@@ -6,21 +6,14 @@ import { OpenNativeSettings } from '@ionic-native/open-native-settings';
 
 import { ProvisioningService } from '../../services/ProvisioningService';
 import { useNavigation } from '../useNavigation';
-import { isClassExpression } from 'typescript';
 
 const useStyles = makeStyles(theme => ({
     padded: {
         margin: '10px 0'
-    },
-    invisible: {
-        color: theme.colors.white
-    },
-    alert: {
-        color: theme.colors.statusAlert
     }
 }));
 
-export const RequestPermissions: FC = () => {
+export const RequestLocationPermissions: FC = () => {
     const classes = useStyles();
     const navigation = useNavigation();
     const [appRefocus, setAppRefocus] = useState(0);
