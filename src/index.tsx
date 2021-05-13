@@ -4,21 +4,24 @@ import { App } from './App';
 import {Plugins} from "@capacitor/core";
 import { ApiService } from './services/ApiService';
 import { StorageService } from './services/StorageService';
+import { FDLService } from './services/FDLService';
 
 const { SplashScreen } = Plugins;
 
+FDLService.init();
+
 ( async () => {
     try {
-        const urlParams = new URLSearchParams(window.location.search);
-        const token = urlParams.get('token');
+        let authenticated = false;
 
-        let authenticated = false; // Passed as a prop to <App /> which is then used to set the appropriate starting route.
-
-        if (token) {
-            const { session_token } = await ApiService.activateAccount(token);
-            await StorageService.set('token', session_token);
-            authenticated = true;
-        }
+        FDLService.onFDLReceived(async (dynamicLink) => {
+            if (dynamicLink.root === 'account' && dynamicLink.sub) {
+                const token = dynamicLink.sub.root;
+                const { session_token } = await ApiService.activateAccount(token);
+                await StorageService.set('token', session_token);
+                authenticated = true;
+            }
+        });
 
         ReactDOM.render(<App authenticated={authenticated} />, document.getElementById('root'), () => {
             SplashScreen.hide();
