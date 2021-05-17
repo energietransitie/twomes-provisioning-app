@@ -6,5 +6,5 @@ interface AppProps {
 }
 
 export const App: FC<AppProps> = ({ authenticated = false }) => (
-    <Router startRoute={authenticated ? 'ScanQRCode' : 'Welcome'} />
+    <Router authenticated={authenticated} />
 );

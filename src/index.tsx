@@ -14,6 +14,11 @@ FDLService.init();
     try {
         let authenticated = false;
 
+        // Check Store for existing account token
+        const storedToken = await StorageService.get('token');;
+        authenticated = !!storedToken;
+
+        // Register Listener for Firebase DynamicLinks holding an account activation token.
         FDLService.onFDLReceived(async (dynamicLink) => {
             if (dynamicLink.root === 'account' && dynamicLink.sub) {
                 const token = dynamicLink.sub.root;

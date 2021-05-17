@@ -38,8 +38,9 @@ export class FDLService {
 
     private static appOpenedWithDynamicLinkHandler(event: Event) {
         const { dynamicLink } = event as unknown as AppOpenedWithDynamicLinkEvent;
+        const formattedLink = FDLService.formatDynamicLink(dynamicLink);
         for (const handler of FDLService.handlers) {
-            handler(FDLService.formatDynamicLink(dynamicLink));
+            handler(formattedLink);
         }
     }
 

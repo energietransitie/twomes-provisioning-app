@@ -1,43 +1,49 @@
 {
   "project_info": {
-    "project_number": "320547820715",
-    "firebase_url": "https://warmtewachter.firebaseio.com",
-    "project_id": "warmtewachter",
-    "storage_bucket": "warmtewachter.appspot.com"
+    "project_number": "362703235304",
+    "project_id": "warmtewachter-7687a",
+    "storage_bucket": "warmtewachter-7687a.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:320547820715:android:a916684c2099beb1d393ee",
+        "mobilesdk_app_id": "1:362703235304:android:ce540e04720f6c65bb015d",
         "android_client_info": {
           "package_name": "nl.windesheim.energietransitie.warmtewachter"
         }
       },
       "oauth_client": [
         {
-          "client_id": "320547820715-ah98953847ab9egfhe2jdbf3fd7b6666.apps.googleusercontent.com",
+          "client_id": "362703235304-qvooohrhueba6le66etqgtj9evlu61om.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "nl.windesheim.energietransitie.warmtewachter",
-            "certificate_hash": "1baab5bd28efe4ca111cb3efe63b01ba03150565"
+            "certificate_hash": "77d0077d75f04d09d94314405ff4cb86011c6d6d"
           }
         },
         {
-          "client_id": "320547820715-4aji28vmbndvt08ktslu5d23m1t06adm.apps.googleusercontent.com",
+          "client_id": "362703235304-j7ci1vae2086bu464opgpelmur0humeg.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCSe9M1CFhyX1yqE3ZU5aVtSZWQQHOrDh0"
+          "current_key": "AIzaSyAO7NdDAJvTG4VbzsWm9o7yeWtso7Nz7mQ"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "320547820715-4aji28vmbndvt08ktslu5d23m1t06adm.apps.googleusercontent.com",
+              "client_id": "362703235304-j7ci1vae2086bu464opgpelmur0humeg.apps.googleusercontent.com",
               "client_type": 3
+            },
+            {
+              "client_id": "362703235304-630vidcd1le7n7ot3amadpuurq1kf374.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "nl.windesheim.energietransitie.warmtewachter"
+              }
             }
           ]
         }
