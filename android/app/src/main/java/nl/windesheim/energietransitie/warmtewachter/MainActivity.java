@@ -22,7 +22,6 @@ public class MainActivity extends BridgeActivity {
     FirebaseDynamicLinks.getInstance().getDynamicLink(getIntent()).addOnSuccessListener(this, new OnSuccessListener<PendingDynamicLinkData>() {
       @Override
       public void onSuccess(PendingDynamicLinkData pendingDynamicLinkData) {
-        Log.i("MARCO_onCreate", "We've got a link!!!");
 
         Uri deepLink = null;
         if (pendingDynamicLinkData != null) {
@@ -30,10 +29,7 @@ public class MainActivity extends BridgeActivity {
         }
 
         if (deepLink != null) {
-          Log.i("MARCO_onCreate", "deepLink: " + deepLink.toString());
           bridge.triggerWindowJSEvent("AppOpenedWithDynamicLink", "{ dynamicLink: '" + deepLink.toString() + "'}");
-        } else {
-          bridge.triggerWindowJSEvent("AppOpenedWithDynamicLink", "{ dynamicLink: 'test'}");
         }
       }
     });
@@ -54,18 +50,14 @@ public class MainActivity extends BridgeActivity {
     FirebaseDynamicLinks.getInstance().getDynamicLink(getIntent()).addOnSuccessListener(this, new OnSuccessListener<PendingDynamicLinkData>() {
       @Override
       public void onSuccess(PendingDynamicLinkData pendingDynamicLinkData) {
-        Log.i("MARCO_onStart", "We've got a link!!!");
-
+        
         Uri deepLink = null;
         if (pendingDynamicLinkData != null) {
           deepLink = pendingDynamicLinkData.getLink();
         }
 
         if (deepLink != null) {
-          Log.i("MARCO_onStart", "deepLink: " + deepLink.toString());
           bridge.triggerWindowJSEvent("AppOpenedWithDynamicLink", "{ dynamicLink: '" + deepLink.toString() + "'}");
-        } else {
-          bridge.triggerWindowJSEvent("AppOpenedWithDynamicLink", "{ dynamicLink: 'test'}");
         }
       }
     });
