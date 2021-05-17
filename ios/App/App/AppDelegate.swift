@@ -64,8 +64,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // tracking app url opens, make sure to keep this call
     
     if let incomingURL = userActivity.webpageURL {
-        print("[FIRECAST] Incoming URL is \(incomingURL)")
-        
         DynamicLinks.dynamicLinks().handleUniversalLink(incomingURL) { (dynamicLink, error) in
             guard error == nil else {
                 CAPLog.print("ERROR! \(error!.localizedDescription)")

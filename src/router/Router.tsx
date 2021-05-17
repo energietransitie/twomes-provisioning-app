@@ -1,30 +1,30 @@
-import React, { FC, useEffect } from 'react';
+import React, { FC, useEffect, useState } from 'react';
 import { IonReactRouter } from '@ionic/react-router'
 import { IonRouterOutlet } from '@ionic/react';
 import { Redirect, Route as IonRoute} from 'react-router';
 import { routeList, Route } from './routeList';
 import { StorageService } from '../services/StorageService';
-import { useNavigation } from './useNavigation';
+// import { useNavigation } from './useNavigation';
 
 interface RouterProps {
     authenticated?: boolean;
 }
 
 export const Router: FC<RouterProps> = (props) => {
-    const { authenticated = 'false' } = props;
-    const navigation = useNavigation();
+    const { authenticated = false } = props;
+    const [hasAuthenticated, setHasAuthenticated] = useState(authenticated);
     
-    const startRoute: Route = authenticated ? 'ScanQRCode' : 'Welcome';
+    const startRoute: Route = hasAuthenticated ? 'ScanQRCode' : 'Welcome';
     const noAuthRoutes: Route[] = ['Welcome', 'Invite'];
 
     useEffect(() => {
         StorageService.onChange('token', (token) => {
             const currentRoute = window.location.pathname.replace('/', '') as Route;
             if (!!token && noAuthRoutes.includes(currentRoute)) {
-                navigation.toRoute('ScanQRCode');
+                setHasAuthenticated(true);
             }
         });
-    }, [])
+    }, []);
     
     return (
         <IonReactRouter>
@@ -37,9 +37,9 @@ export const Router: FC<RouterProps> = (props) => {
                         component={routeList[key as Route]} />    
                 )) }
 
-                { authenticated && noAuthRoutes.map((route) => (
-                    <Redirect exact from={`/${route}`} to={`/${startRoute}`} />
-                ))}
+                { hasAuthenticated ? noAuthRoutes.map((route) => (
+                    <Redirect key={route} exact from={`/${route}`} to={`/${startRoute}`} />
+                )): <React.Fragment/> /* Return Fragment due to weird ReactRouter behaviour */ }
 
                 <Redirect exact from="/" to={`/${startRoute}`} />
 

@@ -27,6 +27,9 @@ class LocalStorage {
     }
 
     public onChange(key: string, listener: Listener): void {
+        if (!this.listeners[key]?.length) {
+            this.listeners[key] = [];
+        }
         this.listeners[key].push(listener);
     }
 

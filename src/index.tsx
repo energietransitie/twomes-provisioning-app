@@ -22,8 +22,10 @@ FDLService.init();
         FDLService.onFDLReceived(async (dynamicLink) => {
             if (dynamicLink.root === 'account' && dynamicLink.sub) {
                 const token = dynamicLink.sub.root;
-                const { session_token } = await ApiService.activateAccount(token);
-                await StorageService.set('token', session_token);
+                // TODO: reenable account activation
+                // const { session_token } = await ApiService.activateAccount(token); 
+                // await StorageService.set('token', session_token);
+                await StorageService.set('token', 'session_token');
                 authenticated = true;
             }
         });
@@ -34,6 +36,6 @@ FDLService.init();
 
     } catch (e) {
         // TODO: Implement critical error and show some sort of error page or popup 
-        console.log(e);
+        console.log('CRITICAL_ERROR', e);
     }
 })();
