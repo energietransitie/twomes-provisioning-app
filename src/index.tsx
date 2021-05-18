@@ -4,21 +4,32 @@ import { App } from './App';
 import {Plugins} from "@capacitor/core";
 import { ApiService } from './services/ApiService';
 import { StorageService } from './services/StorageService';
+import { FDLService } from './services/FDLService';
 
 const { SplashScreen } = Plugins;
 
+FDLService.init();
+
 ( async () => {
     try {
-        const urlParams = new URLSearchParams(window.location.search);
-        const token = urlParams.get('token');
+        let authenticated = false;
 
-        let authenticated = false; // Passed as a prop to <App /> which is then used to set the appropriate starting route.
+        // Check Store for existing account token
+        const storedToken = await StorageService.get('token');;
+        authenticated = !!storedToken;
 
-        if (token) {
-            const { session_token } = await ApiService.activateAccount(token);
-            await StorageService.set('token', session_token);
-            authenticated = true;
-        }
+        // Register Listener for Firebase DynamicLinks holding an account activation token.
+        FDLService.onFDLReceived(async (dynamicLink) => {
+            if (dynamicLink.root === 'account' && dynamicLink.sub) {
+                const token = dynamicLink.sub.root;
+                ApiService.activateAccount(token).then(({ session_token}) => {
+                    StorageService.set('token', session_token);
+                    authenticated = true;
+                }).catch((err) => {
+                    alert(err?.message);
+                }); 
+            }
+        });
 
         ReactDOM.render(<App authenticated={authenticated} />, document.getElementById('root'), () => {
             SplashScreen.hide();
@@ -26,6 +37,6 @@ const { SplashScreen } = Plugins;
 
     } catch (e) {
         // TODO: Implement critical error and show some sort of error page or popup 
-        console.log(e);
+        console.log('CRITICAL_ERROR', e);
     }
 })();

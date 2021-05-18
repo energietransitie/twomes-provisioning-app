@@ -16,5 +16,5 @@ export const useNavigation = (): Navigation => {
             }, delay);
         }
 
-    } as Navigation;
+    };
 };

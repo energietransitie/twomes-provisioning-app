@@ -1,14 +1,25 @@
 import UIKit
 import Capacitor
+import Firebase
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
   var window: UIWindow?
+    
+  func handleDynamicLink(_ dynamicLink: DynamicLink) {
+    guard let url = dynamicLink.url else {
+        CAPLog.print("[NOTICE] DynamicLink did not contain a URL")
+        return
+    }
 
+    if let vc = window?.rootViewController as? CAPBridgeViewController {
+        vc.bridge?.triggerWindowJSEvent(eventName: "AppOpenedWithDynamicLink", data: "{dynamicLink: '\(url.absoluteString)'}")
+    }
+  }
 
   func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
-    // Override point for customization after application launch.
+    FirebaseApp.configure()
     return true
   }
 
@@ -37,6 +48,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
   func application(_ app: UIApplication, open url: URL, options: [UIApplication.OpenURLOptionsKey : Any] = [:]) -> Bool {
     // Called when the app was launched with a url. Feel free to add additional processing here,
     // but if you want the App API to support tracking app url opens, make sure to keep this call
+    if let dynamicLink = DynamicLinks.dynamicLinks().dynamicLink(fromCustomSchemeURL: url) {
+        // Handle Firebase Dynamic Links
+        self.handleDynamicLink(dynamicLink)
+    } else {
+        // Handle other links
+    }
+    
     return CAPBridge.handleOpenUrl(url, options)
   }
   
@@ -44,6 +62,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     // Called when the app was launched with an activity, including Universal Links.
     // Feel free to add additional processing here, but if you want the App API to support
     // tracking app url opens, make sure to keep this call
+    
+    if let incomingURL = userActivity.webpageURL {
+        DynamicLinks.dynamicLinks().handleUniversalLink(incomingURL) { (dynamicLink, error) in
+            guard error == nil else {
+                CAPLog.print("ERROR! \(error!.localizedDescription)")
+                return
+            }
+            self.handleDynamicLink(dynamicLink!)
+        }
+    }
     return CAPBridge.handleContinueActivity(userActivity, restorationHandler)
   }
 
