@@ -2,9 +2,9 @@ import React, { FC, useState, useEffect } from 'react';
 import { Button, Header, PaddedContainer, Portal, SlimButton } from '../../base-components';
 import { makeStyles } from '../../theme/makeStyles';
 import { Page, PageBody } from './Page';
-import { ProvisioningService } from '../../services/ProvisioningService';
 import { QRScanService } from '../../services/QRScanService';
 import { useNavigation } from '../useNavigation';
+import { isPlatform } from '@ionic/react';
 
 const useStyles = makeStyles(theme => ({
     image: {
@@ -40,9 +40,18 @@ export const ScanQRCode: FC = () => {
     const scanQR = async () => {
         setIsScanning(true);
         await QRScanService.requestCameraPermission();
-        await QRScanService.scan();
+        const QRCodeJson = await QRScanService.scan();
         setIsScanning(false);
-        navigation.toRoute('Instructions');
+
+        if(QRCodeJson.transport === "ble"){
+            if(isPlatform('android')){
+                navigation.toRoute('RequestLocationPermissions');
+            } else {
+                navigation.toRoute('Instructions');
+            }
+        } else {
+            navigation.toRoute('Instructions');
+        }
     };
 
     const cancelScan = () => {

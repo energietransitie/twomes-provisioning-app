@@ -24,6 +24,7 @@ const useStyles = makeStyles<'container'|'icon', ButtonProps>((theme) => ({
         fill: theme.colors.white,
         fontWeight: 600,
         background: theme.colors.statusOK,
+        justifyContent: 'center',
 
         '&:hover::after': {
             content: '""',
