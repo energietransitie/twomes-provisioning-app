@@ -6,3 +6,5 @@ export * from './ProcessProvisioning';
 export * from './WifiCredentials';
 export * from './Welcome';
 export * from './Instructions';
+export * from './RequestLocationPermissions';
+export * from './RequestCameraPermissions';

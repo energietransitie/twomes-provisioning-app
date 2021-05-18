@@ -1860,6 +1860,20 @@
   dependencies:
     "@hapi/hoek" "^8.3.0"
 
+"@ionic-native/core@^5.33.0":
+  version "5.33.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/core/-/core-5.33.0.tgz#76c0c8514788c4185b7430567962f378cbade90b"
+  integrity sha512-dnZHu7SadvQvliGJPndk2ohdoPvwiyBWJjsJw33BKyhadnmLlmkYKkRgPPI+i22BZofDKq4YiAfIIqhvfHU6gw==
+  dependencies:
+    "@types/cordova" latest
+
+"@ionic-native/open-native-settings@^5.32.1":
+  version "5.33.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/open-native-settings/-/open-native-settings-5.33.0.tgz#2319c32e286bfad75b3c116037906d3150511b21"
+  integrity sha512-mQyTYsgcl+5JjXU0Qw5uSGTjIsChW0R/LpfgGInYCDOMaCAnFYp8Ge97l+axryby23/mBAHptp9Wp5pXBau6ow==
+  dependencies:
+    "@types/cordova" latest
+
 "@ionic/core@5.6.4":
   version "5.6.4"
   resolved "https://registry.yarnpkg.com/@ionic/core/-/core-5.6.4.tgz#49da080a4122241dd0e8ad5c08f9b8139e2a522b"
@@ -2448,6 +2462,11 @@
   version "2.2.11"
   resolved "https://registry.yarnpkg.com/@types/classnames/-/classnames-2.2.11.tgz#2521cc86f69d15c5b90664e4829d84566052c1cf"
   integrity sha512-2koNhpWm3DgWRp5tpkiJ8JGc1xTn2q0l+jUNUE7oMKXUf5NpI9AIdC4kbjGNFBdHtcxBD18LAksoudAVhFKCjw==
+
+"@types/cordova@latest":
+  version "0.0.34"
+  resolved "https://registry.yarnpkg.com/@types/cordova/-/cordova-0.0.34.tgz#ea7addf74ecec3d7629827a0c39e2c9addc73d04"
+  integrity sha1-6nrd907Ow9dimCegw54smt3HPQQ=
 
 "@types/eslint@^7.2.6":
   version "7.2.10"
@@ -4534,6 +4553,11 @@ copy-descriptor@^0.1.0:
   resolved "https://registry.yarnpkg.com/copy-descriptor/-/copy-descriptor-0.1.1.tgz#676f6eb3c39997c2ee1ac3a924fd6124748f578d"
   integrity sha1-Z29us8OZl8LuGsOpJP1hJHSPV40=
 
+cordova-open-native-settings@^1.5.5:
+  version "1.5.5"
+  resolved "https://registry.yarnpkg.com/cordova-open-native-settings/-/cordova-open-native-settings-1.5.5.tgz#963b50d65cf20c2f6c7603dc1d4f42c7389697bd"
+  integrity sha512-t3we7dUTUamuxVMl/nE6RBNqEyTtUuxvtjXI/BrevuoBIl2nI9GJpTvD9witJkpzf0isCv3zMuiLd9tP+2+LVw==
+
 core-js-compat@^3.6.2:
   version "3.8.1"
   resolved "https://registry.yarnpkg.com/core-js-compat/-/core-js-compat-3.8.1.tgz#8d1ddd341d660ba6194cbe0ce60f4c794c87a36e"
@@ -5787,9 +5811,9 @@ eslint@^7.11.0:
     text-table "^0.2.0"
     v8-compile-cache "^2.0.3"
 
-"esp-provisioning-plugin@github:energietransitie/esp-provisioning-capacitor-plugin#v0.0.9":
-  version "0.0.9"
-  resolved "git+ssh://git@github.com/energietransitie/esp-provisioning-capacitor-plugin.git#b9f9602c3631843e88e007c702cfff1193bcb44b"
+"esp-provisioning-plugin@github:energietransitie/esp-provisioning-capacitor-plugin#v0.0.10":
+  version "0.0.10"
+  resolved "git+ssh://git@github.com/energietransitie/esp-provisioning-capacitor-plugin.git#a869d2a649363453663cb504bbf1f6760aeab0d5"
 
 espree@^7.3.0, espree@^7.3.1:
   version "7.3.1"

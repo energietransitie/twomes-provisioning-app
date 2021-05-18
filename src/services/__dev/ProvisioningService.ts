@@ -9,7 +9,7 @@ type ConnectionStatus = any;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type Network = any;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type PermissionStatus = any;
+type LocationPermissionStatus = any;
 
 interface EspDeviceQRJson {
     name: string;
@@ -40,8 +40,12 @@ export class ProvisioningServiceDev implements IProvisioningService {
         return this.pendingAction;
     }
     
-    public static requestLocationPermissions(): PermissionStatus {
-        return true;
+    public static requestLocationPermissions(): Promise<unknown> {
+        return this.pendingAction;
+    }
+
+    public static checkLocationPermissions(): LocationPermissionStatus {
+        return { permissionStatus: "granted" };
     }
 
     public static async createEspDevice(espDeviceQRJson: EspDeviceQRJson): Promise<ESPDevice> {

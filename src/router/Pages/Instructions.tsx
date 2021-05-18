@@ -15,12 +15,6 @@ export const Instructions: FC = () => {
         // TODO: Fix type
         // eslint-disable-next-line @typescript-eslint/ban-ts-comment
         // @ts-ignore
-        if(QRCodeJson.transport === "ble"){
-            await ProvisioningService.requestLocationPermissions();
-        }
-        // TODO: Fix type
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
         ProvisioningService.createEspDevice(QRCodeJson);
         navigation.toRoute('ConnectToDevice');
     };

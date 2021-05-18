@@ -15,7 +15,7 @@ export const Invite: FC = () => {
             </PageBody>
 
             <PageFooter>
-                <Button label="Ik ben een tester" onClick={() => navigation.toRoute('ScanQRCode') } ></Button>
+                <Button label="Ik ben een tester" onClick={() => navigation.toRoute('RequestCameraPermissions') } ></Button>
             </PageFooter>
         </Page>
     );

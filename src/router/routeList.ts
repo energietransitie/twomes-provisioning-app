@@ -6,7 +6,9 @@ import {
     ConnectToDevice,
     WifiList,
     WifiCredentials,
-    ProcessProvisioning
+    ProcessProvisioning,
+    RequestLocationPermissions,
+    RequestCameraPermissions
 } from './Pages';
 
 export type Route = keyof typeof routeList;
@@ -19,5 +21,7 @@ export const routeList = {
     ConnectToDevice,
     WifiList,
     WifiCredentials,
-    ProcessProvisioning
+    ProcessProvisioning,
+    RequestLocationPermissions,
+    RequestCameraPermissions
 }
