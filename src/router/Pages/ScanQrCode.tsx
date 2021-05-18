@@ -40,9 +40,9 @@ export const ScanQRCode: FC = () => {
     const scanQR = async () => {
         setIsScanning(true);
         await QRScanService.requestCameraPermission();
-        await QRScanService.scan();
+        const QRCodeJson = await QRScanService.scan();
         setIsScanning(false);
-        const QRCodeJson = QRScanService.getQRCodeJson();
+
         if(QRCodeJson.transport === "ble"){
             if(isPlatform('android')){
                 navigation.toRoute('RequestLocationPermissions');
