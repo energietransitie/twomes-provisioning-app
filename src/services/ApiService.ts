@@ -1,4 +1,4 @@
-const API_HOST = 'http://localhost:8000';
+const API_HOST = 'https://api.tst.energietransitiewindesheim.nl';
 
 type Json = string | number | boolean | null | Json[] | { [key: string]: Json };
 
