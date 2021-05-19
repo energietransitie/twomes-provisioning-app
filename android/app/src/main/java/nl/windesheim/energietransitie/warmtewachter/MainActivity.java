@@ -2,7 +2,6 @@ package nl.windesheim.energietransitie.warmtewachter;
 
 import android.net.Uri;
 import android.os.Bundle;
-import android.util.Log;
 
 import com.dutchconcepts.capacitor.barcodescanner.BarcodeScanner;
 import com.getcapacitor.BridgeActivity;
