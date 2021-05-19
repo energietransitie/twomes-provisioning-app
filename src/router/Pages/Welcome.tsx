@@ -30,10 +30,10 @@ export const Welcome: FC = () => {
             <PageBody className={classes.body} >
                 <Header>WarmteWachter</Header>
 
-                <div className={classNames(classes.quote, classes.padded)} >"gebouwde omgeving binnen één generatie (vrijwel) CO2-neutraal"</div>
+                <div className={classNames(classes.quote, classes.padded)} >"gebouwde omgeving binnen één generatie (vrijwel) CO<sub>2</sub>-neutraal"</div>
 
                 <div className={classes.padded} >
-                    Wij doen onderzoek naar de CO2 emissie per huishouden en mogelijke maatregelen om dit te reduceren. Wij vragen personen met een slimme meter om hieraan deel te nemen.
+                    Wij doen onderzoek naar de CO<sub>2</sub> emissie per huishouden en mogelijke maatregelen om dit te reduceren. Wij vragen personen met een slimme meter om hieraan deel te nemen.
                 </div>
 
                 <div>
