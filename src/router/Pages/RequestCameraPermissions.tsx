@@ -53,7 +53,7 @@ export const RequestCameraPermissions: FC = () => {
     return (
         <Page>
             <PageBody>
-                <p>Om de QR code te scannen heeft de applicatie Camera Permissies nodig.</p>
+                <p>Om de QR-code te scannen heeft de applicatie Camera Permissies nodig.</p>
                 <br/> 
                 <p>Zonder deze permissies kunnen de meetapparaten niet geïnstalleerd worden.</p>
             </PageBody>
