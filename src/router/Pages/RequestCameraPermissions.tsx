@@ -53,13 +53,16 @@ export const RequestCameraPermissions: FC = () => {
     return (
         <Page>
             <PageBody>
-                <p>Om de QR-code te scannen heeft de applicatie Camera Permissies nodig.</p>
+                <p>Om de QR-code te kunnen scannen zal de app u zo vragen om toestemming.</p>
                 <br/> 
-                <p>Zonder deze permissies kunnen de meetapparaten niet geïnstalleerd worden.</p>
+                <p>Zonder deze permissies kunt u de meetapparaten niet goed installeren.</p>
             </PageBody>
             <PageFooter>
-                    <Button label="Ik heb het begrepen" onClick={handleSubmit} className={classes.padded} />
-                    <SlimButton label="Open instellingen" onClick={openSettings} className={classes.padded} />
+                    <Button label="Ok, vraag maar" onClick={handleSubmit} className={classes.padded} />
+                    // Cancel button is the commonly understood way for users to cancel a partially started action
+                    // TODO: is there a way to have the Cancel button next to the Ok button?
+                    <Button label="Annuleren" onClick={() => { navigation.toRoute('ScanQRCode') }} className={classes.padded} />
+                    <SlimButton label="Ga naar Instellingen" onClick={openSettings} className={classes.padded} />
             </PageFooter>
         </Page>
     );

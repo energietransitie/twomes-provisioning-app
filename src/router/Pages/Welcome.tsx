@@ -30,20 +30,19 @@ export const Welcome: FC = () => {
             <PageBody className={classes.body} >
                 <Header>WarmteWachter</Header>
 
-                <div className={classNames(classes.quote, classes.padded)} >"gebouwde omgeving binnen één generatie (vrijwel) CO<sub>2</sub>-neutraal"</div>
+                <div className={classNames(classes.quote, classes.padded)} >"App voor het onderzoek van het Lectoraat Energietransitie van hogeschool Windesheim in samenwerking met 50 Tinten Groen Assendorp"</div>
 
                 <div className={classes.padded} >
-                    Wij doen onderzoek naar de CO<sub>2</sub> emissie per huishouden en mogelijke maatregelen om dit te reduceren. Wij vragen personen met een slimme meter om hieraan deel te nemen.
+                    U kunt deze app alleen gebruiken als u zich heeft aangemeld voor het Warmtewachter onderzoek en een e-mail hebt ontvangen om deel te nemen aan het onderzoek.
                 </div>
 
                 <div>
-                    <SlimButton onClick={() => { /* */ }} label="Meer over het Lectoraat Energietransitie" className={classes.padded} />
-                    <SlimButton onClick={() => { /* */ }} label="Ons privacybeleid" className={classes.padded} />
+                    <SlimButton onClick={() => { /* */ }} label="Lectoraat Energietransitie" className={classes.padded} />
+                    <SlimButton onClick={() => { /* */ }} label="Privacyverklaring" className={classes.padded} />
                 </div>
             </PageBody>
 
             <PageFooter>
-                <Button onClick={() => { /* */ }} label="Deelname aanvragen" className={classes.padded} />
                 <SlimButton onClick={() => { navigation.toRoute('Invite') }} label="Ik heb al een uitnodiging" className={classes.padded} />
             </PageFooter>
         </Page>

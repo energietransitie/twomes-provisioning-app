@@ -53,14 +53,16 @@ export const RequestLocationPermissions: FC = () => {
     return (
         <Page>
             <PageBody>
-                <p>Om met dit meetapparaat te kunnen verbinden heeft de applicatie Locatie Permissies nodig.</p>
+                <p>Om dit meetapparaat te kunnen installeren zal de app u zo vragen om toestemming./p>
                 <br/> 
-                <p>Wij zullen deze permissies nooit gebruiken om daadwerkelijk uw locatie op te vragen.</p>
+                <p>De Warmtewachter app zal uw locatie echter nooit opvragen. Tijdens het installeren van dit meetapparaat zal de app echter wel Bluetooth gebruiken, bij Android valt het gebruik van Bluetooth onder locatiediensten. Vandaar dat de app u toch om deze permissie moet vragen.</p>
             </PageBody>
             <PageFooter>
-                    <Button label="Ik heb het begrepen" onClick={handleSubmit} className={classes.padded} />
-                    <SlimButton label="Open instellingen" onClick={openSettings} className={classes.padded} />
-                    <SlimButton label="Meetapparaat niet installeren" onClick={() => { navigation.toRoute('ScanQRCode') }} className={classes.padded} />
+                    <Button label="Ok, vraag maar" onClick={handleSubmit} className={classes.padded} />
+                    // Cancel button is the commonly understood way for users to cancel a partially started action
+                    // TODO: is there a way to have the Cancel button next to the Ok button?
+                    <Button label="Annuleren" onClick={() => { navigation.toRoute('ScanQRCode') }} className={classes.padded} />
+                    <SlimButton label="Ga naar Instellingen" onClick={openSettings} className={classes.padded} />
             </PageFooter>
         </Page>
     );
