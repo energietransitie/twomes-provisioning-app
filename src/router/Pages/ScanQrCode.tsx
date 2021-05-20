@@ -71,7 +71,7 @@ export const ScanQRCode: FC = () => {
             <PageBody>
                 <Header h1={true} >Scan een QR-code</Header>
                 <p>Pak een meetapparaatje. De de QR-code staat op een sticker, meestal op de achterkant van het meetapparaatje.</p>
-                <br>
+                <br/>
                 <img className={classes.image} alt="Scan" src="/resources/ScanQRCode.png" />
                 <Button label="Scannen" onClick={scanQR} />
             </PageBody>

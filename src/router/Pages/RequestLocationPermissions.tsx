@@ -53,7 +53,7 @@ export const RequestLocationPermissions: FC = () => {
     return (
         <Page>
             <PageBody>
-                <p>Om dit meetapparaat te kunnen installeren zal de app u zo vragen om toestemming./p>
+                <p>Om dit meetapparaat te kunnen installeren zal de app u zo vragen om toestemming.</p>
                 <br/> 
                 <p>De Warmtewachter app zal uw locatie echter nooit opvragen. Tijdens het installeren van dit meetapparaat zal de app echter wel Bluetooth gebruiken, bij Android valt het gebruik van Bluetooth onder locatiediensten. Vandaar dat de app u toch om deze permissie moet vragen.</p>
             </PageBody>
