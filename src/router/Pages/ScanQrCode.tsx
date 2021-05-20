@@ -62,14 +62,16 @@ export const ScanQRCode: FC = () => {
     return isScanning ? (
         <Portal name="cameraview" >
             <PaddedContainer className={classes.scanView} >
-                <Header>Richt uw camera op de QR code</Header>
+                <Header>Richt uw camera op de QR-code</Header>
                 <SlimButton label='Annuleren' onClick={cancelScan} />
             </PaddedContainer>
         </Portal>
     ) : (
         <Page>
             <PageBody>
-                <Header h1={true} >Scan een QR code</Header>
+                <Header h1={true} >Scan een QR-code</Header>
+                <p>Pak een meetapparaatje. De de QR-code staat op een sticker, meestal op de achterkant van het meetapparaatje.</p>
+                <br>
                 <img className={classes.image} alt="Scan" src="/resources/ScanQRCode.png" />
                 <Button label="Scannen" onClick={scanQR} />
             </PageBody>
