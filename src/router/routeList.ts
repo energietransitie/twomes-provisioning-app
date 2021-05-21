@@ -9,7 +9,7 @@ import {
     ProcessProvisioning,
     RequestLocationPermissions,
     RequestCameraPermissions
-} from './Pages';
+} from '../Pages';
 
 export type Route = keyof typeof routeList;
 

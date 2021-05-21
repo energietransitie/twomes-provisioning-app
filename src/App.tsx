@@ -1,23 +1,33 @@
-import React, { FC } from 'react';
-import { Modal } from './base-components/Modal';
+import React, { FC, useEffect, useState } from 'react';
+import { ErrorModal } from './components/ErrorModal';
 import { Router } from './router';
+import { ErrorModals, ErrorModalService } from './services/ErrorModalService';
 
 interface AppProps {
     authenticated?: boolean;
 }
 
 export const App: FC<AppProps> = ({ authenticated = false }) => {
+    const [errorModals, setErrorModals] = useState<ErrorModals>([]);
+
+    useEffect(() => {
+        const handleErrorModalsChange = (modals: ErrorModals) => {
+            setErrorModals([...modals]);
+        }
+        ErrorModalService.onChange(handleErrorModalsChange);
+
+        return () => {
+            ErrorModalService.offChange(handleErrorModalsChange);
+        }
+    }, []);
+
+    console.log('MARCO render', errorModals);
+
     return (
         <>
             <Router authenticated={authenticated} />
-            <Modal title='Er is een fout opgetreden' onCancel={() => {/** */}} >
-                Er lijkt onverwachts iets fout te zijn gegaan.
-                Probeer het opnieuw of neem contact op met onze klantenservice.
 
-                <p>
-                    <a href="mailto:warmtewachter-support@windesheim.nl" >warmtewachter-support@windesheim.nl</a>
-                </p>
-            </Modal>
+            { errorModals.map((modalProps, index) => <ErrorModal key={index} {...modalProps} />) }
         </>
     )
 };

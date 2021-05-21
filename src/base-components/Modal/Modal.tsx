@@ -27,7 +27,8 @@ const useStyles = makeStyles(theme => ({
         boxShadow: theme.shadows.level1
     },
     modalTitle: {
-        padding: 15
+        padding: 15,
+        marginBottom: 10
     },
     modalBody: {
         padding: '0 20px'
@@ -38,7 +39,7 @@ const useStyles = makeStyles(theme => ({
         alignItems: 'center',
         flexDirection: 'row',
         justifyContent: 'space-evenly',
-        padding: '15px 10px'
+        padding: '20px 10px'
     }
 }));
 
@@ -46,7 +47,7 @@ interface ModalProps {
     title: string;
     children: ReactNode;
     submitText?: string;
-    onSubmit?: () => void;
+    onSubmit: () => void;
     cancelText?: string;
     onCancel?: () => void;
 }
@@ -67,8 +68,8 @@ export const Modal: FC<ModalProps> = (props) => {
                     <div className={classes.modalBody} >{ children }</div>
 
                     <div className={classes.modalControls} >
-                        {onCancel && <SlimButton label={cancelText} onClick={() => { /***/ }} />}
-                        <Button label={submitText} onClick={() => { /***/ }} />
+                        {onCancel && <SlimButton label={cancelText} onClick={onCancel} />}
+                        <Button label={submitText} onClick={onSubmit} />
                     </div>
                 </div>
             </div>

@@ -1,9 +1,9 @@
 import React, { FC, useState } from 'react';
-import { Button, Header, Input, SlimButton } from '../../base-components';
-import { ProvisioningService } from '../../services/ProvisioningService';
-import { makeStyles } from '../../theme/makeStyles';
-import { useNavigation } from '../useNavigation';
-import { Page, PageBody, PageFooter, PageHeader } from './Page';
+import { Button, Header, Input, SlimButton } from '../base-components';
+import { ProvisioningService } from '../services/ProvisioningService';
+import { makeStyles } from '../theme/makeStyles';
+import { useNavigation } from '../router/useNavigation';
+import { Page, PageBody, PageFooter, PageHeader } from '../components/Page';
 
 const useStyles = makeStyles({
     pageBody: {

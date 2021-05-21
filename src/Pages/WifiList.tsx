@@ -1,10 +1,10 @@
 import React, { FC, useEffect, useState } from 'react';
-import { Header, SlimButton, List, ListItem, Input, Button } from '../../base-components';
-import { ProvisioningService, Network } from '../../services/ProvisioningService';
-import { NetworkService } from '../../services/NetworkService';
-import { makeStyles } from '../../theme/makeStyles';
-import { useNavigation } from '../useNavigation';
-import { Page, PageBody, PageFooter, PageHeader } from './Page';
+import { Header, SlimButton, List, ListItem, Input, Button } from '../base-components';
+import { ProvisioningService, Network } from '../services/ProvisioningService';
+import { NetworkService } from '../services/NetworkService';
+import { makeStyles } from '../theme/makeStyles';
+import { useNavigation } from '../router/useNavigation';
+import { Page, PageBody, PageFooter, PageHeader } from '../components/Page';
 
 const useStyles = makeStyles(theme => ({
     section: {

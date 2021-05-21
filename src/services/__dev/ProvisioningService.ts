@@ -70,11 +70,12 @@ export class ProvisioningServiceDev implements IProvisioningService {
     }
 
     public static connectToDevice(): ConnectionStatus {
-        this.pendingAction = (async () => {
+        this.pendingAction = new Promise((resolve, reject) => {
             setTimeout(() => {
-                return true;
+                reject('Unable to connect to the device');
+                resolve(true);
             }, 1000);
-        })();
+        });
         return this.pendingAction;
     }
 
