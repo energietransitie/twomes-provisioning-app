@@ -1,8 +1,9 @@
 import React, { FC, useEffect } from "react";
-import { Header, Loader } from "../../base-components";
-import { ProvisioningService } from "../../services/ProvisioningService";
-import { useNavigation } from "../useNavigation";
-import { Page, PageBody } from "./Page";
+import { Header, Loader } from "../base-components";
+import { ProvisioningService } from "../services/ProvisioningService";
+import { useNavigation } from "../router/useNavigation";
+import { Page, PageBody } from "../components/Page";
+import { ErrorModalService } from "../services/ErrorModalService";
 
 export const ConnectToDevice: FC = () => {
     const navigation = useNavigation();
@@ -14,10 +15,10 @@ export const ConnectToDevice: FC = () => {
                 await ProvisioningService.connectToDevice();
                 await ProvisioningService.scanForNetworks();
                 navigation.toRoute('WifiList');
-            } catch (e) {
-                console.log(e);
-                alert(e);
-                navigation.toRoute('ScanQRCode');
+            } catch (error) {
+                ErrorModalService.showErrorModal({ error, callback: () => {
+                    navigation.toRoute('ScanQRCode');
+                }});
             }
         }
 

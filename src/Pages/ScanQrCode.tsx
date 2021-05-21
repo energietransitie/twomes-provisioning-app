@@ -1,9 +1,9 @@
 import React, { FC, useState, useEffect } from 'react';
-import { Button, Header, PaddedContainer, Portal, SlimButton } from '../../base-components';
-import { makeStyles } from '../../theme/makeStyles';
-import { Page, PageBody } from './Page';
-import { QRScanService } from '../../services/QRScanService';
-import { useNavigation } from '../useNavigation';
+import { Button, Header, PaddedContainer, Portal, SlimButton } from '../base-components';
+import { makeStyles } from '../theme/makeStyles';
+import { Page, PageBody } from '../components/Page';
+import { QRScanService } from '../services/QRScanService';
+import { useNavigation } from '../router/useNavigation';
 import { isPlatform } from '@ionic/react';
 
 const useStyles = makeStyles(theme => ({

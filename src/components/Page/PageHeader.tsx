@@ -1,22 +1,21 @@
 import classNames from 'classnames';
 import React, { FC, ReactNode } from 'react';
-import { BaseProps, PaddedContainer } from '../../../base-components';
-import { makeStyles } from '../../../theme/makeStyles';
+import { BaseProps, PaddedContainer } from '../../base-components';
+import { makeStyles } from '../../theme/makeStyles';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
     container: {
-        display: 'flex',
-        justifyContent: 'center',
-        flexDirection: 'column',
-        alignItems: 'center'
+        fontSize: 24,
+        fontWeight: 'bold',
+        color: theme.colors.grey800
     }
-});
+}));
 
-interface PageFooterProps extends BaseProps {
+interface PageHeaderProps extends BaseProps {
     children?: ReactNode;
 }
 
-export const PageFooter: FC<PageFooterProps> = (props) => {
+export const PageHeader: FC<PageHeaderProps> = (props) => {
     const { children, className, ...restProps } = props;
     const classes = useStyles();
 

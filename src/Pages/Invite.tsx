@@ -1,7 +1,7 @@
 import React, { FC } from 'react';
-import { Button } from '../../base-components';
-import { useNavigation } from '../useNavigation';
-import { Page, PageBody, PageFooter} from './Page';
+import { Button } from '../base-components';
+import { useNavigation } from '../router/useNavigation';
+import { Page, PageBody, PageFooter} from '../components/Page';
 
 export const Invite: FC = () => {
     const navigation = useNavigation();

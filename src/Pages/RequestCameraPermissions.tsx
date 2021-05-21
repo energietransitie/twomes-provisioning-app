@@ -1,11 +1,11 @@
 import React, { FC, useEffect, useState, } from 'react';
-import { Button, SlimButton } from '../../base-components';
-import { makeStyles } from '../../theme/makeStyles';
-import { Page, PageBody, PageFooter } from './Page';
+import { Button, SlimButton } from '../base-components';
+import { makeStyles } from '../theme/makeStyles';
+import { Page, PageBody, PageFooter } from '../components/Page';
 import { OpenNativeSettings } from '@ionic-native/open-native-settings';
 
-import { ProvisioningService } from '../../services/ProvisioningService';
-import { useNavigation } from '../useNavigation';
+import { useNavigation } from '../router/useNavigation';
+import { CameraPermisionStatus, QRScanService } from '../services/QRScanService';
 
 const useStyles = makeStyles(theme => ({
     padded: {
@@ -13,20 +13,20 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export const RequestLocationPermissions: FC = () => {
+export const RequestCameraPermissions: FC = () => {
     const classes = useStyles();
     const navigation = useNavigation();
     const [appRefocus, setAppRefocus] = useState(0);
 
     useEffect(() => {
         const getPermissionStatus = async () => {
-            const { permissionStatus } = await ProvisioningService.checkLocationPermissions();
-            if (permissionStatus === "granted") {
-                navigation.toRoute("Instructions");
+            const permissionStatus = await QRScanService.getCameraPermissionStatus();
+            if (permissionStatus === CameraPermisionStatus.Granted) {
+                navigation.toRoute("ScanQRCode");
             }
         };
         getPermissionStatus();
-    }, [appRefocus]); // Step 3. Add appRefocus to useEffect dependency list `}, [appRefocus]); `
+    }, [appRefocus]); 
 
     const onResume = () => {
         document.removeEventListener("resume",onResume);
@@ -38,8 +38,8 @@ export const RequestLocationPermissions: FC = () => {
             // TODO: Fix type
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            await ProvisioningService.requestLocationPermissions();
-            navigation.toRoute('Instructions');
+            await QRScanService.requestCameraPermission();
+            navigation.toRoute('ScanQRCode');
         } catch (e){
             console.log(e);
         }
@@ -53,9 +53,9 @@ export const RequestLocationPermissions: FC = () => {
     return (
         <Page>
             <PageBody>
-                <p>Om dit meetapparaat te kunnen installeren zal de app u zo vragen om toestemming.</p>
+                <p>Om de QR-code te kunnen scannen zal de app u zo vragen om toestemming.</p>
                 <br/> 
-                <p>De Warmtewachter app zal uw locatie echter nooit opvragen. Tijdens het installeren van dit meetapparaat zal de app echter wel Bluetooth gebruiken, bij Android valt het gebruik van Bluetooth onder locatiediensten. Vandaar dat de app u toch om deze permissie moet vragen.</p>
+                <p>Zonder deze permissies kunt u de meetapparaten niet goed installeren.</p>
             </PageBody>
             <PageFooter>
                     <Button label="Ok, vraag maar" onClick={handleSubmit} className={classes.padded} />

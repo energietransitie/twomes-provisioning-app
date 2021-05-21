@@ -1,8 +1,8 @@
 import classNames from 'classnames';
 import React, { FC, ReactNode } from 'react';
-import { PaddedContainer } from '../../../base-components';
-import { BaseProps } from '../../../base-components/IBaseProps';
-import { makeStyles } from '../../../theme/makeStyles';
+import { PaddedContainer } from '../../base-components';
+import { BaseProps } from '../../base-components/IBaseProps';
+import { makeStyles } from '../../theme/makeStyles';
 
 const useStyles = makeStyles(theme => ({
     container: {
