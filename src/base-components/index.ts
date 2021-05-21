@@ -9,3 +9,5 @@ export * from './SlimButton';
 export * from './Loader';
 export * from './Input';
 export * from './List';
+export * from './Modal';
+export * from './Icon';
