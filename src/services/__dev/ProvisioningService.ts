@@ -63,9 +63,8 @@ export class ProvisioningServiceDev implements IProvisioningService {
     }
 
     public static connectToDevice(): ConnectionStatus {
-        this.pendingAction = new Promise((resolve, reject) => {
+        this.pendingAction = new Promise((resolve) => {
             setTimeout(() => {
-                reject('Unable to connect to the device');
                 resolve(true);
             }, 1000);
         });

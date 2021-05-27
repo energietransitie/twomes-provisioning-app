@@ -38,20 +38,24 @@ export const ScanQRCode: FC = () => {
     }, [isScanning]);
 
     const scanQR = async () => {
-        setIsScanning(true);
-        await QRScanService.requestCameraPermission();
-        const QRCodeJson = await QRScanService.scan();
-        setIsScanning(false);
+        QRScanService.getCameraPermissionStatus().then(async () => {
+            setIsScanning(true);
+            await QRScanService.requestCameraPermission();
+            const QRCodeJson = await QRScanService.scan();
+            setIsScanning(false);
 
-        if(QRCodeJson.transport === "ble"){
-            if(isPlatform('android')){
-                navigation.toRoute('RequestLocationPermissions');
+            if(QRCodeJson.transport === "ble"){
+                if(isPlatform('android')){
+                    navigation.toRoute('RequestLocationPermissions');
+                } else {
+                    navigation.toRoute('Instructions');
+                }
             } else {
                 navigation.toRoute('Instructions');
             }
-        } else {
-            navigation.toRoute('Instructions');
-        }
+        }).catch(() => {
+            navigation.toRoute('RequestCameraPermissions');
+        });
     };
 
     const cancelScan = () => {

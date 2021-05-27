@@ -59,9 +59,6 @@ export const RequestLocationPermissions: FC = () => {
             </PageBody>
             <PageFooter>
                     <Button label="Ok, vraag maar" onClick={handleSubmit} className={classes.padded} />
-                    // Cancel button is the commonly understood way for users to cancel a partially started action
-                    // TODO: is there a way to have the Cancel button next to the Ok button?
-                    <Button label="Annuleren" onClick={() => { navigation.toRoute('ScanQRCode') }} className={classes.padded} />
                     <SlimButton label="Ga naar Instellingen" onClick={openSettings} className={classes.padded} />
             </PageFooter>
         </Page>
