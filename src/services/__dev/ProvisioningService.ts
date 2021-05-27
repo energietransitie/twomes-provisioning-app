@@ -1,4 +1,5 @@
 import { IProvisioningService } from "../ProvisioningService";
+import { QRCodeJson } from "../QRScanService";
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ESPDevice = any;
@@ -10,14 +11,6 @@ type ConnectionStatus = any;
 type Network = any;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type LocationPermissionStatus = any;
-
-interface EspDeviceQRJson {
-    name: string;
-    pop: string; // Proof-of-Possesion
-    transport: "softap" | "ble";
-    security: 0 | 1; // 0 = unsecure, 1 = secure
-    password: string;
-}
 
 export class ProvisioningServiceDev implements IProvisioningService {
 
@@ -48,7 +41,7 @@ export class ProvisioningServiceDev implements IProvisioningService {
         return { permissionStatus: "granted" };
     }
 
-    public static async createEspDevice(espDeviceQRJson: EspDeviceQRJson): Promise<ESPDevice> {
+    public static async createEspDevice(espDeviceQRJson: QRCodeJson): Promise<ESPDevice> {
         this.pendingAction = new Promise((resolve) => {
             setTimeout(() => {
                 this.espDevice = { id: 0, device: espDeviceQRJson };

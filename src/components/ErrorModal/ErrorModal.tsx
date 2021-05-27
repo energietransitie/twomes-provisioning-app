@@ -25,12 +25,13 @@ export const ErrorModal: FC<ErrorModalProps> = (props) => {
         callback?.();
     };
 
-    const errorMessage = typeof error === 'string' ? error : error.message;
+    console.log('MARCO', error);
+    const errorMessage = (typeof error === 'string' ? error : error?.message) || "Onbekende fout";
 
     return (
         <Modal title='Er is een fout opgetreden' onSubmit={handleSubmit}>
             Er lijkt onverwachts iets fout te zijn gegaan.
-            
+
             <div className={classes.errorMessage}>
                 {errorMessage}
             </div>

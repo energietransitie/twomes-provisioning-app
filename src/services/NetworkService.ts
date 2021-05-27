@@ -1,11 +1,7 @@
 import { Network } from '../services/ProvisioningService';
 
-
-
-type KnownNetworkList = Array<Network>;
-
 export class NetworkService {
-    private static KnownNetworks: KnownNetworkList = [];
+    private static KnownNetworks: Network[] = [];
 
     public static SaveNetwork(network: Network) : void {
         let isNewNetwork = true;
