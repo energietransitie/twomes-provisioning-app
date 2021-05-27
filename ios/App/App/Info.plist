@@ -43,6 +43,8 @@
 	</array>
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
+	<key>ITSAppUsesNonExemptEncryption</key>
+	<false/>
 	<key>LSRequiresIPhoneOS</key>
 	<true/>
 	<key>NSAppTransportSecurity</key>
@@ -51,11 +53,11 @@
 		<true/>
 	</dict>
 	<key>NSBluetoothAlwaysUsageDescription</key>
-	<string>Your bluetooth is required for xyz benefits for you</string>
+	<string>Voor het verbinden met het meetapparaat</string>
 	<key>NSBluetoothPeripheralUsageDescription</key>
-	<string>Your bluetooth peripheral is required for xyz benefits for you</string>
+	<string>Voor het vinden van en verbinden met het meetapparaat</string>
 	<key>NSCameraUsageDescription</key>
-	<string>To Take Photos and Video</string>
+	<string>Voor het scannen van de QR Code van het meetapparaat</string>
 	<key>NSLocalNetworkUsageDescription</key>
 	<string>Your local network usage info is required for xyz benefits for you</string>
 	<key>NSLocationAlwaysUsageDescription</key>

@@ -7,11 +7,11 @@ import { OpenNativeSettings } from '@ionic-native/open-native-settings';
 import { useNavigation } from '../router/useNavigation';
 import { CameraPermisionStatus, QRScanService } from '../services/QRScanService';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
     padded: {
         margin: '10px 0'
     }
-}));
+});
 
 export const RequestCameraPermissions: FC = () => {
     const classes = useStyles();
@@ -35,9 +35,6 @@ export const RequestCameraPermissions: FC = () => {
 
     const handleSubmit = async () => {
         try{
-            // TODO: Fix type
-            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-            // @ts-ignore
             await QRScanService.requestCameraPermission();
             navigation.toRoute('ScanQRCode');
         } catch (e){
@@ -59,9 +56,6 @@ export const RequestCameraPermissions: FC = () => {
             </PageBody>
             <PageFooter>
                     <Button label="Ok, vraag maar" onClick={handleSubmit} className={classes.padded} />
-                    // Cancel button is the commonly understood way for users to cancel a partially started action
-                    // TODO: is there a way to have the Cancel button next to the Ok button?
-                    <Button label="Annuleren" onClick={() => { navigation.toRoute('ScanQRCode') }} className={classes.padded} />
                     <SlimButton label="Ga naar Instellingen" onClick={openSettings} className={classes.padded} />
             </PageFooter>
         </Page>

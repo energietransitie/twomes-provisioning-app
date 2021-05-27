@@ -3,6 +3,7 @@ import React, { ChangeEvent, FC, useState } from 'react';
 import { makeStyles } from '../../theme/makeStyles';
 import { Header } from '../Header';
 import { BaseProps } from '../IBaseProps';
+import { EyeSlashIcon, EyeIcon } from '../Icon';
 
 const useStyles = makeStyles<'container'|'input'|'label'|'fieldIcon', InputProps>(theme => ({
     container: {
@@ -80,7 +81,7 @@ export const Input: FC<InputProps> = (props) => {
                     onChange={handleChange}
                     onFocus={onFocus} />
                 
-                <span className={classNames(classes.fieldIcon)} onClick={toggleVisible}>{isPassword ? '★' : '©'}</span>
+                <span className={classNames(classes.fieldIcon)} onClick={toggleVisible}>{isPassword ? <EyeIcon /> : <EyeSlashIcon />}</span>
             </div>
         </div>
     );

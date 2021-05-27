@@ -1,5 +1,5 @@
 import React, { FC } from 'react';
-import { Button } from '../base-components';
+import { SlimButton } from '../base-components';
 import { useNavigation } from '../router/useNavigation';
 import { Page, PageBody, PageFooter} from '../components/Page';
 
@@ -15,7 +15,7 @@ export const Invite: FC = () => {
             </PageBody>
 
             <PageFooter>
-                <Button label="Ik ben een tester" onClick={() => navigation.toRoute('RequestCameraPermissions') } ></Button>
+                <SlimButton label="Vorige pagina" onClick={() => navigation.toRoute('Welcome') } ></SlimButton>
             </PageFooter>
         </Page>
     );
