@@ -3,6 +3,11 @@ import { ActivateAccountResponse, ActivateDeviceResponse, IApiService } from "..
 export class ApiServiceDev implements IApiService {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    public static setSessionToken(token: string): void {
+        return;
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
     public static async activateAccount(activation_token: string): Promise<ActivateAccountResponse> {
         return new Promise((resolve) => {
             setTimeout(() => {
@@ -14,7 +19,7 @@ export class ApiServiceDev implements IApiService {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public static async activateDevice(proof_of_presence: string): Promise<ActivateDeviceResponse> {
+    public static async activateDevice(proof_of_presence_id: string): Promise<ActivateDeviceResponse> {
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve({

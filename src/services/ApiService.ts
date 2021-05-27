@@ -20,11 +20,16 @@ export class ApiServiceProd {
 
     private static sessionToken: string;
 
+    public static setSessionToken(token: string): void {
+        ApiServiceProd.sessionToken = token;
+    }
+
     private static async request<R extends Json>(path: string, requestBody?: Json, includeSessionToken = false): Promise<R> {
         const response = await fetch(`${API_HOST}${path}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
+                'cache-control': 'no-cache',
                 ...(includeSessionToken
                     ? { Authorization: `Bearer ${ApiServiceProd.sessionToken}`}
                     : {}
@@ -49,9 +54,9 @@ export class ApiServiceProd {
         return response;
     }
 
-    public static async activateDevice(proof_of_presence: string): Promise<ActivateDeviceResponse> {
+    public static async activateDevice(proof_of_presence_id: string): Promise<ActivateDeviceResponse> {
         return ApiServiceProd.request<ActivateDeviceResponse>('/account/device/activate', {
-            proof_of_presence
+            proof_of_presence_id
         }, true);
     }
 

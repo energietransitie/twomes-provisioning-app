@@ -29,7 +29,9 @@ export const Instructions: FC = () => {
             setInstructionsSrc(data.device_type.installation_manual_url);
             setIsFetching(false);
         }).catch((error) => {
-            ErrorModalService.showErrorModal({ error });
+            ErrorModalService.showErrorModal({ error , callback: () => {
+                navigation.toRoute('ScanQRCode');
+            }});
         });
     }, []);
 
