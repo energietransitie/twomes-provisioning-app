@@ -14,7 +14,7 @@ export class ApiServiceDev implements IApiService {
                 resolve({
                     session_token: 'abcde12345'
                 });
-            }, 1000);
+            }, 100);
         });
     }
 
@@ -26,10 +26,10 @@ export class ApiServiceDev implements IApiService {
                     id: 1,
                     device_type: {
                         name: 'Generic-Test',
-                        installation_manual_url: 'https://energietransitiewindesheim.nl/twomes/installation_instruction/generic_test.html'
+                        installation_manual_url: '/resources/InstructionsTemplate.html'
                     }
                 });
-            }, 1000);
+            }, 100);
         });
     }
 

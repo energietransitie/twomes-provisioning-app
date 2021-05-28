@@ -19,7 +19,7 @@ FDLService.init();
         const storedToken = await StorageService.get('token');;
         if (!!storedToken) {
             authenticated = !!storedToken;
-            ApiService.setSessionToken(storedToken);
+            ApiService.setSessionToken(storedToken as string);
         }
 
         // Register Listener for Firebase DynamicLinks holding an account activation token.
