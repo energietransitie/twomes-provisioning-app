@@ -28,7 +28,7 @@ export const Instructions: FC = () => {
             </PageBody>
 
             <PageFooter>
-                <Button label="Volgende stap" onClick={handleSubmit} />
+                <Button label="Ok, heb ik gedaan" onClick={handleSubmit} />
             </PageFooter>
         </Page>
     );
