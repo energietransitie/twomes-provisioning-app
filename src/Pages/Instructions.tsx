@@ -53,7 +53,7 @@ export const Instructions: FC = () => {
             </PageBody>
 
             <PageFooter>
-                {!isFetching && <Button label="Volgende stap" onClick={handleSubmit} />}
+                {!isFetching && <Button label="Ok, heb ik gedaan" onClick={handleSubmit} />}
             </PageFooter>
         </Page>
     );
