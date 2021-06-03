@@ -1,7 +1,7 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { App } from './App';
-import {Plugins} from "@capacitor/core";
+import { Plugins } from "@capacitor/core";
 import { ApiService } from './services/ApiService';
 import { StorageService } from './services/StorageService';
 import { FDLService } from './services/FDLService';

@@ -1,9 +1,9 @@
 import React, { FC, useState, useEffect } from 'react';
-import { Button, Header, PaddedContainer, Portal, SlimButton } from '../../base-components';
-import { makeStyles } from '../../theme/makeStyles';
-import { Page, PageBody } from './Page';
-import { QRScanService } from '../../services/QRScanService';
-import { useNavigation } from '../useNavigation';
+import { Button, Header, PaddedContainer, Portal, SlimButton } from '../base-components';
+import { makeStyles } from '../theme/makeStyles';
+import { Page, PageBody } from '../components/Page';
+import { QRScanService } from '../services/QRScanService';
+import { useNavigation } from '../router/useNavigation';
 import { isPlatform } from '@ionic/react';
 
 const useStyles = makeStyles(theme => ({
@@ -38,20 +38,24 @@ export const ScanQRCode: FC = () => {
     }, [isScanning]);
 
     const scanQR = async () => {
-        setIsScanning(true);
-        await QRScanService.requestCameraPermission();
-        const QRCodeJson = await QRScanService.scan();
-        setIsScanning(false);
+        QRScanService.getCameraPermissionStatus().then(async () => {
+            setIsScanning(true);
+            await QRScanService.requestCameraPermission();
+            const QRCodeJson = await QRScanService.scan();
+            setIsScanning(false);
 
-        if(QRCodeJson.transport === "ble"){
-            if(isPlatform('android')){
-                navigation.toRoute('RequestLocationPermissions');
+            if(QRCodeJson.transport === "ble"){
+                if(isPlatform('android')){
+                    navigation.toRoute('RequestLocationPermissions');
+                } else {
+                    navigation.toRoute('Instructions');
+                }
             } else {
                 navigation.toRoute('Instructions');
             }
-        } else {
-            navigation.toRoute('Instructions');
-        }
+        }).catch(() => {
+            navigation.toRoute('RequestCameraPermissions');
+        });
     };
 
     const cancelScan = () => {
@@ -71,7 +75,7 @@ export const ScanQRCode: FC = () => {
             <PageBody>
                 <Header h1={true} >Scan een QR-code</Header>
                 <p>Pak een meetapparaatje. De de QR-code staat op een sticker, meestal op de achterkant van het meetapparaatje.</p>
-                <br>
+                <br/>
                 <img className={classes.image} alt="Scan" src="/resources/ScanQRCode.png" />
                 <Button label="Scannen" onClick={scanQR} />
             </PageBody>

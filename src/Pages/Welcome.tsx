@@ -1,9 +1,9 @@
 import classNames from 'classnames';
 import React, { FC } from 'react';
-import { Button, Header, SlimButton } from '../../base-components';
-import { makeStyles } from '../../theme/makeStyles';
-import { useNavigation } from '../useNavigation';
-import { Page, PageBody, PageFooter } from './Page';
+import { Button, Header, SlimButton } from '../base-components';
+import { makeStyles } from '../theme/makeStyles';
+import { useNavigation } from '../router/useNavigation';
+import { Page, PageBody, PageFooter } from '../components/Page';
 
 const useStyles = makeStyles(theme => ({
     body: {
@@ -21,6 +21,9 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
+const RESEARCH_GROUP_URL = 'https://www.windesheim.nl/onderzoek/lectoraten/energietransitie';
+const PRIVACY_URL = 'https://energietransitiewindesheim.nl/assendorp2021/privacy.html';
+
 export const Welcome: FC = () => {
     const classes = useStyles();
     const navigation = useNavigation();
@@ -37,8 +40,8 @@ export const Welcome: FC = () => {
                 </div>
 
                 <div>
-                    <SlimButton onClick={() => { /* */ }} label="Lectoraat Energietransitie" className={classes.padded} />
-                    <SlimButton onClick={() => { /* */ }} label="Privacyverklaring" className={classes.padded} />
+                    <SlimButton onClick={() => { window.open(RESEARCH_GROUP_URL, '_system', 'location=yes') }} label="Lectoraat Energietransitie" className={classes.padded} />
+                    <SlimButton onClick={() => { window.open(PRIVACY_URL, '_system', 'location=yes') }} label="Privacyverklaring" className={classes.padded} />
                 </div>
             </PageBody>
 

@@ -1,11 +1,11 @@
 import React, { FC, useEffect, useState, } from 'react';
-import { Button, SlimButton } from '../../base-components';
-import { makeStyles } from '../../theme/makeStyles';
-import { Page, PageBody, PageFooter } from './Page';
+import { Button, SlimButton } from '../base-components';
+import { makeStyles } from '../theme/makeStyles';
+import { Page, PageBody, PageFooter } from '../components/Page';
 import { OpenNativeSettings } from '@ionic-native/open-native-settings';
 
-import { useNavigation } from '../useNavigation';
-import { CameraPermisionStatus, QRScanService } from '../../services/QRScanService';
+import { ProvisioningService } from '../services/ProvisioningService';
+import { useNavigation } from '../router/useNavigation';
 
 const useStyles = makeStyles(theme => ({
     padded: {
@@ -13,20 +13,20 @@ const useStyles = makeStyles(theme => ({
     }
 }));
 
-export const RequestCameraPermissions: FC = () => {
+export const RequestLocationPermissions: FC = () => {
     const classes = useStyles();
     const navigation = useNavigation();
     const [appRefocus, setAppRefocus] = useState(0);
 
     useEffect(() => {
         const getPermissionStatus = async () => {
-            const permissionStatus = await QRScanService.getCameraPermissionStatus();
-            if (permissionStatus === CameraPermisionStatus.Granted) {
-                navigation.toRoute("ScanQRCode");
+            const { permissionStatus } = await ProvisioningService.checkLocationPermissions();
+            if (permissionStatus === "granted") {
+                navigation.toRoute("Instructions");
             }
         };
         getPermissionStatus();
-    }, [appRefocus]); 
+    }, [appRefocus]); // Step 3. Add appRefocus to useEffect dependency list `}, [appRefocus]); `
 
     const onResume = () => {
         document.removeEventListener("resume",onResume);
@@ -38,8 +38,8 @@ export const RequestCameraPermissions: FC = () => {
             // TODO: Fix type
             // eslint-disable-next-line @typescript-eslint/ban-ts-comment
             // @ts-ignore
-            await QRScanService.requestCameraPermission();
-            navigation.toRoute('ScanQRCode');
+            await ProvisioningService.requestLocationPermissions();
+            navigation.toRoute('Instructions');
         } catch (e){
             console.log(e);
         }
@@ -53,15 +53,12 @@ export const RequestCameraPermissions: FC = () => {
     return (
         <Page>
             <PageBody>
-                <p>Om de QR-code te kunnen scannen zal de app u zo vragen om toestemming.</p>
+                <p>Om dit meetapparaat te kunnen installeren zal de app u zo vragen om toestemming.</p>
                 <br/> 
-                <p>Zonder deze permissies kunt u de meetapparaten niet goed installeren.</p>
+                <p>De Warmtewachter app zal uw locatie echter nooit opvragen. Tijdens het installeren van dit meetapparaat zal de app echter wel Bluetooth gebruiken, bij Android valt het gebruik van Bluetooth onder locatiediensten. Vandaar dat de app u toch om deze permissie moet vragen.</p>
             </PageBody>
             <PageFooter>
                     <Button label="Ok, vraag maar" onClick={handleSubmit} className={classes.padded} />
-                    // Cancel button is the commonly understood way for users to cancel a partially started action
-                    // TODO: is there a way to have the Cancel button next to the Ok button?
-                    <Button label="Annuleren" onClick={() => { navigation.toRoute('ScanQRCode') }} className={classes.padded} />
                     <SlimButton label="Ga naar Instellingen" onClick={openSettings} className={classes.padded} />
             </PageFooter>
         </Page>

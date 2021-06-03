@@ -1,10 +1,10 @@
 import React, { FC } from 'react';
-import { Button } from '../../base-components';
-import { Page, PageBody, PageFooter, PageHeader } from './Page';
+import { Button } from '../base-components';
+import { Page, PageBody, PageFooter, PageHeader } from '../components/Page';
 
-import { ProvisioningService } from '../../services/ProvisioningService';
-import { QRScanService } from '../../services/QRScanService';
-import { useNavigation } from '../useNavigation';
+import { ProvisioningService } from '../services/ProvisioningService';
+import { QRScanService } from '../services/QRScanService';
+import { useNavigation } from '../router/useNavigation';
 
 export const Instructions: FC = () => {
     const navigation = useNavigation();
@@ -28,7 +28,7 @@ export const Instructions: FC = () => {
             </PageBody>
 
             <PageFooter>
-                <Button label="Volgende stap" onClick={handleSubmit} />
+                <Button label="Ok, heb ik gedaan" onClick={handleSubmit} />
             </PageFooter>
         </Page>
     );
