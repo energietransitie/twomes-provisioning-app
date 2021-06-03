@@ -32,6 +32,7 @@ export class ErrorModalService {
 
     public static onChange(handler: OnErrorHandler): void {
         ErrorModalService.handlers.push(handler);
+        handler(ErrorModalService.modals);
     }
 
     public static offChange(handler: OnErrorHandler): void {

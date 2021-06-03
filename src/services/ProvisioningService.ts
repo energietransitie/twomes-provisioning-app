@@ -1,6 +1,7 @@
 // import { EspProvisioning } from 'esp-provisioning-plugin';
 import { Plugins } from '@capacitor/core';
 import { NetworkService } from './NetworkService';
+import { QRCodeJson } from './QRScanService';
 import { ProvisioningServiceDev } from './__dev/ProvisioningService';
 
 const { EspProvisioning } = Plugins;
@@ -26,13 +27,6 @@ export interface Network {
   }
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ProvisionStatus = any;
-interface EspDeviceQRJson {
-    name: string;
-    pop: string; // Proof-of-Possesion
-    transport: "softap" | "ble";
-    security: 0 | 1; // 0 = unsecure, 1 = secure
-    password: string;
-}
 
 class ProvisioningServiceProd {
 
@@ -55,7 +49,7 @@ class ProvisioningServiceProd {
         return this.pendingAction;
     }
 
-    public static async createEspDevice(espDeviceQRJson: EspDeviceQRJson): Promise<ESPDevice> {
+    public static async createEspDevice(espDeviceQRJson: QRCodeJson): Promise<ESPDevice> {
         // eslint-disable-next-line @typescript-eslint/no-explicit-any
         this.pendingAction = EspProvisioning.createESPDevice(espDeviceQRJson as any);
         const result = await this.pendingAction;

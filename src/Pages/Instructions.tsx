@@ -1,20 +1,42 @@
-import React, { FC } from 'react';
-import { Button } from '../base-components';
+import React, { FC, useEffect, useState } from 'react';
+import { Button, Loader } from '../base-components';
 import { Page, PageBody, PageFooter, PageHeader } from '../components/Page';
 
 import { ProvisioningService } from '../services/ProvisioningService';
 import { QRScanService } from '../services/QRScanService';
 import { useNavigation } from '../router/useNavigation';
+import { ApiService } from '../services/ApiService';
+import { ErrorModalService } from '../services/ErrorModalService';
+import { makeStyles } from '../theme/makeStyles';
+
+const useStyles = makeStyles({
+    iframe: {
+        border: 'none',
+        flexGrow: 1
+    }
+});
 
 export const Instructions: FC = () => {
+    const [isFetching, setIsFetching] = useState(true);
+    const [instructionsSrc, setInstructionsSrc] = useState<string>();
+
     const navigation = useNavigation();
+    const classes = useStyles();
 
     const QRCodeJson = QRScanService.getQRCodeJson();
 
+    useEffect(() => {
+        ApiService.activateDevice(QRCodeJson.pop).then((data) => {
+            setInstructionsSrc(data.device_type.installation_manual_url);
+            setIsFetching(false);
+        }).catch((error) => {
+            ErrorModalService.showErrorModal({ error , callback: () => {
+                navigation.toRoute('ScanQRCode');
+            }});
+        });
+    }, []);
+
     const handleSubmit = async () => {
-        // TODO: Fix type
-        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-        // @ts-ignore
         ProvisioningService.createEspDevice(QRCodeJson);
         navigation.toRoute('ConnectToDevice');
     };
@@ -24,11 +46,14 @@ export const Instructions: FC = () => {
             <PageHeader>{QRCodeJson.name}</PageHeader>
 
             <PageBody>
-                Steek de stekker in het stopcontact
+                {isFetching
+                    ? <Loader />
+                    : <iframe className={classes.iframe} src={instructionsSrc}></iframe> }
+
             </PageBody>
 
             <PageFooter>
-                <Button label="Ok, heb ik gedaan" onClick={handleSubmit} />
+                {!isFetching && <Button label="Ok, heb ik gedaan" onClick={handleSubmit} />}
             </PageFooter>
         </Page>
     );

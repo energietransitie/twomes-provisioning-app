@@ -92,7 +92,7 @@ export const WifiList: FC = () => {
                                         className={classes.section}
                                         value={passphrase}
                                         label="Wachtwoord:"
-                                        disabled={!network.security}
+                                        disabled={false /* TODO: renable > !network.security */}
                                         placeholder={network.security ? "vul hier uw wachtwoord" : "onbeveiligd netwerk"}
                                         onChange={handlePasswordChange}
                                         onFocus={handlePasswordFocus}

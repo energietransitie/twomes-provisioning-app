@@ -5,6 +5,7 @@ import { Plugins } from "@capacitor/core";
 import { ApiService } from './services/ApiService';
 import { StorageService } from './services/StorageService';
 import { FDLService } from './services/FDLService';
+import { ErrorModalService } from './services/ErrorModalService';
 
 const { SplashScreen } = Plugins;
 
@@ -16,17 +17,20 @@ FDLService.init();
 
         // Check Store for existing account token
         const storedToken = await StorageService.get('token');;
-        authenticated = !!storedToken;
+        if (!!storedToken) {
+            authenticated = !!storedToken;
+            ApiService.setSessionToken(storedToken as string);
+        }
 
         // Register Listener for Firebase DynamicLinks holding an account activation token.
         FDLService.onFDLReceived(async (dynamicLink) => {
             if (dynamicLink.root === 'account' && dynamicLink.sub) {
                 const token = dynamicLink.sub.root;
-                ApiService.activateAccount(token).then(({ session_token}) => {
+                ApiService.activateAccount(token).then(({ session_token }) => {
                     StorageService.set('token', session_token);
                     authenticated = true;
-                }).catch((err) => {
-                    alert(err?.message);
+                }).catch((error: Error) => {
+                    ErrorModalService.showErrorModal({ error });
                 }); 
             }
         });

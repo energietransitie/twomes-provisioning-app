@@ -21,8 +21,6 @@ export const App: FC<AppProps> = ({ authenticated = false }) => {
         }
     }, []);
 
-    console.log('MARCO render', errorModals);
-
     return (
         <>
             <Router authenticated={authenticated} />

@@ -17,7 +17,7 @@ export const ConnectToDevice: FC = () => {
                 navigation.toRoute('WifiList');
             } catch (error) {
                 ErrorModalService.showErrorModal({ error, callback: () => {
-                    navigation.toRoute('ScanQRCode');
+                    navigation.toRoute('Instructions');
                 }});
             }
         }
