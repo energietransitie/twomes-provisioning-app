@@ -10,11 +10,30 @@ export type ActivateAccountResponse = {
 
 export type ActivateDeviceResponse = {
     id: number;
+    name: string;
     device_type: {
         name: string;
+        display_name: string;
         installation_manual_url: string;
-    };
+    }
 };
+
+export type DeviceTypeResponse = {
+    name: string;
+    display_name: string;
+    installation_manual_url: string;
+}
+
+export type DeviceResponse = {
+    id: number;
+    name: string;
+    device_type: {
+        name: string;
+        display_name: string;
+        installation_manual_url: string;
+    }
+    latest_measurement_timestamp: string | null;
+}
 
 export class ApiServiceProd {
 
@@ -24,9 +43,9 @@ export class ApiServiceProd {
         ApiServiceProd.sessionToken = token;
     }
 
-    private static async request<R extends Json>(path: string, requestBody?: Json, includeSessionToken = false): Promise<R> {
+    private static async request<R extends Json>(method: 'GET' | 'POST' | 'PUT', path: string, params?: { body?: Json }, includeSessionToken = false): Promise<R> {
         const response = await fetch(`${API_HOST}${path}`, {
-            method: 'POST',
+            method: method,
             headers: {
                 'Content-Type': 'application/json',
                 'cache-control': 'no-cache',
@@ -35,7 +54,7 @@ export class ApiServiceProd {
                     : {}
                 )
             },
-            body: JSON.stringify(requestBody)
+            body: JSON.stringify(params?.body)
         });
         
         const json = await response.json();
@@ -47,17 +66,25 @@ export class ApiServiceProd {
     }
 
     public static async activateAccount(activation_token: string): Promise<ActivateAccountResponse> {
-        const response = await ApiServiceProd.request<ActivateAccountResponse>('/account/activate', {
-            activation_token
+        const response = await ApiServiceProd.request<ActivateAccountResponse>('POST', '/account/activate', {
+            body: { activation_token }
         });
         ApiServiceProd.sessionToken = response.session_token;
         return response;
     }
 
-    public static async activateDevice(proof_of_presence_id: string): Promise<ActivateDeviceResponse> {
-        return ApiServiceProd.request<ActivateDeviceResponse>('/account/device/activate', {
-            proof_of_presence_id
+    public static async activateDevice(activation_token: string): Promise<ActivateDeviceResponse> {
+        return ApiServiceProd.request<ActivateDeviceResponse>('POST', '/account/device/activate', {
+            body: { activation_token }
         }, true);
+    }
+
+    public static async getInstallationManual(device_name: string): Promise<DeviceTypeResponse> {
+        return ApiServiceProd.request<DeviceTypeResponse>('GET', `/device_type/${device_name}`, {}, true);
+    }
+
+    public static async getDevice(device_name: string): Promise<DeviceResponse> {
+        return ApiServiceProd.request<DeviceResponse>('GET', `/device/${device_name}`, {}, true);
     }
 
 }

@@ -1,4 +1,4 @@
-import { ActivateAccountResponse, ActivateDeviceResponse, IApiService } from "../ApiService";
+import { ActivateAccountResponse, ActivateDeviceResponse, DeviceResponse, DeviceTypeResponse, IApiService } from "../ApiService";
 
 export class ApiServiceDev implements IApiService {
 
@@ -19,15 +19,48 @@ export class ApiServiceDev implements IApiService {
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
-    public static async activateDevice(proof_of_presence_id: string): Promise<ActivateDeviceResponse> {
+    public static async activateDevice(activation_token: string): Promise<ActivateDeviceResponse> {
         return new Promise((resolve) => {
             setTimeout(() => {
                 resolve({
                     id: 1,
+                    name: 'TWOMES-XXXXX',
                     device_type: {
                         name: 'Generic-Test',
-                        installation_manual_url: '/resources/InstructionsTemplate.html'
+                        display_name: 'testapparaatje',
+                        installation_manual_url: 'https://energietransitiewindesheim.nl/manuals/Generic-Test/'
                     }
+                });
+            }, 100);
+        });
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    public static async getInstallationManual(device_name: string): Promise<DeviceTypeResponse> {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve({
+                    name: 'Generic-Test',
+                    display_name: 'testapparaatje',
+                    installation_manual_url: 'https://energietransitiewindesheim.nl/manuals/Generic-Test/'
+                });
+            }, 100);
+        });
+    }
+
+    // eslint-disable-next-line @typescript-eslint/no-unused-vars
+    public static async getDevice(device_name: string): Promise<DeviceResponse> {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve({
+                    id: 1,
+                    name: 'TWOMES-XXXXX',
+                    device_type: {
+                        name: 'Generic-Test',
+                        display_name: 'testapparaatje',
+                        installation_manual_url: 'https://energietransitiewindesheim.nl/manuals/Generic-Test/'
+                    },
+                    latest_measurement_timestamp: '2021-06-07T08:09:59.809Z'
                 });
             }, 100);
         });

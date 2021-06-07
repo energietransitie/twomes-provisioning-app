@@ -26,8 +26,8 @@ export const Instructions: FC = () => {
     const QRCodeJson = QRScanService.getQRCodeJson();
 
     useEffect(() => {
-        ApiService.activateDevice(QRCodeJson.pop).then((data) => {
-            setInstructionsSrc(data.device_type.installation_manual_url);
+        ApiService.getInstallationManual(QRCodeJson.name).then((data) => {
+            setInstructionsSrc(data.installation_manual_url);
             setIsFetching(false);
         }).catch((error) => {
             ErrorModalService.showErrorModal({ error , callback: () => {
