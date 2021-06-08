@@ -50,8 +50,7 @@ class ProvisioningServiceProd {
     }
 
     public static async createEspDevice(espDeviceQRJson: QRCodeJson): Promise<ESPDevice> {
-        // eslint-disable-next-line @typescript-eslint/no-explicit-any
-        this.pendingAction = EspProvisioning.createESPDevice(espDeviceQRJson as any);
+        this.pendingAction = EspProvisioning.createESPDevice(espDeviceQRJson);
         const result = await this.pendingAction;
         this.espDevice = result;
         return this.espDevice;
