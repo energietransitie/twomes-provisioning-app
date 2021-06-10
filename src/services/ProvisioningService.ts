@@ -1,5 +1,6 @@
 // import { EspProvisioning } from 'esp-provisioning-plugin';
 import { Plugins } from '@capacitor/core';
+import { DeviceTypeResponse } from './ApiService';
 import { NetworkService } from './NetworkService';
 import { QRCodeJson } from './QRScanService';
 import { ProvisioningServiceDev } from './__dev/ProvisioningService';
@@ -10,13 +11,13 @@ const { EspProvisioning } = Plugins;
 (window as any).EspProvisioning = EspProvisioning;
 
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
-type ESPDevice = any;
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
 type NetworkList = any;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type ConnectionStatus = any;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type LocationPermissionStatus = any;
+// eslint-disable-next-line @typescript-eslint/no-explicit-any
+type ProvisionStatus = any;
 
 export interface Network {
     ssid: string;
@@ -24,9 +25,14 @@ export interface Network {
     channel: number;
     passphrase?: string;
     security?: boolean;
-  }
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type ProvisionStatus = any;
+}
+
+export type ESPDeviceData = QRCodeJson & { deviceType?: DeviceTypeResponse };
+export interface ESPDevice {
+    id: number;
+    device: QRCodeJson;
+    deviceType: DeviceTypeResponse;
+}
 
 class ProvisioningServiceProd {
 
@@ -49,11 +55,10 @@ class ProvisioningServiceProd {
         return this.pendingAction;
     }
 
-    public static async createEspDevice(espDeviceQRJson: QRCodeJson): Promise<ESPDevice> {
-        this.pendingAction = EspProvisioning.createESPDevice(espDeviceQRJson);
-        const result = await this.pendingAction;
-        this.espDevice = result;
-        return this.espDevice;
+    public static async createEspDevice(deviceData: ESPDevice): Promise<void> {
+        this.pendingAction = EspProvisioning.createESPDevice(deviceData);
+        const device = await this.pendingAction;
+        this.espDevice = { ...deviceData, ...device as ESPDevice };
     }
     public static getEspDevice(): ESPDevice {
         return this.espDevice;

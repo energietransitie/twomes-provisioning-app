@@ -33,6 +33,9 @@ export const ProcessProvisioning: FC = () => {
                 setTimeout(() => {
                     setProvisioningStatus('failure');
                     clearInterval(waitForHeartbeat);
+                    ErrorModalService.showErrorModal({ error: 'Await Heartbeat Timeout', callback: () => {
+                        navigation.toRoute('WifiCredentials');
+                    }});
                 }, 1000 * 60);
             } catch (error) {
                 setProvisioningStatus('failure');

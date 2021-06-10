@@ -2,7 +2,7 @@ import React, { FC, useEffect, useState } from 'react';
 import { Button, Loader } from '../base-components';
 import { Page, PageBody, PageFooter, PageHeader } from '../components/Page';
 
-import { ProvisioningService } from '../services/ProvisioningService';
+import { ESPDevice, ProvisioningService } from '../services/ProvisioningService';
 import { QRScanService } from '../services/QRScanService';
 import { useNavigation } from '../router/useNavigation';
 import { ApiService } from '../services/ApiService';
@@ -17,17 +17,16 @@ const useStyles = makeStyles({
 });
 
 export const Instructions: FC = () => {
+    const QRCodeJson = QRScanService.getQRCodeJson();
     const [isFetching, setIsFetching] = useState(true);
-    const [instructionsSrc, setInstructionsSrc] = useState<string>();
+    const [deviceData, setDeviceData] = useState<ESPDevice>(QRCodeJson);
 
     const navigation = useNavigation();
     const classes = useStyles();
 
-    const QRCodeJson = QRScanService.getQRCodeJson();
-
     useEffect(() => {
-        ApiService.getInstallationManual(QRCodeJson.name).then((data) => {
-            setInstructionsSrc(data.installation_manual_url);
+        ApiService.getInstallationManual(QRCodeJson.name).then((deviceType) => {
+            setDeviceData({ ...QRCodeJson, ...deviceType });
             setIsFetching(false);
         }).catch((error) => {
             ErrorModalService.showErrorModal({ error , callback: () => {
@@ -37,7 +36,7 @@ export const Instructions: FC = () => {
     }, []);
 
     const handleSubmit = async () => {
-        ProvisioningService.createEspDevice(QRCodeJson);
+        deviceData && ProvisioningService.createEspDevice(deviceData);
         navigation.toRoute('ConnectToDevice');
     };
 
@@ -48,7 +47,7 @@ export const Instructions: FC = () => {
             <PageBody>
                 {isFetching
                     ? <Loader />
-                    : <iframe className={classes.iframe} src={instructionsSrc}></iframe> }
+                    : <iframe className={classes.iframe} src={deviceData?.deviceType?.installation_manual_url}></iframe> }
 
             </PageBody>
 
