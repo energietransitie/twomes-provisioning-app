@@ -9,8 +9,8 @@ Contains the follow contents;
  4. [Scripts](#scripts)
 
 ### Prerequisites
- - Yarn installed.
- - Android Studio installed.
+ - [Yarn](https://classic.yarnpkg.com/) installed (on Windows, you can use the [Yarn msi installer](https://classic.yarnpkg.com/latest.msi));
+ - [Android Studio](https://developer.android.com/studio) installed.
  - Xcode installed.
 
 ### Installing dependencies
