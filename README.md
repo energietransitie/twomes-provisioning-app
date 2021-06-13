@@ -48,16 +48,21 @@ Project is: _in progress_
 This software is available under the [Apache 2.0 license](./LICENSE), Copyright 2021 [Research group Energy Transition, Windesheim University of Applied Sciences](https://windesheim.nl/energietransitie) 
 
 ## Credits
-This software is a collaborative effort of the following students:
-* Wietske Veneberg  ·  [@WVeneberg](https://github.com/WVeneberg)
-* Amicia Smit  ·  [@AmiciaSmit](https://github.com/AmiciaSmit)
-* Marco Prins  ·  [@mk-prins](https://github.com/mk-prins)
+This software is a collaborative effort of:
+* Wietske Veneberg · [@WVeneberg](https://github.com/WVeneberg)
+* Amicia Smit · [@AmiciaSmit](https://github.com/AmiciaSmit)
+* Marco Prins · [@mk-prins](https://github.com/mk-prins)
+
+Thanks also go to:
+* <thanks name 1> · [@Github_handle_1](https://github.com/<github_handle_1>) · Twitter [@Twitter_handle_1](https://twitter.com/<twitter_handle_1>)
+* <thanks name 2> · [@Github_handle_2](https://github.com/<github_handle_2>) · Twitter [@Twitter_handle_2](https://twitter.com/<twitter_handle_2>)
+* <thanks name 3> · [@Github_handle_3](https://github.com/<github_handle_3>) · Twitter [@Twitter_handle_3](https://twitter.com/<twitter_handle_3>)
+* etc. 
 
 Product owner:
-* Henri ter Hofte  ·  [@henriterhofte](https://github.com/henriterhofte)
+* Henri ter Hofte · [@henriterhofte](https://github.com/henriterhofte) · Twitter [@HeNRGi](https://twitter.com/HeNRGi)
 
 We use and gratefully aknowlegde the efforts of the makers of the following source code and libraries:
-
 * [Typescript](https://github.com/microsoft/TypeScript), by Microsoft, licensed under [Apache 2.0](https://github.com/microsoft/TypeScript/blob/master/LICENSE.txt)
 * [React](https://github.com/facebook/react/), by Facebook, Inc. and its affiliates., licensed under [MIT](https://github.com/facebook/react/blob/master/LICENSE)
 * [Capacitor](https://github.com/ionic-team/capacitor), by Drifty Co., licensed under [MIT](https://github.com/ionic-team/capacitor/blob/main/LICENSE)
