@@ -12,7 +12,8 @@ import { makeStyles } from '../theme/makeStyles';
 const useStyles = makeStyles({
     iframe: {
         border: 'none',
-        flexGrow: 1
+        flexGrow: 1,
+        maxWidth: '100%'
     }
 });
 
