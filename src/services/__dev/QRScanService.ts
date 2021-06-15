@@ -39,7 +39,7 @@ export class QRScanServiceDev implements IQRScanService {
                     security: 1
                 };
                 resolve(QRScanServiceDev.QRCodeJson);
-            }, 1000 * 10000);
+            }, 3000);
         });
     }
 
