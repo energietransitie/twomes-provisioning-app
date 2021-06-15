@@ -2,6 +2,7 @@ import { CameraPermisionStatus, IQRScanService, QRCodeJson } from "../QRScanServ
 
 export class QRScanServiceDev implements IQRScanService {
 
+    private static styleNode: HTMLStyleElement;
     private static QRCodeJson: QRCodeJson = {
         name: 'PROV_XXX',
         pop: 'abcd1234',
@@ -18,21 +19,28 @@ export class QRScanServiceDev implements IQRScanService {
     }
 
     public static prepareQRScan(): void {
-        return;
+        QRScanServiceDev.styleNode = document.createElement('style');
+        document.head.appendChild(QRScanServiceDev.styleNode);
+        (QRScanServiceDev.styleNode.sheet as CSSStyleSheet).insertRule('#root { opacity: 0 }');
+        (QRScanServiceDev.styleNode.sheet as CSSStyleSheet).insertRule('body { background: black }');
     }
 
     public static unprepareQRScan(): void {
-        return;
+        QRScanServiceDev.styleNode && document.head.removeChild(QRScanServiceDev.styleNode);
     }
 
     public static async scan(): Promise<QRCodeJson> {
-        QRScanServiceDev.QRCodeJson = {
-            name: 'PROV_XXX',
-            pop: 'abcd1234',
-            transport: 'ble',
-            security: 1
-        };
-        return QRScanServiceDev.QRCodeJson;
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                QRScanServiceDev.QRCodeJson = {
+                    name: 'PROV_XXX',
+                    pop: 'abcd1234',
+                    transport: 'ble',
+                    security: 1
+                };
+                resolve(QRScanServiceDev.QRCodeJson);
+            }, 1000 * 10000);
+        });
     }
 
     public static getQRCodeJson(): QRCodeJson {
