@@ -2,10 +2,9 @@ import React, { FC, useEffect, useState } from "react";
 import { Button, Header, Loader } from "../base-components";
 import { ProvisioningService } from "../services/ProvisioningService";
 import { useNavigation } from "../router/useNavigation";
-import { Page, PageBody, PageFooter } from "../components/Page";
+import { Page, PageBody, PageFooter, PageHeader } from "../components/Page";
 import { ErrorModalService } from "../services/ErrorModalService";
 import { ApiService } from "../services/ApiService";
-import { QRScanService } from "../services/QRScanService";
 
 type ProvisioningStatus = 'pendingConnection' | 'pendingHeartbeat' | 'failure' | 'success';
 
@@ -13,7 +12,7 @@ export const ProcessProvisioning: FC = () => {
     const navigation = useNavigation();
     const [provisioningStatus, setProvisioningStatus] = useState<ProvisioningStatus>('pendingConnection');
 
-    const QRCodeJson = QRScanService.getQRCodeJson();
+    const {device, deviceType} = ProvisioningService.getEspDevice();
 
     useEffect(() => {
         const handleProvisioning = async () => {
@@ -21,26 +20,29 @@ export const ProcessProvisioning: FC = () => {
                 await ProvisioningService.getPendingAction();
                 setProvisioningStatus('pendingHeartbeat');
 
-                const waitForHeartbeat = setInterval(() => {
-                    ApiService.getDevice(QRCodeJson.name).then((data) => {
+                let waitForHeartbeat: NodeJS.Timeout | null = setInterval(() => {
+                    ApiService.getDevice(device.name).then((data) => {
                         if (data.latest_measurement_timestamp) {
                             setProvisioningStatus('success');
-                            clearInterval(waitForHeartbeat);
+                            waitForHeartbeat && clearInterval(waitForHeartbeat);
+                            waitForHeartbeat = null;
                         }
                     });
                 }, 200);
 
                 setTimeout(() => {
-                    setProvisioningStatus('failure');
-                    clearInterval(waitForHeartbeat);
-                    ErrorModalService.showErrorModal({ error: 'Await Heartbeat Timeout', callback: () => {
-                        navigation.toRoute('WifiCredentials');
-                    }});
+                    if (waitForHeartbeat) {
+                        setProvisioningStatus('failure');
+                        clearInterval(waitForHeartbeat);
+                        ErrorModalService.showErrorModal({ error: 'Await Heartbeat Timeout', callback: () => {
+                            navigation.toRoute('WifiList');
+                        }});
+                    }
                 }, 1000 * 60);
             } catch (error) {
                 setProvisioningStatus('failure');
                 ErrorModalService.showErrorModal({ error, callback: () => {
-                    navigation.toRoute('WifiCredentials');
+                    navigation.toRoute('WifiList');
                 }});
             }
         }
@@ -53,6 +55,8 @@ export const ProcessProvisioning: FC = () => {
 
     return (
         <Page>
+            <PageHeader>{ deviceType.display_name }</PageHeader>
+
             <PageBody>
                 { provisioningStatus === 'pendingConnection' && <>
                     <Header>Het apparaat wordt verbonden met uw WiFi netwerk</Header>

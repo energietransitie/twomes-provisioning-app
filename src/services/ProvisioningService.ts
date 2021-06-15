@@ -26,8 +26,6 @@ export interface Network {
     passphrase?: string;
     security?: boolean;
 }
-
-export type ESPDeviceData = QRCodeJson & { deviceType?: DeviceTypeResponse };
 export interface ESPDevice {
     id: number;
     device: QRCodeJson;
@@ -55,10 +53,11 @@ class ProvisioningServiceProd {
         return this.pendingAction;
     }
 
-    public static async createEspDevice(deviceData: ESPDevice): Promise<void> {
-        this.pendingAction = EspProvisioning.createESPDevice(deviceData);
+    public static async createEspDevice(qrCodeJson: QRCodeJson, deviceType: DeviceTypeResponse): Promise<ESPDevice> {
+        this.pendingAction = EspProvisioning.createESPDevice(qrCodeJson);
         const device = await this.pendingAction;
-        this.espDevice = { ...deviceData, ...device as ESPDevice };
+        this.espDevice = { ...device as {}, deviceType} as ESPDevice;
+        return this.espDevice;
     }
     public static getEspDevice(): ESPDevice {
         return this.espDevice;
