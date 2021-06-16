@@ -37,7 +37,7 @@ export const ProcessProvisioning: FC = () => {
             } catch (error) {
                 setProvisioningStatus('failure');
                 ErrorModalService.showErrorModal({ error, callback: () => {
-                    navigation.toRoute('WifiCredentials');
+                    navigation.toRoute('WifiList');
                 }});
             }
         }
