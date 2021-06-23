@@ -1,6 +1,6 @@
 # Twomes WarmteWachter
 
-This repository contains the source code for the WarmteWachter App for both Android and iOS. The WarmteWachter app helps a user to install and connect one or more Twomes measurement devices in his home and to start, monitor and stop acquisition of monitoring data related to the heating of his/her home. 
+This repository contains the source code for the WarmteWachter App for both Android and iOS. The WarmteWachter app helps a user to install and connect one or more Twomes measurement devices that start collecting monitoring data related to home heating. 
 
 ## Table of contents
 * [General info](#general-info)
@@ -19,9 +19,9 @@ The app is meant to be installed automatically by clicking on e-mail invitation 
 To deploy and sucessfully use the WarmteWachter app you need to have received an e-mail with a proper Firebase Dynamic Link and you need be in the possession of at least one Twomes measurment device.
 
 ## Deploying
-As we are currently stil in development, to get an (internal) beta tester version, you need to contact us using the following emailaddress; `marco.prins@windesheim.nl`. Please include the Apple ID or Google Account that's being used on the device you wish to install the WarmteWachter app.
+To get an (internal) test version of the app, you need to contact us using the following emailaddress; `marco.prins@windesheim.nl`. Please include the Apple ID or Google Account of the device you intend to install the WarmteWachter app on.
 
-Eventually the production version of the app will be downloaded and installed directly from the Apple App Store or Google Play Store after clicking the Firebase Dynamic Link on your iPhone or Android smartphone, respectively.
+Eventually, the app will be downloaded and installed directly from the Apple App Store or Google Play Store after clicking the Firebase Dynamic Link on your iPhone or Android smartphone, respectively.
 
 ## Developing
 For getting started with the development of the WarmteWachter app see [Developing - Getting Started](./docs/developing.md).
@@ -32,12 +32,12 @@ List of features ready and TODOs for future development. Ready:
 - [x] activate your account using a Firebase Dynamic Link;
 - [x] scan the QR code of any of a Twomes measurment device;
 - [x] connect via BLE to a Twomes measurement device to provision internet connectivity via your home Wi-Fi network.
+- [x] present device-type specific installation instructions (fetched from the Twomes backoffice server);
+- [x] verify succesful device provisioning with the Twomes backoffice server;
 
 To-do:
 
-- [ ] present device specific 'Installation Instructions' that have been fetched from the Twomes backoffice server;
 - [ ] connect via SoftAP to a Twomes measurement device to provision internet connectivity via your home Wi-Fi network;
-- [ ] verify cuccesful device provisioning with the Twomes backoffice server;
 - [ ] more complete non-happy flow coverage;
 - [ ] usability improvements.
 
