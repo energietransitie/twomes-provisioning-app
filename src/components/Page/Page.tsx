@@ -17,7 +17,8 @@ const useStyles = makeStyles(theme => ({
         background: theme.colors.white,
         display: 'flex',
         flexDirection: 'column',
-        justifyContent: 'space-between'
+        justifyContent: 'space-between',
+        overflowY: 'auto'
     }
 }));
 
