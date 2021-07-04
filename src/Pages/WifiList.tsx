@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 export const WifiList: FC = () => {
-    const { device } = ProvisioningService.getEspDevice();
+    const { deviceType } = ProvisioningService.getEspDevice();
     const classes = useStyles();
     const navigation = useNavigation();
 
@@ -74,7 +74,7 @@ export const WifiList: FC = () => {
 
     return (
         <Page>
-            <PageHeader>{device.name}</PageHeader>
+            <PageHeader>{deviceType.display_name}</PageHeader>
             
             <PageBody>
                 <Header>Selecteer uw WiFi-netwerk</Header>
@@ -97,7 +97,6 @@ export const WifiList: FC = () => {
                                         onChange={handlePasswordChange}
                                         onFocus={handlePasswordFocus}
                                     />
-
 
                                     <Button
                                         className={classes.section}

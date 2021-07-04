@@ -3,9 +3,9 @@ import { Button, Loader } from '../base-components';
 import { Page, PageBody, PageFooter, PageHeader } from '../components/Page';
 
 import { ProvisioningService } from '../services/ProvisioningService';
-import { QRScanService } from '../services/QRScanService';
+import { QRCodeJson, QRScanService } from '../services/QRScanService';
 import { useNavigation } from '../router/useNavigation';
-import { ApiService } from '../services/ApiService';
+import { ApiService, DeviceTypeResponse } from '../services/ApiService';
 import { ErrorModalService } from '../services/ErrorModalService';
 import { makeStyles } from '../theme/makeStyles';
 
@@ -17,17 +17,16 @@ const useStyles = makeStyles({
 });
 
 export const Instructions: FC = () => {
+    const QRCodeJson = QRScanService.getQRCodeJson();
     const [isFetching, setIsFetching] = useState(true);
-    const [instructionsSrc, setInstructionsSrc] = useState<string>();
+    const [deviceTypeData, setDeviceTypeData] = useState<DeviceTypeResponse>();
 
     const navigation = useNavigation();
     const classes = useStyles();
 
-    const QRCodeJson = QRScanService.getQRCodeJson();
-
     useEffect(() => {
-        ApiService.getInstallationManual(QRCodeJson.name).then((data) => {
-            setInstructionsSrc(data.installation_manual_url);
+        ApiService.getInstallationManual(QRCodeJson.name).then((deviceType) => {
+            setDeviceTypeData(deviceType);
             setIsFetching(false);
         }).catch((error) => {
             ErrorModalService.showErrorModal({ error , callback: () => {
@@ -37,18 +36,20 @@ export const Instructions: FC = () => {
     }, []);
 
     const handleSubmit = async () => {
-        ProvisioningService.createEspDevice(QRCodeJson);
-        navigation.toRoute('ConnectToDevice');
+        if (deviceTypeData) {
+            ProvisioningService.createEspDevice(QRCodeJson, deviceTypeData);
+            navigation.toRoute('ConnectToDevice');
+        }
     };
 
     return (
         <Page>
-            <PageHeader>{QRCodeJson.name}</PageHeader>
+            <PageHeader>{deviceTypeData?.display_name}</PageHeader>
 
             <PageBody>
                 {isFetching
                     ? <Loader />
-                    : <iframe className={classes.iframe} src={instructionsSrc}></iframe> }
+                    : <iframe className={classes.iframe} src={deviceTypeData?.installation_manual_url}></iframe> }
 
             </PageBody>
 

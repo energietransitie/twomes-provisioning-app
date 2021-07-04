@@ -1,5 +1,11 @@
 import { ActivateAccountResponse, ActivateDeviceResponse, DeviceResponse, DeviceTypeResponse, IApiService } from "../ApiService";
 
+export const DUMMY_DEVICE_TYPE = {
+    name: 'Generic-Test',
+    display_name: 'testapparaatje',
+    installation_manual_url: 'https://energietransitiewindesheim.nl/manuals/Generic-Test/'
+}
+
 export class ApiServiceDev implements IApiService {
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars
@@ -24,12 +30,8 @@ export class ApiServiceDev implements IApiService {
             setTimeout(() => {
                 resolve({
                     id: 1,
-                    name: 'TWOMES-XXXXX',
-                    device_type: {
-                        name: 'Generic-Test',
-                        display_name: 'testapparaatje',
-                        installation_manual_url: 'https://energietransitiewindesheim.nl/manuals/Generic-Test/'
-                    }
+                    name: 'TWOMES-A0FEB2',
+                    device_type: DUMMY_DEVICE_TYPE
                 });
             }, 100);
         });
@@ -39,11 +41,7 @@ export class ApiServiceDev implements IApiService {
     public static async getInstallationManual(device_name: string): Promise<DeviceTypeResponse> {
         return new Promise((resolve) => {
             setTimeout(() => {
-                resolve({
-                    name: 'Generic-Test',
-                    display_name: 'testapparaatje',
-                    installation_manual_url: 'https://energietransitiewindesheim.nl/manuals/Generic-Test/'
-                });
+                resolve(DUMMY_DEVICE_TYPE);
             }, 100);
         });
     }
@@ -54,12 +52,8 @@ export class ApiServiceDev implements IApiService {
             setTimeout(() => {
                 resolve({
                     id: 1,
-                    name: 'TWOMES-XXXXX',
-                    device_type: {
-                        name: 'Generic-Test',
-                        display_name: 'testapparaatje',
-                        installation_manual_url: 'https://energietransitiewindesheim.nl/manuals/Generic-Test/'
-                    },
+                    name: 'TWOMES-A0FEB2',
+                    device_type: DUMMY_DEVICE_TYPE,
                     latest_measurement_timestamp: '2021-06-07T08:09:59.809Z'
                 });
             }, 100);
