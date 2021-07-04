@@ -5,7 +5,6 @@ import {
     Instructions,
     ConnectToDevice,
     WifiList,
-    WifiCredentials,
     ProcessProvisioning,
     RequestLocationPermissions,
     RequestCameraPermissions
@@ -20,7 +19,6 @@ export const routeList = {
     Instructions,
     ConnectToDevice,
     WifiList,
-    WifiCredentials,
     ProcessProvisioning,
     RequestLocationPermissions,
     RequestCameraPermissions

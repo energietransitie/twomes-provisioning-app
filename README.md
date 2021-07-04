@@ -1,6 +1,6 @@
 # Twomes WarmteWachter
 
-This repository contains the source code for the WarmteWachter App for both Android and iOS. The WarmteWachter app helps a user to install and connect one or more Twomes measurement devices in his home and to start, monitor and stop acquisition of monitoring data related to the heating of his/her home. 
+This repository contains the source code for the WarmteWachter App for both Android and iOS. The WarmteWachter app helps a user to install and connect one or more Twomes measurement devices that start collecting monitoring data related to home heating. 
 
 ## Table of contents
 * [General info](#general-info)

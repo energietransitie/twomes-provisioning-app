@@ -1,8 +1,8 @@
-import { IProvisioningService } from "../ProvisioningService";
+import { IProvisioningService, ESPDevice } from "../ProvisioningService";
 import { QRCodeJson } from "../QRScanService";
+import { DUMMY_DEVICE_TYPE } from "./ApiService";
+import { DUMMY_QR_DATA } from "./QRScanService";
 
-// eslint-disable-next-line @typescript-eslint/no-explicit-any
-type ESPDevice = any;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
 type NetworkList = any;
 // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -24,7 +24,13 @@ export class ProvisioningServiceDev implements IProvisioningService {
             { ssid: 'VRVAS68GASG8', channel: 54, rssi: -21, security: true },
             { ssid: 'TMNL-3454D1', channel: 32, rssi: -31, security: true },
             { ssid: 'GZA7987DF834AVS', channel: 14, rssi: -46, security: false },
-            { ssid: 'Ziggo384598352', channel: 16, rssi: -25, security: true }
+            { ssid: 'Ziggo384598352', channel: 16, rssi: -25, security: true },
+            { ssid: 'VRV343AV786B', channel: 12, rssi: -51, security: true, password: "MySecretPassowrd" },
+            { ssid: 'VRVASC897BDS', channel: 69, rssi: -41, security: true },
+            { ssid: 'VRVAS68GASG8', channel: 54, rssi: -21, security: true },
+            { ssid: 'TMNL-3454D1', channel: 32, rssi: -31, security: true },
+            { ssid: 'GZA7987DF834AVS', channel: 14, rssi: -46, security: false },
+            { ssid: 'Ziggo384598352', channel: 16, rssi: -25, security: true },
         ]
     };
     private static network: Network;
@@ -44,21 +50,16 @@ export class ProvisioningServiceDev implements IProvisioningService {
     public static async createEspDevice(espDeviceQRJson: QRCodeJson): Promise<ESPDevice> {
         this.pendingAction = new Promise((resolve) => {
             setTimeout(() => {
-                this.espDevice = { id: 0, device: espDeviceQRJson };
+                this.espDevice = { id: 0, device: espDeviceQRJson, deviceType: DUMMY_DEVICE_TYPE };
                 resolve(this.espDevice);
             }, 1000);
         });
-        return this.pendingAction;
+        return this.espDevice;
     }
     public static getEspDevice(): ESPDevice {
         return this.espDevice || {
             id: 0,
-            device: {
-                name: 'PROV_XXX',
-                pop: 'abcd1234',
-                transport: 'ble',
-                security: 1
-            }
+            device: DUMMY_QR_DATA
         };
     }
 

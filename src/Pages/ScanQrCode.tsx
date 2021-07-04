@@ -5,22 +5,32 @@ import { Page, PageBody } from '../components/Page';
 import { QRScanService } from '../services/QRScanService';
 import { useNavigation } from '../router/useNavigation';
 import { isPlatform } from '@ionic/react';
+import { QRScanBoundaries } from '../components/QRScanBoundaries';
 
 const useStyles = makeStyles(theme => ({
     image: {
         width: '80%',
         margin: '25px 0'
     },
-    scanView: {
-        height: '40%',
-        position: 'absolute',
-        bottom: 0,
-        left: 0,
+    scanViewContainer: {
         display: 'flex',
-        justifyContent: 'space-evenly',
-        alignItems: 'center',
         flexDirection: 'column',
-        background: theme.colors.white
+        justifyContent: 'space-between'
+    },
+    scanViewTop: {
+        display: 'flex',
+        justifyContent: 'center',
+        background: theme.colors.white,
+        padding: '30px 0',
+    },
+    scanViewMiddle: {
+        margin: '0 auto'
+    },
+    scanViewBottom: {
+        display: 'flex',
+        justifyContent: 'center',
+        background: theme.colors.white,
+        padding: '20px 0',
     }
 }));
 
@@ -64,9 +74,14 @@ export const ScanQRCode: FC = () => {
     };
 
     return isScanning ? (
-        <Portal name="cameraview" >
-            <PaddedContainer className={classes.scanView} >
-                <Header>Richt uw camera op de QR-code</Header>
+        <Portal name="cameraview" className={classes.scanViewContainer} >
+            <PaddedContainer className={classes.scanViewTop} >
+                <Header h2>Richt uw camera op de QR-code</Header>
+            </PaddedContainer>
+
+            <QRScanBoundaries className={classes.scanViewMiddle} />
+
+            <PaddedContainer className={classes.scanViewBottom} >
                 <SlimButton label='Annuleren' onClick={cancelScan} />
             </PaddedContainer>
         </Portal>
