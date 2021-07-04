@@ -16,8 +16,8 @@ const useStyles = makeStyles<'container'|'icon', ButtonProps>((theme) => ({
             || 'row'),
         cursor: 'pointer',
         fontSize: 18,
-        height: 40,
-        padding: '0 10px',
+        minHeight: 40,
+        padding: '5px 10px',
         borderRadius: 4,
         lineHeight: 1,
         color: theme.colors.white,
@@ -25,6 +25,7 @@ const useStyles = makeStyles<'container'|'icon', ButtonProps>((theme) => ({
         fontWeight: 600,
         background: theme.colors.statusOK,
         justifyContent: 'center',
+        textAlign: 'center',
 
         '&:hover::after': {
             content: '""',
