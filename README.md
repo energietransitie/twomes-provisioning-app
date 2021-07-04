@@ -19,9 +19,7 @@ The app is meant to be installed automatically by clicking on e-mail invitation 
 To deploy and sucessfully use the WarmteWachter app you need to have received an e-mail with a proper Firebase Dynamic Link and you need be in the possession of at least one Twomes measurment device.
 
 ## Deploying
-To get an (internal) test version of the app, you need to contact us using the following emailaddress; `marco.prins@windesheim.nl`. Please include the Apple ID or Google Account of the device you intend to install the WarmteWachter app on.
-
-Eventually, the app will be downloaded and installed directly from the Apple App Store or Google Play Store after clicking the Firebase Dynamic Link on your iPhone or Android smartphone, respectively.
+LTS version is available in both the Apple App Store and Google Play Store. For beta versions an invite is required. To receive an invite please contact [@henriterhofte](https://github.com/henriterhofte). Please include in your request the Email address of the Apple ID or Google Account that's being used on the device you wish to install the WarmteWachter app.
 
 ## Developing
 For getting started with the development of the WarmteWachter app see [Developing - Getting Started](./docs/developing.md).
@@ -29,20 +27,26 @@ For getting started with the development of the WarmteWachter app see [Developin
 ## Features
 List of features ready and TODOs for future development. Ready:
 
-- [x] activate your account using a Firebase Dynamic Link;
-- [x] scan the QR code of any of a Twomes measurment device;
-- [x] connect via BLE to a Twomes measurement device to provision internet connectivity via your home Wi-Fi network.
-- [x] present device-type specific installation instructions (fetched from the Twomes backoffice server);
-- [x] verify succesful device provisioning with the Twomes backoffice server;
+- [x] Activate your account using a Firebase Dynamic Link.
+- [x] Scan the QR code of any Twomes measurment device.
+- [x] Present device specific 'Installation Instructions' that have been fetched from the Twomes backoffice server.
+- [x] Connect via BLE to a Twomes measurement device to provision internet connectivity via your home Wi-Fi network.
+- [x] Have a connected measurement device scan for available Wifi-networks and present these.
+- [x] Provision (write network credentials to) a measurement device.
+- [x] Verify successful device provisioning with the Twomes backoffice server by checking for a measurement (heartbeat) from the measurement device.
 
 To-do:
 
-- [ ] connect via SoftAP to a Twomes measurement device to provision internet connectivity via your home Wi-Fi network;
-- [ ] more complete non-happy flow coverage;
-- [ ] usability improvements.
+- [ ] Connect via SoftAP to a Twomes measurement device to provision internet connectivity via your home Wi-Fi network;
+- [ ] More complete non-happy flow coverage;
+- [ ] Improved and translated error handling for known errors.
+- [ ] Usability improvements.
+- [ ] Use the production Backoffice API instead of the testing API.
 
 ## Status
 Project is: _in progress_
+
+Current version is stable. Room for improvement.
 
 ## License
 This software is available under the [Apache 2.0 license](./LICENSE), Copyright 2021 [Research group Energy Transition, Windesheim University of Applied Sciences](https://windesheim.nl/energietransitie) 
