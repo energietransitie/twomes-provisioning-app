@@ -9,28 +9,33 @@ Contains the follow contents;
  4. [Scripts](#scripts)
 
 ### Prerequisites
- - [Yarn](https://classic.yarnpkg.com/) installed (on Windows, you can use the [Yarn msi installer](https://classic.yarnpkg.com/latest.msi));
- - [Android Studio](https://developer.android.com/studio) installed.
- - Xcode installed.
+Before you can start developing, you should have:
+
+* [Yarn](https://classic.yarnpkg.com/) installed; on Windows:
+  * [Node.js](https://nodejs.org/en/) installed;
+  * [Yarn](https://classic.yarnpkg.com/latest.msi) installed;
+* [Android Studio](https://developer.android.com/studio) installed.
+* Xcode installed;
+* this GitHub reposotory cloned.
 
 ### Installing dependencies
-The app is build using Ionic hence you need to;
-```
-    yarn add global @ionic/cli
+The app is build using Ionic hence you need to open a command window and enter;
+```shell
+yarn add global @ionic/cli
 ```
 Next up, fill up your `node_modules` using;
-```
-    yarn
+```shell
+yarn
 ```
 
 ### Running and Debugging
 For simple and quick changes that do not depend on native functions you can simply use this to debug on localhost in your preferred browser.
-```
-    yarn start
+```shell
+yarn start
 ```
 You can also create a production build of the web portion using:
-```
-    yarn build
+```shell
+yarn build
 ```
 
 #### Native debugging

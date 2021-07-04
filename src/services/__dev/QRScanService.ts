@@ -1,14 +1,16 @@
-import { CameraPermisionStatus, IQRScanService, QRCodeJson } from "../QRScanService";
+import { BleDeviceQRJson, CameraPermisionStatus, IQRScanService, QRCodeJson } from "../QRScanService";
+
+export const DUMMY_QR_DATA: BleDeviceQRJson = {
+    name: 'TWOMES-A0FEB2',
+    pop: 'abcd1234',
+    transport: 'ble',
+    security: 1
+};
 
 export class QRScanServiceDev implements IQRScanService {
 
     private static styleNode: HTMLStyleElement;
-    private static QRCodeJson: QRCodeJson = {
-        name: 'PROV_XXX',
-        pop: 'abcd1234',
-        transport: 'ble',
-        security: 1
-    };
+    private static QRCodeJson: QRCodeJson = DUMMY_QR_DATA;
 
     public static async getCameraPermissionStatus(): Promise<CameraPermisionStatus> {
         return CameraPermisionStatus.Granted;
@@ -32,12 +34,7 @@ export class QRScanServiceDev implements IQRScanService {
     public static async scan(): Promise<QRCodeJson> {
         return new Promise((resolve) => {
             setTimeout(() => {
-                QRScanServiceDev.QRCodeJson = {
-                    name: 'PROV_XXX',
-                    pop: 'abcd1234',
-                    transport: 'ble',
-                    security: 1
-                };
+                QRScanServiceDev.QRCodeJson = DUMMY_QR_DATA;
                 resolve(QRScanServiceDev.QRCodeJson);
             }, 3000);
         });
