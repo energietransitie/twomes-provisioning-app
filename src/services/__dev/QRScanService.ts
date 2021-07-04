@@ -9,6 +9,7 @@ export const DUMMY_QR_DATA: BleDeviceQRJson = {
 
 export class QRScanServiceDev implements IQRScanService {
 
+    private static styleNode: HTMLStyleElement;
     private static QRCodeJson: QRCodeJson = DUMMY_QR_DATA;
 
     public static async getCameraPermissionStatus(): Promise<CameraPermisionStatus> {
@@ -20,16 +21,23 @@ export class QRScanServiceDev implements IQRScanService {
     }
 
     public static prepareQRScan(): void {
-        return;
+        QRScanServiceDev.styleNode = document.createElement('style');
+        document.head.appendChild(QRScanServiceDev.styleNode);
+        (QRScanServiceDev.styleNode.sheet as CSSStyleSheet).insertRule('#root { opacity: 0 }');
+        (QRScanServiceDev.styleNode.sheet as CSSStyleSheet).insertRule('body { background: black }');
     }
 
     public static unprepareQRScan(): void {
-        return;
+        QRScanServiceDev.styleNode && document.head.removeChild(QRScanServiceDev.styleNode);
     }
 
     public static async scan(): Promise<QRCodeJson> {
-        QRScanServiceDev.QRCodeJson = DUMMY_QR_DATA;
-        return QRScanServiceDev.QRCodeJson;
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                QRScanServiceDev.QRCodeJson = DUMMY_QR_DATA;
+                resolve(QRScanServiceDev.QRCodeJson);
+            }, 3000);
+        });
     }
 
     public static getQRCodeJson(): QRCodeJson {
