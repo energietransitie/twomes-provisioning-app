@@ -33,7 +33,7 @@ export class ApiServiceDev implements IApiService {
                     name: 'TWOMES-A0FEB2',
                     device_type: DUMMY_DEVICE_TYPE
                 });
-            }, 100);
+            }, 500);
         });
     }
 

@@ -7,11 +7,11 @@ import { OpenNativeSettings } from '@ionic-native/open-native-settings';
 import { ProvisioningService } from '../services/ProvisioningService';
 import { useNavigation } from '../router/useNavigation';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
     padded: {
         margin: '10px 0'
     }
-}));
+});
 
 export const RequestLocationPermissions: FC = () => {
     const classes = useStyles();

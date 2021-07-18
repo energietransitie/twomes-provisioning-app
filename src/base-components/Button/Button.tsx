@@ -1,5 +1,5 @@
 /* eslint-disable react/display-name */
-import React, { FC, MouseEventHandler, ReactElement } from 'react';
+import React, { VFC, MouseEventHandler, ReactElement, MouseEvent } from 'react';
 import classNames from 'classnames';
 import { Ripple } from '../Ripple';
 import { BaseProps } from '../IBaseProps';
@@ -14,7 +14,6 @@ const useStyles = makeStyles<'container'|'icon', ButtonProps>((theme) => ({
             || (iconPosition === 'left' && 'row-reverse')
             || (iconPosition === 'bottom' && 'column')
             || 'row'),
-        cursor: 'pointer',
         fontSize: 18,
         minHeight: 40,
         padding: '5px 10px',
@@ -23,7 +22,7 @@ const useStyles = makeStyles<'container'|'icon', ButtonProps>((theme) => ({
         color: theme.colors.white,
         fill: theme.colors.white,
         fontWeight: 600,
-        background: theme.colors.statusOK,
+        background: ({ disabled }) => disabled ? theme.colors.grey700 : theme.colors.statusOK,
         justifyContent: 'center',
         textAlign: 'center',
 
@@ -50,21 +49,26 @@ const useStyles = makeStyles<'container'|'icon', ButtonProps>((theme) => ({
 }));
 
 interface ButtonProps extends BaseProps {
+    disabled?: boolean;
     label?: string | number;
     icon?: ReactElement;
     iconPosition?: 'top' | 'left' | 'bottom' | 'right';
     onClick: MouseEventHandler;
 }
 
-export const Button: FC<ButtonProps> = (props) => {
-    const { className, label, icon, onClick, ...restProps } = props;
+export const Button: VFC<ButtonProps> = (props) => {
+    const { className, label, icon, onClick, disabled = false, ...restProps } = props;
     const classes = useStyles(props);
+
+    const handleClick = (e: MouseEvent) => {
+        !disabled && onClick(e);
+    }
 
     return (
         <Ripple>
             <div
                 className={classNames(classes.container, className)}
-                onClick={onClick}
+                onClick={handleClick}
                 data-testid="button"
                 {...restProps} >
 

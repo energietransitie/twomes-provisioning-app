@@ -1,6 +1,6 @@
 import classNames from 'classnames';
 import React, { FC } from 'react';
-import { Button, Header, SlimButton } from '../base-components';
+import { Header, SlimButton } from '../base-components';
 import { makeStyles } from '../theme/makeStyles';
 import { useNavigation } from '../router/useNavigation';
 import { Page, PageBody, PageFooter } from '../components/Page';
