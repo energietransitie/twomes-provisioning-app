@@ -1,4 +1,4 @@
-import React, { FC, ReactNode } from 'react';
+import React, { FC } from 'react';
 import { makeStyles } from '../../theme/makeStyles';
 
 const useStyles = makeStyles({
@@ -7,8 +7,8 @@ const useStyles = makeStyles({
     }
 });
 
-interface IconProps {
-    children: ReactNode;
+export interface IconProps {
+    color?: string;
 }
 
 export const Icon: FC<IconProps> = (props) => {
