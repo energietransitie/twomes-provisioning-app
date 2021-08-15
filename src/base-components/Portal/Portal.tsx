@@ -4,13 +4,14 @@ import ReactDOM from 'react-dom';
 import { makeStyles } from '../../theme/makeStyles';
 import { BaseProps } from '../IBaseProps';
 
-const useStyles = makeStyles({
+const useStyles = makeStyles(theme => ({
     container: {
         width: '100%',
         height: '100%',
-        position: 'relative'
+        position: 'relative',
+        zIndex: theme.zLayers.portal
     }
-})
+}));
 
 interface PortalProps extends BaseProps {
     children?: ReactNode;

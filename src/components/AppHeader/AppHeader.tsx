@@ -10,7 +10,7 @@ const useStyles = makeStyles(theme => ({
         background: theme.colors.white,
         alignItems: 'center',
         boxShadow: theme.shadows.level1,
-        zIndex: 1,
+        zIndex: theme.zLayers.appHeader,
         padding: 5
     },
     button: {
@@ -35,7 +35,7 @@ export const AppHeader: VFC<AppHeaderProps> = (props) => {
                 icon={<HamburgerIcon/>}
                 onClick={onMenuClick}/>
 
-            <Header h3>AppHeader</Header>
+            <Header h3>WarmteWachter</Header>
 
         </div>
     );
