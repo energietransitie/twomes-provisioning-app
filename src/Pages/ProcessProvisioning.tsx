@@ -1,16 +1,21 @@
 import React, { FC, useEffect, useState } from "react";
-import { Button, Header, Loader } from "../base-components";
+import { Button, PaddedContainer } from "../base-components";
 import { ProvisioningService } from "../services/ProvisioningService";
 import { useNavigation } from "../router/useNavigation";
 import { Page, PageBody, PageFooter, PageHeader } from "../components/Page";
 import { ErrorModalService } from "../services/ErrorModalService";
 import { ApiService } from "../services/ApiService";
-
-type ProvisioningStatus = 'pendingConnection' | 'pendingHeartbeat' | 'failure' | 'success';
+import { ActionStatus, StatusType } from "../components/ActionStatus";
 
 export const ProcessProvisioning: FC = () => {
     const navigation = useNavigation();
-    const [provisioningStatus, setProvisioningStatus] = useState<ProvisioningStatus>('pendingConnection');
+    const [provisioningStatus, setProvisioningStatus] = useState<StatusType>('pending');
+    const [heartbeatStatus, setHeartbeatStatus] = useState<StatusType>('not-started');
+
+    const hasCumulativeSuccessStatus = (
+        provisioningStatus === 'success' &&
+        heartbeatStatus === 'success'
+    );
 
     const {device, deviceType} = ProvisioningService.getEspDevice();
 
@@ -18,12 +23,13 @@ export const ProcessProvisioning: FC = () => {
         const handleProvisioning = async () => {
             try {
                 await ProvisioningService.getPendingAction();
-                setProvisioningStatus('pendingHeartbeat');
+                setProvisioningStatus('success');
+                setHeartbeatStatus('pending');
 
                 let waitForHeartbeat: NodeJS.Timeout | null = setInterval(() => {
                     ApiService.getDevice(device.name).then((data) => {
                         if (data.latest_measurement_timestamp) {
-                            setProvisioningStatus('success');
+                            setHeartbeatStatus('success');
                             waitForHeartbeat && clearInterval(waitForHeartbeat);
                             waitForHeartbeat = null;
                         }
@@ -32,7 +38,7 @@ export const ProcessProvisioning: FC = () => {
 
                 setTimeout(() => {
                     if (waitForHeartbeat) {
-                        setProvisioningStatus('failure');
+                        setHeartbeatStatus('failure');
                         clearInterval(waitForHeartbeat);
                         ErrorModalService.showErrorModal({ error: 'Await Heartbeat Timeout', callback: () => {
                             navigation.toRoute('WifiList');
@@ -49,34 +55,42 @@ export const ProcessProvisioning: FC = () => {
         handleProvisioning();
     }, []);
 
-    const handleClick = () => {
-        navigation.toRoute('ScanQRCode');
-    }
-
     return (
         <Page>
             <PageHeader>{ deviceType.display_name }</PageHeader>
 
             <PageBody>
-                { provisioningStatus === 'pendingConnection' && <>
-                    <Header>Het apparaat wordt verbonden met uw WiFi netwerk</Header>
-                    <Loader style={{ margin: 60 }}/>
-                    <p>Dit kan enkele seconden duren</p>
-                </> }
+                <PaddedContainer>
+                    <ActionStatus status="success" label="Verbinden met het apparaat" />
+                </PaddedContainer>
 
-                { provisioningStatus === 'pendingHeartbeat' && <>
-                    <Header>Verbinding gelukt! We wachten nog op een eerste meting van het apparaat.</Header>
-                    <Loader style={{ margin: 60 }}/>
-                    <p>Dit kan enkele seconden duren</p>
-                </> }
+                <PaddedContainer>
+                    <ActionStatus status="success" label="Zoeken naar netwerken" />
+                </PaddedContainer>
 
-                { provisioningStatus === 'success' && <Header>Gelukt! Het apparaat is succesvol verbonden!</Header> }
-                { provisioningStatus === 'failure' && <Header>Er is iets mis gegaan!</Header> }
+                <PaddedContainer>
+                    <ActionStatus status="success" label="Activeren van het apparaat" />
+                </PaddedContainer>
+
+                <PaddedContainer>
+                    <ActionStatus
+                        status={provisioningStatus}
+                        label="Verbinden met netwerk" />
+                </PaddedContainer>
+
+                <PaddedContainer>
+                    <ActionStatus
+                        status={heartbeatStatus}
+                        label="Wachten op eerste meting" />
+                </PaddedContainer>
             </PageBody>
 
-            { provisioningStatus === 'success' && <PageFooter>
-                <Button label="Scan het volgende meetapparaat" onClick={handleClick} />
-            </PageFooter> }
+            <PageFooter>
+                <Button
+                    disabled={!hasCumulativeSuccessStatus}
+                    label="Scan het volgende meetapparaat"
+                    onClick={() => navigation.toRoute('ScanQRCode')} />
+            </PageFooter>
         </Page>
     )
 };

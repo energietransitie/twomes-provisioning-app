@@ -48,6 +48,7 @@ export const ScanQRCode: FC = () => {
     }, [isScanning]);
 
     const scanQR = async () => {
+        console.log('MARCO');
         QRScanService.getCameraPermissionStatus().then(async () => {
             setIsScanning(true);
             await QRScanService.requestCameraPermission();
@@ -88,8 +89,8 @@ export const ScanQRCode: FC = () => {
     ) : (
         <Page>
             <PageBody>
-                <Header h1={true} >Scan een QR-code</Header>
-                <p>Pak een meetapparaatje. De de QR-code staat op een sticker, meestal op de achterkant van het meetapparaatje.</p>
+                <Header h1>Scan een QR-code</Header>
+                <p>Pak een meetapparaatje. De QR-code staat op een sticker, meestal op de achterkant van het meetapparaatje.</p>
                 <br/>
                 <img className={classes.image} alt="Scan" src="/resources/ScanQRCode.png" />
                 <Button label="Scannen" onClick={scanQR} />

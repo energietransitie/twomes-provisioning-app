@@ -67,7 +67,7 @@ export class ProvisioningServiceDev implements IProvisioningService {
         this.pendingAction = new Promise((resolve) => {
             setTimeout(() => {
                 resolve(true);
-            }, 1000);
+            }, 1500);
         });
         return this.pendingAction;
     }
@@ -76,7 +76,7 @@ export class ProvisioningServiceDev implements IProvisioningService {
         this.pendingAction = new Promise((resolve) => {
             setTimeout(() => {
                 resolve(this.networkList);
-            }, 1000);
+            }, 3000);
         });
         return this.pendingAction;
     }
