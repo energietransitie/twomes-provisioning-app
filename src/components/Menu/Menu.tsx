@@ -1,6 +1,6 @@
 import { isPlatform } from '@ionic/react';
 import React, { VFC } from 'react';
-import { Button, HamburgerIcon } from '../../base-components';
+import { Button, TimesIcon } from '../../base-components';
 import { makeStyles } from '../../theme/makeStyles';
 import { AppVersionInfo } from './AppVersionInfo';
 import { MenuItem } from './MenuItem';
@@ -33,7 +33,9 @@ const useStyles = makeStyles<string, { isVisible: boolean }>(theme => ({
     },
     closeIcon: {
         background: theme.colors.white,
-        width: 45,
+        color: theme.colors.grey600,
+        fontWeight: 'normal',
+        justifyContent: 'flex-start',
         margin: 15
     },
     appInfo: {
@@ -62,7 +64,7 @@ export const Menu: VFC<MenuProps> = (props) => {
                 {/* TODO: Use close icon instead */}
                 <Button
                     className={classes.closeIcon}
-                    icon={<HamburgerIcon/>}
+                    icon={<TimesIcon color="#999999" />}
                     onClick={onCloseClick} />
 
                 <MenuItem
