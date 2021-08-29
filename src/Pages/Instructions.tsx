@@ -3,7 +3,7 @@ import { Button, Loader } from '../base-components';
 import { Page, PageBody, PageFooter, PageHeader } from '../components/Page';
 
 import { ProvisioningService } from '../services/ProvisioningService';
-import { QRCodeJson, QRScanService } from '../services/QRScanService';
+import { QRScanService } from '../services/QRScanService';
 import { useNavigation } from '../router/useNavigation';
 import { ApiService, DeviceTypeResponse } from '../services/ApiService';
 import { ErrorModalService } from '../services/ErrorModalService';

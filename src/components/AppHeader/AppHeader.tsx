@@ -1,3 +1,4 @@
+import { isPlatform } from '@ionic/react';
 import React, { VFC } from 'react';
 import { Button, Header } from '../../base-components';
 import { HamburgerIcon } from '../../base-components/Icon';
@@ -11,7 +12,8 @@ const useStyles = makeStyles(theme => ({
         alignItems: 'center',
         boxShadow: theme.shadows.level1,
         zIndex: theme.zLayers.appHeader,
-        padding: 5
+        padding: 5,
+        paddingTop: isPlatform('ios') ? 40 : 5
     },
     button: {
         background: theme.colors.white,

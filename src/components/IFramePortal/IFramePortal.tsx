@@ -1,3 +1,4 @@
+import { isPlatform } from '@ionic/react';
 import React, { VFC } from 'react';
 import { Portal } from '../../base-components';
 import { makeStyles } from '../../theme/makeStyles';
@@ -5,9 +6,9 @@ import { makeStyles } from '../../theme/makeStyles';
 const useStyles = makeStyles(theme => ({
     container: {
         position: 'absolute',
-        top: '50px', // AppHeader Correction
+        top: isPlatform('ios') ? 85 : 50, // AppHeader Correction
         left: 0,
-        height: 'calc(100% - 50px)', // AppHeader Correction
+        height: isPlatform('ios') ? 'calc(100% - 85px)' : 'calc(100% - 50px)', // AppHeader Correction
         background: theme.colors.white
     },
     iframe: {

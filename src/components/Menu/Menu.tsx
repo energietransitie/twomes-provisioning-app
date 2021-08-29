@@ -1,3 +1,4 @@
+import { isPlatform } from '@ionic/react';
 import React, { VFC } from 'react';
 import { Button, HamburgerIcon } from '../../base-components';
 import { makeStyles } from '../../theme/makeStyles';
@@ -13,16 +14,14 @@ const useStyles = makeStyles<string, { isVisible: boolean }>(theme => ({
         height: '100%',
         zIndex: theme.zLayers.menu,
         transition: 'transform 0.3s ease-in-out',
-        transform: ({ isVisible }) => isVisible ? 'translateX(0px)' : 'translateX(-300px)',
+        transform: ({ isVisible }) => isVisible ? 'translateX(0px)' : 'translateX(-300px)'
     },
     menu: {
-        position: 'absolute',
-        top: 0,
-        left: 0,
         width: 300,
         height: '100%',
         background: theme.colors.white,
-        boxShadow: theme.shadows.level1
+        boxShadow: theme.shadows.level1,
+        paddingTop: isPlatform('ios') ? 35 : 0
     },
     outside: {
         position: 'absolute',
@@ -39,8 +38,8 @@ const useStyles = makeStyles<string, { isVisible: boolean }>(theme => ({
     },
     appInfo: {
         position: 'absolute',
-        bottom: 0,
-        left: 0
+        bottom: 10,
+        left: 5
     }
 }));
 
