@@ -2,7 +2,7 @@ import classNames from 'classnames';
 import React, { FC } from 'react';
 import { makeStyles } from '../../theme/makeStyles';
 
-const useStyles = makeStyles(theme => ({
+const useStyles = makeStyles({
     container: {
         position: 'relative',
         width: '80vw',
@@ -37,7 +37,7 @@ const useStyles = makeStyles(theme => ({
         borderRightStyle: 'solid',
         margin: '15vw 0 0 15vw'
     }
-}));
+});
 
 interface QRScanBoundariesProps {
     className?: string;
