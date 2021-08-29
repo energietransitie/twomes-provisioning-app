@@ -61,15 +61,27 @@ export const ProcessProvisioning: FC = () => {
 
             <PageBody>
                 <PaddedContainer>
+                    <ActionStatus status="success" label="Verbinden met het apparaat" />
+                </PaddedContainer>
+
+                <PaddedContainer>
+                    <ActionStatus status="success" label="Zoeken naar netwerken" />
+                </PaddedContainer>
+
+                <PaddedContainer>
+                    <ActionStatus status="success" label="Activeren van het apparaat" />
+                </PaddedContainer>
+
+                <PaddedContainer>
                     <ActionStatus
                         status={provisioningStatus}
-                        label="Het apparaat wordt verbonden met uw WiFi netwerk" />
+                        label="Verbinden met netwerk" />
                 </PaddedContainer>
 
                 <PaddedContainer>
                     <ActionStatus
                         status={heartbeatStatus}
-                        label="Wachten op een eerste meting van het apparaat." />
+                        label="Wachten op eerste meting" />
                 </PaddedContainer>
             </PageBody>
 

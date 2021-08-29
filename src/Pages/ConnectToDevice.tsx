@@ -62,6 +62,14 @@ export const ConnectToDevice: FC = () => {
                     <ActionStatus status={deviceActivationStatus} label="Activeren van het apparaat" />
                 </PaddedContainer>
 
+                <PaddedContainer>
+                    <ActionStatus status="not-started" label="Verbinden met netwerk" />
+                </PaddedContainer>
+
+                <PaddedContainer>
+                    <ActionStatus status="not-started" label="Wachten op eerste meting" />
+                </PaddedContainer>
+
             </PageBody>
 
             <PageFooter>
