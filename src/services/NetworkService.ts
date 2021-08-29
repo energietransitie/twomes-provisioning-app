@@ -1,3 +1,4 @@
+import { isPlatform } from '@ionic/react';
 import { Network } from '../services/ProvisioningService';
 
 export class NetworkService {
@@ -38,7 +39,9 @@ export class NetworkService {
         // Add networks not previously used for provisioning to sortedNetworks in order based on rssi. 
         networks.forEach(network => {
             if (!sortedNetworks.includes(network)) {
-                sortedNetworks.push(network);
+                isPlatform('ios')
+                    ? sortedNetworks.unshift(network)
+                    : sortedNetworks.push(network);
         }});
 
         return sortedNetworks;
