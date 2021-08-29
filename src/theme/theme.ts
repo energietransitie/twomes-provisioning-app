@@ -34,5 +34,12 @@ export const theme = {
     },
     shadows: {
         level1: '0px 3px 3px -2px rgba(0,0,0,0.2), 0px 3px 4px 0px rgba(0,0,0,0.14), 0px 1px 8px 0px rgba(0,0,0,0.12)'
+    },
+    zLayers: {
+        main: 1,
+        portal: 10,
+        appHeader: 20,
+        menu: 30,
+        modal: 40
     }
 } as const;

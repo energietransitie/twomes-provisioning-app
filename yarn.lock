@@ -1757,9 +1757,9 @@
   integrity sha512-6NZf4O2ZUmlhqgQvTihc96/AMOGtKSsuru790+f7TCceSTYRrl3SCepUY02WBsUHR+G8HSqrTNvkgTxDA+hGsg==
 
 "@capacitor/android@^2.4.2":
-  version "2.4.5"
-  resolved "https://registry.yarnpkg.com/@capacitor/android/-/android-2.4.5.tgz#7ceefd0857eb2f789225bfb88f7467bfa3409125"
-  integrity sha512-LwnOPc1/luS3RqCiKx9l5qQtxQfFu4YW2r4U8Ko1Lr91i9Ibix1ChWqnvsBlcrdeNdhmMrW2v53mn22oT4F6oA==
+  version "2.4.9"
+  resolved "https://registry.yarnpkg.com/@capacitor/android/-/android-2.4.9.tgz#ac1e5898df802fa02e5761c48513a2f7dc5006dc"
+  integrity sha512-WHBbcNBcTjPA98aC+mwPM4RpGBNRXKsv2dQv+Ki4wW19iw5nDuqLLSE540Rq0HC4Lduj8sCKqZvmEzppIKkK4w==
 
 "@capacitor/cli@2.4.2":
   version "2.4.2"
@@ -1859,6 +1859,13 @@
   integrity sha512-tAag0jEcjwH+P2quUfipd7liWCNX2F8NvYjQp2wtInsZxnMlypdw0FtAOLxtvvkO+GSRRbmNi8m/5y42PQJYCQ==
   dependencies:
     "@hapi/hoek" "^8.3.0"
+
+"@ionic-native/app-version@^5.35.0":
+  version "5.35.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/app-version/-/app-version-5.35.0.tgz#f79d15a3b3397a02d17ef2fb90a8bf32661cbc4c"
+  integrity sha512-Uu7Tlav27rRoAJiIpAIh+WK7fOhTYHwFEmSs3Tp3rJCwcxhx5co6yvMLLXsuXbLVlcR8OB7l17lLGVN6wrfh6g==
+  dependencies:
+    "@types/cordova" latest
 
 "@ionic-native/core@^5.33.0":
   version "5.33.0"
@@ -4113,15 +4120,10 @@ caniuse-api@^3.0.0:
     lodash.memoize "^4.1.2"
     lodash.uniq "^4.5.0"
 
-caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000981, caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001165:
-  version "1.0.30001168"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001168.tgz#6fcd098c139d003b9bd484cbb9ca26cb89907f9a"
-  integrity sha512-P2zmX7swIXKu+GMMR01TWa4csIKELTNnZKc+f1CjebmZJQtTAEXmpQSoKVJVVcvPGAA0TEYTOUp3VehavZSFPQ==
-
-caniuse-lite@^1.0.30001125, caniuse-lite@^1.0.30001208:
-  version "1.0.30001209"
-  resolved "https://registry.yarnpkg.com/caniuse-lite/-/caniuse-lite-1.0.30001209.tgz#1bb4be0bd118e98e21cfb7ef617b1ef2164622f4"
-  integrity sha512-2Ktt4OeRM7EM/JaOZjuLzPYAIqmbwQMNnYbgooT+icoRGrKOyAxA1xhlnotBD1KArRSPsuJp3TdYcZYrL7qNxA==
+caniuse-lite@^1.0.0, caniuse-lite@^1.0.30000981, caniuse-lite@^1.0.30001109, caniuse-lite@^1.0.30001125, caniuse-lite@^1.0.30001165, caniuse-lite@^1.0.30001208:
+  version "1.0.30001251"
+  resolved "https://registry.npmjs.org/caniuse-lite/-/caniuse-lite-1.0.30001251.tgz"
+  integrity sha512-HOe1r+9VkU4TFmnU70z+r7OLmtR+/chB1rdcJUeQlAinjEeb0cKL20tlAtOagNZhbrtLnCvV19B4FmF1rgzl6A==
 
 capture-exit@^2.0.0:
   version "2.0.0"
@@ -4557,6 +4559,11 @@ cordova-open-native-settings@^1.5.5:
   version "1.5.5"
   resolved "https://registry.yarnpkg.com/cordova-open-native-settings/-/cordova-open-native-settings-1.5.5.tgz#963b50d65cf20c2f6c7603dc1d4f42c7389697bd"
   integrity sha512-t3we7dUTUamuxVMl/nE6RBNqEyTtUuxvtjXI/BrevuoBIl2nI9GJpTvD9witJkpzf0isCv3zMuiLd9tP+2+LVw==
+
+cordova-plugin-app-version@^0.1.12:
+  version "0.1.12"
+  resolved "https://registry.yarnpkg.com/cordova-plugin-app-version/-/cordova-plugin-app-version-0.1.12.tgz#08798f6edf870e42dc655a8f1028894428eb72a6"
+  integrity sha512-P+0d9+h9HasanKuMd8tcEpuJJlsVmClie3Mbq16v3TV/VroDrgYB6Ea8Imkc/WjjMVSBCjWB+pji1LoupWlddA==
 
 core-js-compat@^3.6.2:
   version "3.8.1"
@@ -11226,9 +11233,9 @@ run-queue@^1.0.0, run-queue@^1.0.3:
     aproba "^1.1.1"
 
 rxjs@^6.4.0:
-  version "6.6.3"
-  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.6.3.tgz#8ca84635c4daa900c0d3967a6ee7ac60271ee552"
-  integrity sha512-trsQc+xYYXZ3urjOiJOuCOa5N3jAZ3eiSpQB5hIT8zGlL2QfnHLJ2r7GMkBGuIausdJN1OneaI6gQlsqNHHmZQ==
+  version "6.6.7"
+  resolved "https://registry.yarnpkg.com/rxjs/-/rxjs-6.6.7.tgz#90ac018acabf491bf65044235d5863c4dab804c9"
+  integrity sha512-hTdwr+7yYNIT5n4AMYp85KA6yw2Va0FLa3Rguvbpa4W3I5xynaBZo41cM3XM+4Q6fRMj3sBYIR1VAmZMXYJvRQ==
   dependencies:
     tslib "^1.9.0"
 

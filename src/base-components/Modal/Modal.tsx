@@ -6,6 +6,9 @@ import { Portal } from "../Portal";
 import { SlimButton } from "../SlimButton";
 
 const useStyles = makeStyles(theme => ({
+    portal: {
+        zIndex: theme.zLayers.modal
+    },
     container: {
         width: '100%',
         height: '100%',
@@ -61,7 +64,7 @@ export const Modal: FC<ModalProps> = (props) => {
     }
 
     return (
-        <Portal name="modal" >
+        <Portal name="modal" className={classes.portal} >
             <div className={classes.container} onClick={blockOutsideClick} >
                 <div className={classes.modalContainer} >
                     <Header h2 className={classes.modalTitle} >{ title }</Header>
