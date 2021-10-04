@@ -1,4 +1,4 @@
-import React, { FC } from 'react';
+import React, { FC, useEffect } from 'react';
 import { Modal } from '../../base-components/Modal';
 import { makeStyles } from '../../theme/makeStyles';
 
@@ -21,11 +21,24 @@ export const ErrorModal: FC<ErrorModalProps> = (props) => {
     const { error, callback } = props;
     const classes = useStyles();
 
+    useEffect(() => {
+        const closeModal = (e: Event) => {
+            e.preventDefault();
+            e.stopPropagation();
+            callback?.();
+        };
+
+        document.addEventListener('backbutton', closeModal);
+
+        return () => {
+            document.removeEventListener('backbutton', closeModal);
+        }
+    }, []);
+
     const handleSubmit = () => {
         callback?.();
     };
 
-    console.log('MARCO', error);
     const errorMessage = (typeof error === 'string' ? error : error?.message) || "Onbekende fout";
 
     return (

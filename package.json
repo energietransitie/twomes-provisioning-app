@@ -47,7 +47,7 @@
     "classnames": "^2.2.6",
     "cordova-open-native-settings": "^1.5.5",
     "cordova-plugin-app-version": "^0.1.12",
-    "esp-provisioning-plugin": "github:energietransitie/esp-provisioning-capacitor-plugin#v0.0.10",
+    "esp-provisioning-plugin": "https://github.com/energietransitie/esp-provisioning-capacitor-plugin.git",
     "react": "^16.13.0",
     "react-dom": "^16.13.0",
     "react-router": "^5.1.2",

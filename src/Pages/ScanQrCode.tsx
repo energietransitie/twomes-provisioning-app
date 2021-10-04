@@ -48,7 +48,6 @@ export const ScanQRCode: FC = () => {
     }, [isScanning]);
 
     const scanQR = async () => {
-        console.log('MARCO');
         QRScanService.getCameraPermissionStatus().then(async () => {
             setIsScanning(true);
             await QRScanService.requestCameraPermission();

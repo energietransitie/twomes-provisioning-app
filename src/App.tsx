@@ -37,6 +37,23 @@ export const App: FC<AppProps> = ({ authenticated = false }) => {
         }
     }, []);
 
+    useEffect(() => {
+        const returnToMainView = (e: Event) => {
+            e.preventDefault();
+            if (activeView !== 'main' || menuIsVisible) {
+                e.stopPropagation();
+            }
+            setActiveView('main');
+            setMenuIsVisible(false);
+        };
+
+        document.addEventListener('backbutton', returnToMainView);
+
+        return () => {
+            document.removeEventListener('backbutton', returnToMainView);
+        }
+    }, []);
+
     const toggleMenu = () => {
         setMenuIsVisible(isVisible => !isVisible);
     }
