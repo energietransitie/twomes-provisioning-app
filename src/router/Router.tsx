@@ -3,9 +3,8 @@ import { IonReactRouter } from '@ionic/react-router'
 import { IonRouterOutlet } from '@ionic/react';
 import { Redirect, Route as IonRoute} from 'react-router';
 import { routeList, Route } from './routeList';
-import { StorageService } from '../services/StorageService';
+import { StorageService, StorageValue } from '../services/StorageService';
 import { makeStyles } from '../theme/makeStyles';
-// import { useNavigation } from './useNavigation';
 
 const useStyles = makeStyles({
     container: {
@@ -29,13 +28,30 @@ export const Router: FC<RouterProps> = (props) => {
     const noAuthRoutes: Route[] = ['Welcome', 'Invite'];
 
     useEffect(() => {
-        StorageService.onChange('token', (token) => {
+        const handleAuthChange = (token: StorageValue) => {
             const currentRoute = window.location.pathname.replace('/', '') as Route;
             if (!!token && noAuthRoutes.includes(currentRoute)) {
                 setHasAuthenticated(true);
             }
-        });
+        }
+
+        StorageService.onChange('token', handleAuthChange);
+
+        return () => {
+            StorageService.offChange('token', handleAuthChange);
+        }
     }, []);
+
+    useEffect(() => {
+        const handleBackButton = (e: Event) => {
+            e.preventDefault();
+        }
+        document.addEventListener('backbutton', handleBackButton);
+
+        return () => {
+            document.removeEventListener('backbutton', handleBackButton);
+        }
+    }, [])
     
     return (
         <div className={classes.container} >
@@ -46,7 +62,7 @@ export const Router: FC<RouterProps> = (props) => {
                         <IonRoute
                             key={key}
                             path={`/${key}`}
-                            component={routeList[key as Route]} />    
+                            component={routeList[key as Route]} />
                     )) }
 
                     { hasAuthenticated ? noAuthRoutes.map((route) => (

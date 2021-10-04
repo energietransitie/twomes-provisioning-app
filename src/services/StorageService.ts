@@ -1,8 +1,8 @@
 import { Storage } from '@ionic/storage';
 
-type StorageValue = string | number | boolean;
+export type StorageValue = string | number | boolean;
 
-type Listener = (value: StorageValue) => void;
+export type Listener = (value: StorageValue) => void;
 
 class LocalStorage {
 
