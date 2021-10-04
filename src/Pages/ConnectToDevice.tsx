@@ -51,15 +51,11 @@ export const ConnectToDevice: FC = () => {
             <PageHeader>We maken verbinding met het apparaat.</PageHeader>
             <PageBody>
                 <PaddedContainer>
-                    <ActionStatus status={connectingStatus} label="Verbinden met het apparaat" />
+                    <ActionStatus status={connectingStatus} label="Zoeken apparaatje" />
                 </PaddedContainer>
 
                 <PaddedContainer>
-                    <ActionStatus status={networkScanStatus} label="Zoeken naar netwerken" />
-                </PaddedContainer>
-
-                <PaddedContainer>
-                    <ActionStatus status={deviceActivationStatus} label="Activeren van het apparaat" />
+                    <ActionStatus status={networkScanStatus} label="Zoeken netwerken" />
                 </PaddedContainer>
 
                 <PaddedContainer>
@@ -67,7 +63,7 @@ export const ConnectToDevice: FC = () => {
                 </PaddedContainer>
 
                 <PaddedContainer>
-                    <ActionStatus status="not-started" label="Wachten op eerste meting" />
+                    <ActionStatus status="not-started" label="Wachten op data" />
                 </PaddedContainer>
 
             </PageBody>
@@ -75,7 +71,7 @@ export const ConnectToDevice: FC = () => {
             <PageFooter>
                 <Button
                     disabled={!hasCumulativeSuccessStatus}
-                    label="Volgende stap"
+                    label="Kies netwerk"
                     onClick={() => navigation.toRoute('WifiList')} />
             </PageFooter>
         </Page>

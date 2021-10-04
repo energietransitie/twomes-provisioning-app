@@ -61,15 +61,11 @@ export const ProcessProvisioning: FC = () => {
 
             <PageBody>
                 <PaddedContainer>
-                    <ActionStatus status="success" label="Verbinden met het apparaat" />
+                    <ActionStatus status="success" label="Zoeken apparaatje" />
                 </PaddedContainer>
 
                 <PaddedContainer>
-                    <ActionStatus status="success" label="Zoeken naar netwerken" />
-                </PaddedContainer>
-
-                <PaddedContainer>
-                    <ActionStatus status="success" label="Activeren van het apparaat" />
+                    <ActionStatus status="success" label="Zoeken netwerken" />
                 </PaddedContainer>
 
                 <PaddedContainer>
@@ -81,14 +77,14 @@ export const ProcessProvisioning: FC = () => {
                 <PaddedContainer>
                     <ActionStatus
                         status={heartbeatStatus}
-                        label="Wachten op eerste meting" />
+                        label="Wachten op data" />
                 </PaddedContainer>
             </PageBody>
 
             <PageFooter>
                 <Button
                     disabled={!hasCumulativeSuccessStatus}
-                    label="Scan het volgende meetapparaat"
+                    label="Scan volgende"
                     onClick={() => navigation.toRoute('ScanQRCode')} />
             </PageFooter>
         </Page>
