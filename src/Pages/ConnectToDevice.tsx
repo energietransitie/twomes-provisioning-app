@@ -48,7 +48,7 @@ export const ConnectToDevice: FC = () => {
 
     return (
         <Page>
-            <PageHeader>We maken verbinding met het apparaat.</PageHeader>
+            <PageHeader>Apparaatje wordt gekoppeld...</PageHeader>
             <PageBody>
                 <PaddedContainer>
                     <ActionStatus status={connectingStatus} label="Zoeken apparaatje" />
