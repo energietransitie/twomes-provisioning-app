@@ -33,10 +33,10 @@ export const Welcome: FC = () => {
             <PageBody className={classes.body} >
                 <Header>WarmteWachter</Header>
 
-                <div className={classNames(classes.quote, classes.padded)} >"App voor het onderzoek van het Lectoraat Energietransitie van hogeschool Windesheim in samenwerking met 50 Tinten Groen Assendorp"</div>
+                <div className={classNames(classes.quote, classes.padded)} >App voor het onderzoek van het Lectoraat Energietransitie van hogeschool Windesheim in samenwerking met 50 Tinten Groen Assendorp</div>
 
                 <div className={classes.padded} >
-                    U kunt deze app alleen gebruiken als u zich heeft aangemeld voor het Warmtewachter onderzoek en een e-mail hebt ontvangen om deel te nemen aan het onderzoek.
+                    U kunt deze app alleen gebruiken na ontvangst van een uitnodiging voor het meetonderzoek van WarmteWachter met een persoonlijke activatielink voor de app.
                 </div>
 
                 <div>

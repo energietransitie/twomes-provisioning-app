@@ -6,8 +6,8 @@ android {
         applicationId "nl.windesheim.energietransitie.warmtewachter"
         minSdkVersion rootProject.ext.minSdkVersion
         targetSdkVersion rootProject.ext.targetSdkVersion
-        versionCode 10010
-        versionName "1.3.0"
+        versionCode 10601
+        versionName "1.6.1"
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
     buildTypes {

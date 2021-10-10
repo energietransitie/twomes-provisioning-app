@@ -7,19 +7,31 @@ import { ErrorModalService } from "../services/ErrorModalService";
 import { QRScanService } from "../services/QRScanService";
 import { ApiService } from "../services/ApiService";
 import { ActionStatus, StatusType } from "../components/ActionStatus";
+import { makeStyles } from "../theme/makeStyles";
+import classNames from "classnames";
+
+const useStyles = makeStyles(theme => ({
+    dimmedStatus: {
+        '& *': {
+            color: `${theme.colors.grey300} !important`,
+            fill: `${theme.colors.grey300} !important`
+        }
+    },
+    hr: {
+        borderTop: `2px solid ${theme.colors.grey200}`,
+        paddingTop: 15
+    }
+}));
 
 export const ConnectToDevice: FC = () => {
     const [connectingStatus, setConnectingStatus] = useState<StatusType>('pending');
     const [networkScanStatus, setNetworkScanStatus] = useState<StatusType>('not-started');
-    const [deviceActivationStatus, setDeviceActivationStatus] = useState<StatusType>('not-started');
 
-    const hasCumulativeSuccessStatus = (
-        connectingStatus === 'success' &&
-        networkScanStatus === 'success' &&
-        deviceActivationStatus === 'success'
-    );
+    const hasCumulativeSuccessStatus = (connectingStatus === 'success' && networkScanStatus === 'success');
 
     const navigation = useNavigation();
+    const classes = useStyles();
+
     const QRCodeJson = QRScanService.getQRCodeJson();
 
     useEffect(() => {
@@ -31,11 +43,8 @@ export const ConnectToDevice: FC = () => {
 
                 setNetworkScanStatus('pending');
                 await ProvisioningService.scanForNetworks();
-                setNetworkScanStatus('success');
-
-                setDeviceActivationStatus('pending');
                 await ApiService.activateDevice(QRCodeJson.pop);
-                setDeviceActivationStatus('success');
+                setNetworkScanStatus('success');
             } catch (error) {
                 ErrorModalService.showErrorModal({ error, callback: () => {
                     navigation.toRoute('Instructions');
@@ -48,26 +57,32 @@ export const ConnectToDevice: FC = () => {
 
     return (
         <Page>
-            <PageHeader>We maken verbinding met het apparaat.</PageHeader>
+            <PageHeader>Apparaatje wordt gekoppeld...</PageHeader>
             <PageBody>
                 <PaddedContainer>
-                    <ActionStatus status={connectingStatus} label="Verbinden met het apparaat" />
+                    <ActionStatus
+                        status={connectingStatus}
+                        label="Zoeken apparaatje" />
                 </PaddedContainer>
 
                 <PaddedContainer>
-                    <ActionStatus status={networkScanStatus} label="Zoeken naar netwerken" />
+                    <ActionStatus
+                        status={networkScanStatus}
+                        label="Zoeken netwerken" />
                 </PaddedContainer>
 
                 <PaddedContainer>
-                    <ActionStatus status={deviceActivationStatus} label="Activeren van het apparaat" />
+                    <ActionStatus
+                        className={classNames(classes.dimmedStatus, classes.hr)}
+                        status="not-started"
+                        label="Verbinden met netwerk" />
                 </PaddedContainer>
 
                 <PaddedContainer>
-                    <ActionStatus status="not-started" label="Verbinden met netwerk" />
-                </PaddedContainer>
-
-                <PaddedContainer>
-                    <ActionStatus status="not-started" label="Wachten op eerste meting" />
+                    <ActionStatus
+                        className={classes.dimmedStatus}
+                        status="not-started"
+                        label="Wachten op data" />
                 </PaddedContainer>
 
             </PageBody>
@@ -75,7 +90,7 @@ export const ConnectToDevice: FC = () => {
             <PageFooter>
                 <Button
                     disabled={!hasCumulativeSuccessStatus}
-                    label="Volgende stap"
+                    label="Kies netwerk"
                     onClick={() => navigation.toRoute('WifiList')} />
             </PageFooter>
         </Page>
