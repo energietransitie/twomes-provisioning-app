@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import React, { VFC } from 'react';
 import { CheckIcon, Loader, MinusIcon, TimesIcon } from '../../base-components';
 import { makeStyles } from '../../theme/makeStyles';
@@ -34,14 +35,15 @@ export type StatusType = 'not-started' | 'pending' | 'success' | 'failure';
 export interface ActionStatusProps {
     status: StatusType;
     label: string;
+    className?: string;
 };
 
 export const ActionStatus: VFC<ActionStatusProps> = (props) => {
-    const { status, label } = props;
+    const { status, label, className } = props;
     const classes = useStyles({ status });
 
     return (
-        <div className={classes.container} >
+        <div className={classNames(classes.container, className)} >
             <div className={classes.statusIcon} >
                 { status === 'not-started' && <MinusIcon color="#999999" />}
                 { status === 'pending' && <Loader className={classes.loaderIcon} />}
