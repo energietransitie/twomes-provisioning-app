@@ -58,10 +58,10 @@ This software is a collaborative effort of:
 * Marco Prins · [@mk-prins](https://github.com/mk-prins)
 
 Thanks also go to:
-* <thanks name 1> · [@Github_handle_1](https://github.com/<github_handle_1>) · Twitter [@Twitter_handle_1](https://twitter.com/<twitter_handle_1>)
-* <thanks name 2> · [@Github_handle_2](https://github.com/<github_handle_2>) · Twitter [@Twitter_handle_2](https://twitter.com/<twitter_handle_2>)
-* <thanks name 3> · [@Github_handle_3](https://github.com/<github_handle_3>) · Twitter [@Twitter_handle_3](https://twitter.com/<twitter_handle_3>)
-* etc. 
+* Brian Hoen · [@lordpalf123](https://github.com/lordpalf123)
+* Mattijs Noordhof · [@Matthijsn](https://github.com/Matthijsn)
+* Matthias Verweij · [@MatthiasVerweij](https://github.com/MatthiasVerweij)
+* Rowan van der Zande · [@RowanvdZ](https://github.com/RowanvdZ)
 
 Product owner:
 * Henri ter Hofte · [@henriterhofte](https://github.com/henriterhofte) · Twitter [@HeNRGi](https://twitter.com/HeNRGi)
