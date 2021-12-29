@@ -66,7 +66,7 @@ Thanks also go to:
 Product owner:
 * Henri ter Hofte · [@henriterhofte](https://github.com/henriterhofte) · Twitter [@HeNRGi](https://twitter.com/HeNRGi)
 
-We use and gratefully aknowlegde the efforts of the makers of the following source code and libraries:
+We use and gratefully acknowlegde the efforts of the makers of the following source code and libraries:
 * [Typescript](https://github.com/microsoft/TypeScript), by Microsoft, licensed under [Apache 2.0](https://github.com/microsoft/TypeScript/blob/master/LICENSE.txt)
 * [React](https://github.com/facebook/react/), by Facebook, Inc. and its affiliates., licensed under [MIT](https://github.com/facebook/react/blob/master/LICENSE)
 * [Capacitor](https://github.com/ionic-team/capacitor), by Drifty Co., licensed under [MIT](https://github.com/ionic-team/capacitor/blob/main/LICENSE)
