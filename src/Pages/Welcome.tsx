@@ -22,7 +22,7 @@ const useStyles = makeStyles(theme => ({
 }));
 
 const RESEARCH_GROUP_URL = 'https://www.windesheim.nl/onderzoek/lectoraten/energietransitie';
-const PRIVACY_URL = 'https://energietransitiewindesheim.nl/assendorp2021/privacy.html';
+const PRIVACY_URL = 'https://energiebeveiliging.nl/assendorp2021/privacy.html';
 
 export const Welcome: FC = () => {
     const classes = useStyles();

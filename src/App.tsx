@@ -76,17 +76,17 @@ export const App: FC<AppProps> = ({ authenticated = false }) => {
             { activeView === 'about'
                 ? <IFramePortal
                     index="about"
-                    src="https://www.energietransitiewindesheim.nl/assendorp2021/about/" />
+                    src="https://www.energiebeveiliging.nl/assendorp2021/about/" />
                 : null}
             { activeView === 'faq'
                 ? <IFramePortal
                     index="faq"
-                    src="https://www.energietransitiewindesheim.nl/assendorp2021/FAQ/" />
+                    src="https://www.energiebeveiliging.nl/assendorp2021/FAQ/" />
                 : null}
             { activeView === 'privacy'
                 ? <IFramePortal
                     index="privacy"
-                    src="https://www.energietransitiewindesheim.nl/assendorp2021/privacy.html" />
+                    src="https://www.energiebeveiliging.nl/assendorp2021/privacy.html" />
                 : null}
 
             <Router authenticated={authenticated} />
