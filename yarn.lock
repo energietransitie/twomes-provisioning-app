@@ -1874,10 +1874,10 @@
   dependencies:
     "@types/cordova" latest
 
-"@ionic-native/open-native-settings@^5.32.1":
-  version "5.33.0"
-  resolved "https://registry.yarnpkg.com/@ionic-native/open-native-settings/-/open-native-settings-5.33.0.tgz#2319c32e286bfad75b3c116037906d3150511b21"
-  integrity sha512-mQyTYsgcl+5JjXU0Qw5uSGTjIsChW0R/LpfgGInYCDOMaCAnFYp8Ge97l+axryby23/mBAHptp9Wp5pXBau6ow==
+"@ionic-native/open-native-settings@^5.36.0":
+  version "5.36.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/open-native-settings/-/open-native-settings-5.36.0.tgz#02d3f39797bb5ef992bd78cf4d453f2439cce08f"
+  integrity sha512-/qdJ1dNTLHgQifw7IdxOA7q8og6KQgfuUkNlPvZaXykiINyiykNz8iNBCNtgJV1/C8KFTJwzjf8nbc/h+4xRYg==
   dependencies:
     "@types/cordova" latest
 
