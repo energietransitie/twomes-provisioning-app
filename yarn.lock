@@ -1867,10 +1867,10 @@
   dependencies:
     "@types/cordova" latest
 
-"@ionic-native/core@^5.33.0":
-  version "5.33.0"
-  resolved "https://registry.yarnpkg.com/@ionic-native/core/-/core-5.33.0.tgz#76c0c8514788c4185b7430567962f378cbade90b"
-  integrity sha512-dnZHu7SadvQvliGJPndk2ohdoPvwiyBWJjsJw33BKyhadnmLlmkYKkRgPPI+i22BZofDKq4YiAfIIqhvfHU6gw==
+"@ionic-native/core@^5.36.0":
+  version "5.36.0"
+  resolved "https://registry.yarnpkg.com/@ionic-native/core/-/core-5.36.0.tgz#712c40a530b119b0039e8d16cb577899f50541d4"
+  integrity sha512-lOrkktadlKYbYf1LrDyAtsu1JnQ0oCCdkOU7iHQ8oXnNOkMwobFfD2m62F1CoOr0u9LIkpYnZSPjng8lZbmbNw==
   dependencies:
     "@types/cordova" latest
 
