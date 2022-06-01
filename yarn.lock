@@ -4560,10 +4560,10 @@ cordova-open-native-settings@^1.5.5:
   resolved "https://registry.yarnpkg.com/cordova-open-native-settings/-/cordova-open-native-settings-1.5.5.tgz#963b50d65cf20c2f6c7603dc1d4f42c7389697bd"
   integrity sha512-t3we7dUTUamuxVMl/nE6RBNqEyTtUuxvtjXI/BrevuoBIl2nI9GJpTvD9witJkpzf0isCv3zMuiLd9tP+2+LVw==
 
-cordova-plugin-app-version@^0.1.12:
-  version "0.1.12"
-  resolved "https://registry.yarnpkg.com/cordova-plugin-app-version/-/cordova-plugin-app-version-0.1.12.tgz#08798f6edf870e42dc655a8f1028894428eb72a6"
-  integrity sha512-P+0d9+h9HasanKuMd8tcEpuJJlsVmClie3Mbq16v3TV/VroDrgYB6Ea8Imkc/WjjMVSBCjWB+pji1LoupWlddA==
+cordova-plugin-app-version@^0.1.14:
+  version "0.1.14"
+  resolved "https://registry.yarnpkg.com/cordova-plugin-app-version/-/cordova-plugin-app-version-0.1.14.tgz#a9f231d5cf7a5bfaf63a82915d42e0caef024b16"
+  integrity sha512-HN6Yz6IIdRO+iMvCHN/qMe8/O4miOpHH/pDtWNjIYTjV3MzP+XdzFJoFnq2zxlNNXFz0Zn8REGQhFY77vV4AWQ==
 
 core-js-compat@^3.6.2:
   version "3.8.1"
