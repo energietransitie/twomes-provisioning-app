@@ -1,6 +1,6 @@
 import { ApiServiceDev } from "./__dev/ApiService";
 
-const API_HOST = 'https://api.energietransitiewindesheim.nl';
+const API_HOST = 'https://api.energiebeveiliging.nl';
 
 export type Json = string | number | boolean | Date | null | Json[] | { [key: string]: Json };
 

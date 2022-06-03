@@ -3,7 +3,7 @@ import { ActivateAccountResponse, ActivateDeviceResponse, DeviceResponse, Device
 export const DUMMY_DEVICE_TYPE = {
     name: 'Generic-Test',
     display_name: 'testapparaatje',
-    installation_manual_url: 'https://energietransitiewindesheim.nl/manuals/Generic-Test/'
+    installation_manual_url: 'https://energiebeveiliging.nl/manuals/Generic-Test/'
 }
 
 export class ApiServiceDev implements IApiService {
