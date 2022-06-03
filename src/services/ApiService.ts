@@ -2,10 +2,19 @@ import { ApiServiceDev } from "./__dev/ApiService";
 
 const API_HOST = 'https://api.energietransitiewindesheim.nl';
 
-export type Json = string | number | boolean | null | Json[] | { [key: string]: Json };
+export type Json = string | number | boolean | Date | null | Json[] | { [key: string]: Json };
 
 export type ActivateAccountResponse = {
     session_token: string;
+}
+
+export type ProvisionDeviceResponse = {
+    id: number;
+    name: string;
+    device_type: DeviceTypeResponse
+    activation_token: string;
+    created_on: Date;
+    activated_on: Date;
 }
 
 export type ActivateDeviceResponse = {
@@ -71,6 +80,12 @@ export class ApiServiceProd {
         });
         ApiServiceProd.sessionToken = response.session_token;
         return response;
+    }
+
+    public static async provisionDevice(name: string, type: string, pop: string): Promise<ProvisionDeviceResponse> {
+        return ApiServiceProd.request<ProvisionDeviceResponse>('POST', '/accont/device/provision', {
+            body: {name, device_type_name: type, activation_token: pop}
+        })
     }
 
     public static async activateDevice(activation_token: string): Promise<ActivateDeviceResponse> {

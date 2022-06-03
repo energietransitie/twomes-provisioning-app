@@ -1,4 +1,4 @@
-import { ActivateAccountResponse, ActivateDeviceResponse, DeviceResponse, DeviceTypeResponse, IApiService } from "../ApiService";
+import { ActivateAccountResponse, ActivateDeviceResponse, DeviceResponse, DeviceTypeResponse, IApiService, ProvisionDeviceResponse } from "../ApiService";
 
 export const DUMMY_DEVICE_TYPE = {
     name: 'Generic-Test',
@@ -22,6 +22,21 @@ export class ApiServiceDev implements IApiService {
                 });
             }, 100);
         });
+    }
+
+    public static async provisionDevice(name: string, type: string, pop: string): Promise<ProvisionDeviceResponse> {
+        return new Promise((resolve) => {
+            setTimeout(() => {
+                resolve({
+                    id: 1,
+                    name: 'TWOMES-AAAAAA',
+                    device_type: DUMMY_DEVICE_TYPE,
+                    activation_token: "qwertyuiopasdfghjkl",
+                    activated_on: new Date(),
+                    created_on: new Date()
+                })
+            })
+        })
     }
 
     // eslint-disable-next-line @typescript-eslint/no-unused-vars

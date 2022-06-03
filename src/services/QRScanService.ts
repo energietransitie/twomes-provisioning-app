@@ -13,6 +13,7 @@ export enum CameraPermisionStatus {
 
 export interface BleDeviceQRJson {
     name: string;
+    type: string;
     pop: string;
     transport: "ble";
     security?: 0 | 1; // 0 = unsecure, 1 = secure
@@ -20,6 +21,7 @@ export interface BleDeviceQRJson {
 
 export interface SoftAPDeviceQRJson {
     name: string;
+    type: string;
     pop: string;
     transport: "softap";
     security?: 0 | 1; // 0 = unsecure, 1 = secure
