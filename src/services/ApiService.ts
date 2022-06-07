@@ -83,19 +83,13 @@ export class ApiServiceProd {
     }
 
     public static async provisionDevice(name: string, type: string, pop: string): Promise<ProvisionDeviceResponse> {
-        return ApiServiceProd.request<ProvisionDeviceResponse>('POST', '/accont/device/provision', {
+        return ApiServiceProd.request<ProvisionDeviceResponse>('POST', '/account/device/provision', {
             body: {name, device_type_name: type, activation_token: pop}
         })
     }
 
-    public static async activateDevice(activation_token: string): Promise<ActivateDeviceResponse> {
-        return ApiServiceProd.request<ActivateDeviceResponse>('POST', '/account/device/activate', {
-            body: { activation_token }
-        }, true);
-    }
-
-    public static async getInstallationManual(device_name: string): Promise<DeviceTypeResponse> {
-        return ApiServiceProd.request<DeviceTypeResponse>('GET', `/device_type/${device_name}`, {}, true);
+    public static async getInstallationManual(device_type_name: string): Promise<DeviceTypeResponse> {
+        return ApiServiceProd.request<DeviceTypeResponse>('GET', `/device_type/${device_type_name}`, {}, true);
     }
 
     public static async getDevice(device_name: string): Promise<DeviceResponse> {

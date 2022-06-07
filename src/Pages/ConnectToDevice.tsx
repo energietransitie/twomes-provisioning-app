@@ -31,9 +31,7 @@ export const ConnectToDevice: FC = () => {
 
     const navigation = useNavigation();
     const classes = useStyles();
-
-    const QRCodeJson = QRScanService.getQRCodeJson();
-
+    
     useEffect(() => {
         const handleDeviceConnection = async () => {
             try {
@@ -44,9 +42,6 @@ export const ConnectToDevice: FC = () => {
                 setNetworkScanStatus('pending');
                 await ProvisioningService.scanForNetworks();
 
-                await ApiService.provisionDevice(QRCodeJson.name, QRCodeJson.type, QRCodeJson.pop);
-
-                await ApiService.activateDevice(QRCodeJson.pop);
                 setNetworkScanStatus('success');
             } catch (error) {
                 ErrorModalService.showErrorModal({ error, callback: () => {

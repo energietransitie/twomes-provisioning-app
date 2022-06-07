@@ -26,7 +26,7 @@ export const Instructions: FC = () => {
     const classes = useStyles();
 
     useEffect(() => {
-        ApiService.getInstallationManual(QRCodeJson.name).then((deviceType) => {
+        ApiService.getInstallationManual(QRCodeJson.type).then((deviceType) => {
             setDeviceTypeData(deviceType);
             setIsFetching(false);
         }).catch((error) => {
