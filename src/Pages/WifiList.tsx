@@ -34,7 +34,6 @@ export const WifiList: FC = () => {
     const [intialPassphraseFocus, setInitialPassphraseFocus] = useState(true);
     const [passphrase, setPassphrase] = useState<string>();
 
-    const [requestStatus, setRequestStatus] = useState<StatusType>('not-started');
     const QRCodeJson = QRScanService.getQRCodeJson();
 
     useEffect(() => {
@@ -64,7 +63,6 @@ export const WifiList: FC = () => {
         ProvisioningService.provisionDevice(network)
 
         registerDevice();
-        setRequestStatus("success");
 
         navigation.toRoute("ProcessProvisioning");
     };
@@ -115,7 +113,6 @@ export const WifiList: FC = () => {
                                     <Button
                                         className={classes.section}
                                         label="Verbinden"
-                                        disabled={requestStatus !== "success"}
                                         onClick={() => connectToNetwork(network)}
                                     />
 

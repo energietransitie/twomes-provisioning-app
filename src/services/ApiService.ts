@@ -85,7 +85,7 @@ export class ApiServiceProd {
     public static async provisionDevice(name: string, type: string, pop: string): Promise<ProvisionDeviceResponse> {
         return ApiServiceProd.request<ProvisionDeviceResponse>('POST', '/account/device/provision', {
             body: {name, device_type_name: type, activation_token: pop}
-        })
+        }, true)
     }
 
     public static async getInstallationManual(device_type_name: string): Promise<DeviceTypeResponse> {
