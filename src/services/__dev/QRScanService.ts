@@ -3,6 +3,7 @@ import { BleDeviceQRJson, CameraPermisionStatus, IQRScanService, QRCodeJson } fr
 export const DUMMY_QR_DATA: BleDeviceQRJson = {
     name: 'TWOMES-A0FEB2',
     pop: 'abcd1234',
+    type: "DSMR-P1-gateway-TinTsTrCO2",
     transport: 'ble',
     security: 1
 };

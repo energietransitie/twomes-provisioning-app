@@ -5,6 +5,9 @@ import { NetworkService } from '../services/NetworkService';
 import { makeStyles } from '../theme/makeStyles';
 import { useNavigation } from '../router/useNavigation';
 import { Page, PageBody, PageFooter, PageHeader } from '../components/Page';
+import { ApiService } from '../services/ApiService';
+import { QRScanService } from '../services/QRScanService';
+import { StatusType } from '../components/ActionStatus';
 
 const useStyles = makeStyles(theme => ({
     section: {
@@ -31,6 +34,9 @@ export const WifiList: FC = () => {
     const [intialPassphraseFocus, setInitialPassphraseFocus] = useState(true);
     const [passphrase, setPassphrase] = useState<string>();
 
+    const [requestStatus, setRequestStatus] = useState<StatusType>('not-started');
+    const QRCodeJson = QRScanService.getQRCodeJson();
+
     useEffect(() => {
         const getNetworks = async () => {
             await ProvisioningService.getPendingAction();
@@ -49,9 +55,17 @@ export const WifiList: FC = () => {
         navigation.toRoute('ScanQRCode');
     };
 
+    const registerDevice = async () => {
+        await ApiService.provisionDevice(QRCodeJson.name, QRCodeJson.type, QRCodeJson.pop);
+    }
+
     const connectToNetwork = (network: Network) => {
         network.passphrase = passphrase;
         ProvisioningService.provisionDevice(network)
+
+        registerDevice();
+        setRequestStatus("success");
+
         navigation.toRoute("ProcessProvisioning");
     };
 
@@ -101,6 +115,7 @@ export const WifiList: FC = () => {
                                     <Button
                                         className={classes.section}
                                         label="Verbinden"
+                                        disabled={requestStatus !== "success"}
                                         onClick={() => connectToNetwork(network)}
                                     />
 
