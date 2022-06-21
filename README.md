@@ -3,14 +3,16 @@
 This repository contains the source code for the WarmteWachter App for both Android and iOS. The WarmteWachter app helps a user to install and connect one or more Twomes measurement devices that start collecting monitoring data related to home heating. 
 
 ## Table of contents
-* [General info](#general-info)
-* [Prerequisites](#prerequisites)
-* [Deploying](#deploying)
-* [Developing](#developing) 
-* [Features](#features)
-* [Status](#status)
-* [License](#license)
-* [Credits](#credits)
+- [Twomes WarmteWachter](#twomes-warmtewachter)
+  - [Table of contents](#table-of-contents)
+  - [General info](#general-info)
+  - [Prerequisites](#prerequisites)
+  - [Deploying](#deploying)
+  - [Developing](#developing)
+  - [Features](#features)
+  - [Status](#status)
+  - [License](#license)
+  - [Credits](#credits)
 
 ## General info
 The app is meant to be installed automatically by clicking on e-mail invitation on your smartphone that contains a Firebase Dynamic Link, which automatically selects the proper app from the proper app store, installs it and activates the user's account using the account activation token in the Firebase Dynamic Link. The user is then asked to proceed by scanning, one-by-one, the QR-code that is attached to each Twomes measurement device that has been sent to the home address of the user. For each device scanned, the proper device installation instructions are retrieved from the Twomes server and presented. The app then connects with the device, which then scans for available Wi-Fi networks. The user is asked to select their home Wi-Fi network from the list of available networks and supply the password for that network. If everything has been entered correctly, the user is notified the setup was complete and succesful and can choose to configure the next device.
@@ -62,6 +64,8 @@ Thanks also go to:
 * Mattijs Noordhof · [@Matthijsn](https://github.com/Matthijsn)
 * Matthias Verweij · [@MatthiasVerweij](https://github.com/MatthiasVerweij)
 * Rowan van der Zande · [@RowanvdZ](https://github.com/RowanvdZ)
+* Jorin Kievit ·  [@JorrinKievit](https://github.com/JorrinKievit)
+* Stijn Wingens ·  [@Stijnwingens](https://github.com/Stijnwingens)
 
 Product owner:
 * Henri ter Hofte · [@henriterhofte](https://github.com/henriterhofte) · Twitter [@HeNRGi](https://twitter.com/HeNRGi)
