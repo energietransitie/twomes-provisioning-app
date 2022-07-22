@@ -56,7 +56,7 @@
     "typescript": "3.8.3"
   },
   "devDependencies": {
-    "@babel/eslint-parser": "^7.12.16",
+    "@babel/eslint-parser": "^7.18.9",
     "@capacitor/cli": "2.4.2",
     "@typescript-eslint/eslint-plugin": "^4.15.1",
     "@typescript-eslint/parser": "^4.15.1",
