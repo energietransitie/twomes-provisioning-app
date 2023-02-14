@@ -16,13 +16,13 @@ This repository contains the source code for the Twomes provisioning app (Warmte
 The app is meant to be installed automatically by clicking on e-mail invitation on your smartphone that contains a Firebase Dynamic Link, which automatically selects the proper app from the proper app store, installs it and activates the user's account using the account activation token in the Firebase Dynamic Link. The user is then asked to proceed by scanning, one-by-one, the QR-code that is attached to each Twomes measurement device that has been sent to the home address of the user. For each device scanned, the proper device installation instructions are retrieved from the Twomes server and presented. The app then connects with the device, which then scans for available Wi-Fi networks. The user is asked to select their home Wi-Fi network from the list of available networks and supply the password for that network. If everything has been entered correctly, the user is notified the setup was complete and succesful and can choose to configure the next device.
 
 ## Prerequisites
-To deploy and sucessfully use the WarmteWachter app you need to have received an e-mail with a proper Firebase Dynamic Link and you need be in the possession of at least one Twomes measurment device.
+To deploy and sucessfully use the app you need to have received an e-mail with a proper Firebase Dynamic Link and you need be in the possession of at least one Twomes measurment device.
 
 ## Deploying
-LTS version is available in both the Apple App Store and Google Play Store. For beta versions an invite is required. To receive an invite please contact [@henriterhofte](https://github.com/henriterhofte). Please include in your request the Email address of the Apple ID or Google Account that's being used on the device you wish to install the WarmteWachter app.
+LTS version is available in both the Apple App Store and Google Play Store. For beta versions an invite is required. To receive an invite please contact [@henriterhofte](https://github.com/henriterhofte). Please include in your request the Email address of the Apple ID or Google Account that's being used on the device you wish to install the app.
 
 ## Developing
-For getting started with the development of the WarmteWachter app see [Developing - Getting Started](./docs/developing.md).
+For getting started with the development of the app see [Developing - Getting Started](./docs/developing.md).
 
 ## Features
 List of features ready and TODOs for future development. Ready:
