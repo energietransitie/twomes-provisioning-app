@@ -1,5 +1,11 @@
 # Twomes provisioning app
 
+> **Note**
+> 
+> This repository has been archived and is no longer maintained.
+> 
+> See the status [here](#status).
+
 This repository contains the source code for the Twomes provisioning app (WarmteWachter) for both Android and iOS. The app helps a user to install and connect one or more Twomes measurement devices that start collecting monitoring data related to home heating. 
 
 ## Table of contents
@@ -44,9 +50,10 @@ To-do:
 - [ ] Use the production Backoffice API instead of the testing API.
 
 ## Status
-Project is: _in progress_
+Project is: _archived_
 
-Current version is stable. Room for improvement.
+This repository has been archived and is no longer maintained.
+This project has been continued as [twomes-app-needforheat](https://github.com/energietransitie/twomes-app-needforheat).
 
 ## License
 This software is available under the [Apache 2.0 license](./LICENSE), Copyright 2021 [Research group Energy Transition, Windesheim University of Applied Sciences](https://windesheim.nl/energietransitie) 
